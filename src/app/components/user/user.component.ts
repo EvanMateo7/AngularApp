@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
 
+import { User } from '../models/user';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -17,13 +19,6 @@ export class UserComponent implements OnInit {
   selectedUser: User;
   newUser: User;
 
-  name:string;
-  age:number;
-  email:string;
-  address:Address;
-  hobbies:string[];
-  posts:Post[];
-
   constructor(private afs: AngularFirestore) {
     console.log('Constructing: UserComponent with AngularFirestore...');
   };
@@ -31,13 +26,15 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     console.log('Initialize: UserComponent...');
 
+    const userDataObject = _ => {
+      const data = _.payload.doc.data() as User;
+      data.id = _.payload.doc.id;
+      return data;
+    }
+
     this.usersCollection = this.afs.collection("users");
     this.users = this.usersCollection.snapshotChanges().pipe(map(changes => {
-        return changes.map(x => {
-          const data = x.payload.doc.data() as User;
-          data.id = x.payload.doc.id;
-          return data;
-        })
+        return changes.map(userDataObject);
       })
     );
 
@@ -45,13 +42,15 @@ export class UserComponent implements OnInit {
     this.newUser = null;
   }
 
+
+  
   selectUser(user): void {
     this.selectedUser = user;
     this.newUser = null;
   }
 
   addNewUser(): void {
-    this.newUser = {name:"" ,age: 0};
+    this.newUser = {name: "", age: 0};
     this.selectedUser = null;
   }
   
@@ -75,21 +74,4 @@ export class UserComponent implements OnInit {
 }
 
 
-interface User {
-  id?: string
-  name:string,
-  age:number,
-}
 
-interface Address {
-  street:string,
-  city:string,
-  state:string
-}
-
-interface Post {
-  id: number,
-  titel: string,
-  body: string,
-  userId: number
-}

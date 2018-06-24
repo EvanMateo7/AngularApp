@@ -12,6 +12,6 @@ body {
     font-size: 62.5%;
 }
 
-.userTable {
+.userTable, .itemTable{
     font-size: 1.3em;
 }

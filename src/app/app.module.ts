@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from "@angular/http";
 import { RouterModule, Routes } from "@angular/router";
 import { environment } from "../environments/environment";
+import { DataService } from './services/data.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularFireModule, FirebaseApp } from "angularfire2";
 export const firebaseConfig = environment.firebaseConfig;
@@ -13,13 +15,13 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
-
-import { DataService } from './services/data.service';
+import { ItemComponent } from './components/item//item.component';
 import { AboutComponent } from './components/about/about.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 const appRoutes: Routes = [
-  {path: '', component: UserComponent},
+  {path: '', component: ItemComponent},
+  {path: 'users', component: UserComponent},
   {path: 'about', component: AboutComponent},
 ];
 
@@ -28,6 +30,7 @@ const appRoutes: Routes = [
     AppComponent,
     UserComponent,
     AboutComponent,
+    ItemComponent,
   ],
   imports: [
     BrowserModule,

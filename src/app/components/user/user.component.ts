@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
 
-import { User } from '../models/user';
+import { User } from '../models';
 
 @Component({
   selector: 'app-user',
@@ -43,7 +43,6 @@ export class UserComponent implements OnInit {
   }
 
 
-  
   selectUser(user): void {
     this.selectedUser = user;
     this.newUser = null;
@@ -55,20 +54,21 @@ export class UserComponent implements OnInit {
   }
   
 
+
   updateUser(): void {
-    console.log("updating...");
+    console.log("updating user...");
     this.userDoc = this.afs.doc(`users/${this.selectedUser.id}`);
     this.userDoc.update(this.selectedUser);
   }
 
   deleteUser(user): void {
-    console.log("deleting...");
+    console.log("deleting user...");
     this.userDoc = this.afs.doc(`users/${user.id}`);
     this.userDoc.delete();
   }
 
   addUser(): void {
-    console.log("adding...");
+    console.log("adding user...");
     this.usersCollection.add(this.newUser);
   }
 }

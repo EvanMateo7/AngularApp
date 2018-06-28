@@ -49,7 +49,7 @@ export class UserComponent implements OnInit {
   }
 
   addNewUser(): void {
-    this.newUser = {name: "", age: 0};
+    this.newUser = {name: "", age: 0, email: ""};
     this.selectedUser = null;
   }
   

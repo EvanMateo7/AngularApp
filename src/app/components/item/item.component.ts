@@ -10,7 +10,7 @@ import { Item } from '../models';
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent implements OnInit{
 
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;

@@ -29,11 +29,39 @@ export class AuthService {
       }
     })
   }
+  
+  private updateUserData(credentiallUser) {
+    console.log("Updating user data after login...");
+    
+    
+    const userDoc = this.afs.doc(`users/${credentiallUser.uid}`);
+    const user: User = {
+      id: credentiallUser.uid, 
+      email: credentiallUser.email,
+      displayName: credentiallUser.displayName,
+      photoURL: credentiallUser.photoURL,
+    }
+    userDoc.update(user)
+      .catch(err => {
+        console.error(`User: ${credentiallUser.displayName} does not exist`);
+        this.createUser(user);
+      });
+  }
+    
+  private createUser(newUser) {
+    console.log("Creating User...");
+    const newUserDoc = this.afs.collection("users").doc(newUser.id);
+    newUserDoc.set(newUser);
+  }
+  
 
   private oAuthLogin(provider) {
+    console.log("oAuthLogin");
     return this.afAuth.auth.signInWithPopup(provider)
       .then( credential => {
         // TODO: Initial User Data in Firestore /users
+        console.log("User logged in.");
+        this.updateUserData(credential.user);
       })
   }
 

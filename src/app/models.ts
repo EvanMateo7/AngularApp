@@ -9,7 +9,9 @@ export interface Item {
 
 export interface User {
     id?: string, 
-    name: string,
+    name?: string,
     email: string,
-    age: number
+    displayName?: string,
+    photoURL?: string,
+    age?: number
 }

@@ -11,7 +11,12 @@
         <li class="nav-item">
             <a class="navbar-brand font-weight-bold" routerLink="/about">About</a>
         </li>
-    </ul>      
+    </ul> 
+    <ul class="nav navbar-nav flex-row ml-auto">
+        <li class="nav-item ">
+            <a class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.googleLogin()">Login</a>
+        </li>
+    </ul>       
 </nav>
 
 <router-outlet></router-outlet>

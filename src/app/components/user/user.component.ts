@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
 
-import { User } from '../models';
+import { User } from '../../models';
 
 @Component({
   selector: 'app-user',

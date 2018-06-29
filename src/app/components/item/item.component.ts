@@ -3,14 +3,14 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
 
-import { Item } from '../models';
+import { Item } from '../../models';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css']
 })
-export class ItemComponent implements OnInit{
+export class ItemComponent implements OnInit {
 
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;

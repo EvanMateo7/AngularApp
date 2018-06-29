@@ -6,6 +6,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { environment } from "../environments/environment";
 import { DataService } from './services/data.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreModule } from "./core/core.module";
 
 import { AngularFireModule, FirebaseApp } from "angularfire2";
 export const firebaseConfig = environment.firebaseConfig;
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
     AngularFirestoreModule,
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
+    CoreModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

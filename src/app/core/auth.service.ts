@@ -6,6 +6,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "angularfire2/firestore";
 
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { User } from '../models';
@@ -19,7 +20,7 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth, 
               private afs: AngularFirestore, 
               private router: Router) { 
-
+  
     this.user = this.afAuth.authState.switchMap(user => {
       if(user) {
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
@@ -27,10 +28,10 @@ export class AuthService {
       else {
         return Observable.of(null);
       }
-    })
+    });
   }
   
-  private updateUserData(credentiallUser) {
+  private updateUserData(credentiallUser): void {
     console.log("Updating user data after login...");
     
     
@@ -48,15 +49,14 @@ export class AuthService {
       });
   }
     
-  private createUser(newUser) {
+  private createUser(newUser): void {
     console.log("Creating User...");
     const newUserDoc = this.afs.collection("users").doc(newUser.id);
     newUserDoc.set(newUser);
   }
   
 
-  private oAuthLogin(provider) {
-    console.log("oAuthLogin");
+  private oAuthLogin(provider): Promise<any> {
     return this.afAuth.auth.signInWithPopup(provider)
       .then( credential => {
         // TODO: Initial User Data in Firestore /users
@@ -65,10 +65,19 @@ export class AuthService {
       })
   }
 
-  googleLogin() {
+  public googleLogin(): Promise<any> {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
   }
 
+  public logout(): void {
+    firebase.auth().signOut()
+      .then(function() {
+        console.log("User logged out.");
+      })
+      .catch(function(error) {
+        console.error("Error logging out!");
+      });
+  }
   
 }

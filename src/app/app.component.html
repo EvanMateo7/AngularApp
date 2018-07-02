@@ -14,7 +14,7 @@
     </ul> 
     <ul class="nav navbar-nav flex-row ml-auto">
         <li class="nav-item ">
-            <a class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.googleLogin()">Login</a>
+            <div *ngIf="auth.user | async; then authenticated else unauthenticated" ></div>
         </li>
     </ul>       
 </nav>
@@ -22,5 +22,10 @@
 <router-outlet></router-outlet>
 
 
+<ng-template #authenticated>
+        <a *ngIf="auth.user | async as user" class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.logout()">Logout {{user.displayName}}</a>
+</ng-template>
 
-
+<ng-template #unauthenticated>
+        <a class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.googleLogin()">Login</a>
+</ng-template>

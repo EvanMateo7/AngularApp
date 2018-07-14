@@ -44,7 +44,7 @@ export class AuthService {
     }
     userDoc.update(user)
       .catch(err => {
-        console.error(`User: ${credentiallUser.displayName} does not exist`);
+        console.error(`User: ${credentiallUser.displayName} does not exist in user collection!`);
         this.createUser(user);
       });
   }
@@ -59,7 +59,6 @@ export class AuthService {
   private oAuthLogin(provider): Promise<any> {
     return this.afAuth.auth.signInWithPopup(provider)
       .then( credential => {
-        // TODO: Initial User Data in Firestore /users
         console.log("User logged in.");
         this.updateUserData(credential.user);
       })
@@ -67,11 +66,14 @@ export class AuthService {
 
   public googleLogin(): Promise<any> {
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
     return this.oAuthLogin(provider);
   }
 
   public logout(): void {
-    firebase.auth().signOut()
+    this.afAuth.auth.signOut()
       .then(function() {
         console.log("User logged out.");
       })

@@ -1,7 +1,7 @@
 
 
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-1">
-    <ul class="nav navbar-nav flex-row">
+    <ul class="nav navbar-nav flex-row navbarmenu">
         <li class="nav-item ">
             <a class="navbar-brand font-weight-bold" routerLink="/">Items</a>
         </li>
@@ -14,13 +14,21 @@
     </ul> 
     <ul class="nav navbar-nav flex-row ml-auto">
         <li class="nav-item ">
-            <a class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.googleLogin()">Login</a>
+            <div *ngIf="auth.user | async as user; then authenticated else unauthenticated" ></div>
         </li>
     </ul>       
 </nav>
 
 <router-outlet></router-outlet>
 
+<ng-template #authenticated>
+    <div class="mr-3" *ngIf="auth.user | async as user">
+        <img class="userPhoto" src="{{user.photoURL}}?sz=32"  alt="User Photo">
+        {{user.displayName}}
+        <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
+    </div>   
+</ng-template>
 
-
-
+<ng-template #unauthenticated>
+        <a class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.googleLogin()">Login</a>
+</ng-template>

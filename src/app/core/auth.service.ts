@@ -36,16 +36,21 @@ export class AuthService {
     
     
     const userDoc = this.afs.doc(`users/${credentiallUser.uid}`);
-    const user: User = {
-      id: credentiallUser.uid, 
-      email: credentiallUser.email,
-      displayName: credentiallUser.displayName,
-      photoURL: credentiallUser.photoURL,
-    }
-    userDoc.update(user)
+      const existingUser: User = {
+        id: credentiallUser.uid, 
+        email: credentiallUser.email,
+        photoURL: credentiallUser.photoURL,
+      }
+      const newUser: User = {
+        id: credentiallUser.uid, 
+        email: credentiallUser.email,
+        displayName: credentiallUser.displayName,
+        photoURL: credentiallUser.photoURL,
+      }
+    userDoc.update(existingUser)
       .catch(err => {
         console.error(`User: ${credentiallUser.displayName} does not exist in user collection!`);
-        this.createUser(user);
+        this.createUser(newUser);
       });
   }
     

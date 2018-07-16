@@ -6,7 +6,7 @@
         <th>Age</th>
     </tr>
     <tr *ngFor="let user of users | async" >
-        <td>{{user.name}}</td>
+        <td>{{user.displayName}}</td>
         <td>{{user.age}}</td>
         <td class="click" (click)='selectUser(user)' data-toggle="modal" data-target="#editUserModal">Edit</td>
         <td class="click" (dblclick)='deleteUser(user)' >Delete</td>
@@ -31,7 +31,7 @@
 
           <div class="form-group">
             <label for="name">Name</label><br>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedUser.name" name="name" required #name="ngModel">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedUser.displayName" name="name" required #name="ngModel">
             <div [hidden]="name.valid" class="alert-sm alert-danger sm">
                 Name is required
             </div>
@@ -74,7 +74,7 @@
           <form *ngIf="newUser" #addUserForm="ngForm">
             <div class="form-group">
               <label for="name">Name</label><br>
-              <input type="text" class="form-control form-control-sm" [(ngModel)]="newUser.name" name="name" required #name="ngModel">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="newUser.displayName" name="name" required #name="ngModel">
               <div [hidden]="name.valid || name.pristine" class="alert-sm alert-danger sm">
                   Name is required
               </div>

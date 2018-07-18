@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators/map';
@@ -19,7 +20,8 @@ export class UserComponent implements OnInit {
   selectedUser: User;
   newUser: User;
 
-  constructor(private afs: AngularFirestore) {
+
+  constructor(private auth: AuthService, private afs: AngularFirestore) {
     console.log('Constructing: UserComponent with AngularFirestore...');
   };
 
@@ -49,11 +51,11 @@ export class UserComponent implements OnInit {
   }
 
   addNewUser(): void {
-    this.newUser = {displayName: "", age: 0, email: ""};
+    // Disabled for now...
+    //this.newUser = {displayName: "", age: 0, email: ""};
+    console.error("Adding new user is disabled!");
     this.selectedUser = null;
   }
-  
-
 
   updateUser(): void {
     console.log("updating user...");

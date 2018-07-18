@@ -87,4 +87,7 @@ export class AuthService {
       });
   }
   
+  public getCurrentUser(): firebase.User {
+    return this.afAuth.auth.currentUser;
+  }
 }

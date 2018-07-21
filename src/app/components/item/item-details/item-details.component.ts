@@ -14,13 +14,27 @@ import { map } from 'rxjs/operators';
 })
 export class ItemDetailsComponent implements OnInit {
 
-  selectedItem: Item;
+  selectedItem: Observable<Item>;
+  itemDoc: AngularFirestoreDocument<Item>;
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
   ngOnInit() {
-    console.log('Initialize: ItemDetailsComponent...');
+    console.log("Initialize: ItemDetailsComponent...");
     this.selectedItem = null;
+    this.getItem(); 
+  }
+
+  getItem(): void {
+    const itemDataObject = _ => {
+      const data = _.payload.doc.data() as Item;
+      data.id = _.payload.doc.id;
+      return data;
+    }
+
+    const itemId = this.route.snapshot.paramMap.get("itemId");
+    this.itemDoc = this.afs.doc(`items/${itemId}`);
+    this.selectedItem = this.itemDoc.valueChanges();
   }
 
 }

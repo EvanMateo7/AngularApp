@@ -15,7 +15,9 @@ import { ItemDetailsComponent } from './components/item/item-details/item-detail
 
 
 const appRoutes: Routes = [
-  {path: '', component: ItemComponent},
+  {path: '', redirectTo: '/item', pathMatch: 'full'},
+  {path: 'item', component: ItemComponent},
+  {path: 'item/:itemId', component: ItemDetailsComponent},
   {path: 'users', component: UserComponent},
   {path: 'about', component: AboutComponent},
 ];

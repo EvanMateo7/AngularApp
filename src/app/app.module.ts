@@ -11,6 +11,7 @@ import { UserComponent } from './components/user/user.component';
 import { ItemComponent } from './components/item//item.component';
 import { AboutComponent } from './components/about/about.component';
 import { DataService } from './services/data.service';
+import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 
 
 const appRoutes: Routes = [
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
     UserComponent,
     AboutComponent,
     ItemComponent,
+    ItemDetailsComponent,
   ],
   imports: [
     BrowserModule,

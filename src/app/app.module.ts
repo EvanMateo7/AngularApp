@@ -12,13 +12,14 @@ import { ItemComponent } from './components/item//item.component';
 import { AboutComponent } from './components/about/about.component';
 import { DataService } from './services/data.service';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
   {path: 'item/:itemId', component: ItemDetailsComponent},
-  {path: 'users', component: UserComponent},
+  {path: 'user', component: UserComponent},
   {path: 'about', component: AboutComponent},
 ];
 
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
     AboutComponent,
     ItemComponent,
     ItemDetailsComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

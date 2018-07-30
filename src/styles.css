@@ -42,3 +42,35 @@ body {
 .editCell:hover {
     background-color: rgba(50, 255, 50, 0.6);
 }
+
+#itemList {
+    max-width: 60%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#itemList > div {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    height: 10em;
+    border-radius: 5px;
+    background-color: rgba(52, 58, 64, 0.1);
+    margin: 0.1em;
+}
+
+#itemList > div:hover {
+    box-shadow: 2px 1px 1px 0 rgba(52, 58, 64, 1);;
+    transform: translate(-2px, -1px);
+    cursor: pointer;
+    /*transition: background-color 0.5s ease-in;*/
+}
+
+#itemImage {
+    margin: 10px;
+}
+
+#itemInfo {
+    margin: 10px;
+}

@@ -20,6 +20,7 @@ a, a:hover {
 body { 
     margin: 0; 
     font-size: 62.5%;
+    font-family: Helvetica, Arial, sans-serif
 }
 
 .userTable, .itemTable{
@@ -45,7 +46,12 @@ body {
     background-color: rgba(50, 255, 50, 0.6);
 }
 
-#itemList {
+.itemDetails {
+    max-width: 70%;
+    margin: 20px auto;
+}
+
+.itemList {
     max-width: 60%;
     margin: auto;
     display: flex;
@@ -53,26 +59,26 @@ body {
     justify-content: space-around;
 }
 
-#itemList > a {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    height: 10em;
-    border-radius: 5px;
-    background-color: rgba(52, 58, 64, 0.1);
-    margin: 0.1em;
-}
+        .itemList > a {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            height: 10em;
+            border-radius: 5px;
+            background-color: rgba(52, 58, 64, 0.1);
+            margin: 0.1em;
+        }
 
-#itemList > a:hover {
-    box-shadow: 2px 1px 1px 0 rgba(52, 58, 64, 1);;
-    transform: translate(-2px, -1px);
-    cursor: pointer;
-    /*transition: background-color 0.5s ease-in;*/
-}
+        .itemList > a:hover {
+            box-shadow: 2px 1px 1px 0 rgba(52, 58, 64, 1);;
+            transform: translate(-2px, -1px);
+            cursor: pointer;
+        }
 
-#itemImage {
+.itemImage {
     margin: 10px;
 }
 
-#itemInfo {
+.itemInfo {
     margin: 10px;
+    font-size: 1.3em;
 }

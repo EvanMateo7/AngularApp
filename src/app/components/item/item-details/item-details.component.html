@@ -1,4 +1,7 @@
-<h3>Item Details</h3>
-<p >
-  {{(selectedItem | async)?.name}}
-</p>
+<div class="itemDetails" *ngIf="selectedItem | async as item">
+    <div class="itemImage">item image here</div>
+    <div class="itemInfo">
+      <h3>{{item.name}}</h3>
+      {{item.description}}
+    </div>
+</div>

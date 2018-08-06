@@ -1,7 +1,7 @@
-<div id="itemList">
+<div class="itemList">
   <a routerLink="/item/{{item.id}}" *ngFor="let item of items | async" >
-      <div id="itemImage">item image here</div>
-      <div id="itemInfo">
+      <div class="itemImage">item image here</div>
+      <div class="itemInfo">
         <h5>{{item.name}}</h5>
         {{item.description}}
       </div>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
+import { AngularFireStorage } from 'angularfire2/storage';
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
 
@@ -13,6 +14,9 @@ import { Item } from '../../models';
 })
 export class ItemComponent implements OnInit {
 
+  @ViewChild('itemImageInput') itemImageInput;
+  @ViewChild('addItemForm') addItemForm;
+
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;
   itemDoc: AngularFirestoreDocument<Item>;
@@ -20,8 +24,11 @@ export class ItemComponent implements OnInit {
   selectedItem: Item;
   newItem: Item;
 
+  uploadPercent: Observable<number>;
+  uploadImage: any;
 
-  constructor(private auth: AuthService, private afs: AngularFirestore) { 
+
+  constructor(private auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { 
     console.log('Constructing: ItemComponent with AngularFirestore...');
   }
 
@@ -67,7 +74,7 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  deleteItem(item): void {
+  deleteItem(item: Item): void {
     const currentUser = this.auth.getCurrentUser();
     if(currentUser) {
       console.log("deleting item...");
@@ -76,8 +83,30 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  addItem(): void {
+  async addItem() {
     console.log("adding item...");
-    this.itemsCollection.add(this.newItem);
+    let newItemID = await this.itemsCollection.add(this.newItem)
+      .then( res => newItemID = res.id);
+    console.log(newItemID);
+    this.uploadFile(newItemID);
+  }
+
+  resetAddItemForm(): void {
+    this.addItemForm.resetForm();
+    this.itemImageInput.nativeElement.value = "";
+    console.log("addItemForm reset.");
+  }
+
+  getUploadFile(event): void {
+    this.uploadImage = event.target.files[0];
+  }
+
+  uploadFile(itemID: String): void {
+    console.log("uploading file...");
+    const filePath = `images/${itemID}`;
+    if(this.uploadImage != undefined)
+      this.uploadPercent = this.storage.ref(filePath).put(this.uploadImage).percentageChanges();
+    else  
+      console.error("upload image is UNDEFINED!");
   }
 }

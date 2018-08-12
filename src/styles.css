@@ -82,3 +82,15 @@ body {
     margin: 10px;
     font-size: 1.3em;
 }
+
+#uploader {
+    display: flex;
+    margin: 1em;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#uploadProgress {
+    margin: 0.5em;
+    width: 100%;
+}

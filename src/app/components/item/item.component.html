@@ -108,9 +108,15 @@
             <label for="price">Price</label><br>
             <input type="number" class="form-control form-control-sm" [(ngModel)]="newItem.price" name="price" >
           </div>
+          
+          <div id="uploader">
+            <progress [value]="uploadPercent | async" max="100" id="uploadProgress">0</progress>
+            <input type="file" value="upload" id="uploadButton" (change)="getUploadFile($event)" #itemImageInput> 
+          </div>
+          
 
           <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" (click)="addItemForm.resetForm()" data-dismiss="modal">Cancel</button>
+            <button type="reset" class="btn btn-secondary" (click)="resetAddItemForm()" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="!addItemForm.valid" (click)="addItem()" data-dismiss="modal">Save</button>
           </div>
 

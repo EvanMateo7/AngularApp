@@ -85,10 +85,9 @@ export class ItemComponent implements OnInit {
 
   async addItem() {
     console.log("adding item...");
-    let newItemID = await this.itemsCollection.add(this.newItem)
-      .then( res => newItemID = res.id);
-    console.log(newItemID);
-    this.uploadFile(newItemID);
+    let newItem = await this.itemsCollection.add(this.newItem)
+    console.log(newItem.id);
+    this.uploadFile(newItem.id);
   }
 
   resetAddItemForm(): void {

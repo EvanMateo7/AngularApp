@@ -5,6 +5,13 @@ a, a:hover {
     display: block;
 }
 
+img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin: 0 auto;
+}
+
 .navbar {
     color: white;
 }
@@ -61,8 +68,8 @@ body {
 
         .itemList > a {
             display: grid;
-            grid-template-columns: 1fr 3fr;
-            height: 10em;
+            grid-template-columns: 1fr 4fr;
+            height: 15em;
             border-radius: 5px;
             background-color: rgba(52, 58, 64, 0.1);
             margin: 0.1em;
@@ -75,7 +82,7 @@ body {
         }
 
 .itemImage {
-    margin: 10px;
+    margin: 10px auto;
 }
 
 .itemInfo {

@@ -3,9 +3,10 @@ import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
 import { AngularFireStorage } from 'angularfire2/storage';
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators';
+import { map, finalize } from 'rxjs/operators';
 
 import { Item } from '../../models';
+import { VariableAst } from '../../../../node_modules/@angular/compiler';
 
 @Component({
   selector: 'app-item',
@@ -85,7 +86,7 @@ export class ItemComponent implements OnInit {
 
   async addItem() {
     console.log("adding item...");
-    let newItem = await this.itemsCollection.add(this.newItem)
+    let newItem = await this.itemsCollection.add(this.newItem);
     console.log(newItem.id);
     this.uploadFile(newItem.id);
   }
@@ -101,11 +102,26 @@ export class ItemComponent implements OnInit {
   }
 
   uploadFile(itemID: String): void {
-    console.log("uploading file...");
+    
     const filePath = `images/${itemID}`;
-    if(this.uploadImage != undefined)
-      this.uploadPercent = this.storage.ref(filePath).put(this.uploadImage).percentageChanges();
-    else  
+    if(this.uploadImage != undefined) {
+      console.log("uploading file...");
+      const uploadRef = this.storage.ref(filePath);
+      const uploadTask = uploadRef.put(this.uploadImage);
+      this.uploadPercent = uploadTask.percentageChanges();
+
+      uploadTask.snapshotChanges().pipe(
+        finalize(() => {
+          let url = uploadRef.getDownloadURL().subscribe( next => {
+            this.itemDoc = this.afs.doc(`items/${itemID}`);
+            this.itemDoc.update({imageURL: next});
+          });
+        } )
+      ).subscribe();
+    }
+    else {
       console.error("upload image is UNDEFINED!");
+    }
+      
   }
 }

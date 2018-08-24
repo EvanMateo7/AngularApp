@@ -4,7 +4,8 @@ export interface Item {
     name:string,
     description: string,
     price:number,
-    userId: string
+    userId: string,
+    imageURL?: string
   }
 
 export interface User {

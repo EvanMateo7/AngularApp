@@ -5,7 +5,7 @@ export interface Item {
     description: string,
     price:number,
     userId: string,
-    imageURL?: string
+    thumbnailURL?: string
   }
 
 export interface User {

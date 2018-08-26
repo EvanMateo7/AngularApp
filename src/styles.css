@@ -81,10 +81,6 @@ body {
             cursor: pointer;
         }
 
-.itemImage {
-    margin: 10px auto;
-}
-
 .itemInfo {
     margin: 10px;
     font-size: 1.3em;

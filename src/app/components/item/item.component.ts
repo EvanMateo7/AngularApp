@@ -29,7 +29,7 @@ export class ItemComponent implements OnInit {
   uploadImage: any;
 
 
-  constructor(private auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { 
+  constructor(private auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) {
     console.log('Constructing: ItemComponent with AngularFirestore...');
   }
 
@@ -38,6 +38,7 @@ export class ItemComponent implements OnInit {
 
     const itemDataObject = _ => {
       const data = _.payload.doc.data() as Item;
+      console.log(data.thumbnailURL);
       data.id = _.payload.doc.id;
       return data;
     }
@@ -65,7 +66,7 @@ export class ItemComponent implements OnInit {
     }
     this.selectedItem = null;
   }
-  
+
   updateItem(): void {
     const currentUser = this.auth.getCurrentUser();
     if(currentUser) {
@@ -102,7 +103,7 @@ export class ItemComponent implements OnInit {
   }
 
   uploadFile(itemID: String): void {
-    
+
     const filePath = `images/${itemID}`;
     if(this.uploadImage != undefined) {
       console.log("uploading file...");
@@ -110,18 +111,18 @@ export class ItemComponent implements OnInit {
       const uploadTask = uploadRef.put(this.uploadImage);
       this.uploadPercent = uploadTask.percentageChanges();
 
-      uploadTask.snapshotChanges().pipe(
-        finalize(() => {
-          let url = uploadRef.getDownloadURL().subscribe( next => {
-            this.itemDoc = this.afs.doc(`items/${itemID}`);
-            this.itemDoc.update({imageURL: next});
-          });
-        } )
-      ).subscribe();
+      // uploadTask.snapshotChanges().pipe(
+      //   finalize(() => {
+      //     let url = uploadRef.getDownloadURL().subscribe( next => {
+      //       this.itemDoc = this.afs.doc(`items/${itemID}`);
+      //       this.itemDoc.update({imageURL: next});
+      //     });
+      //   } )
+      // ).subscribe();
     }
     else {
       console.error("upload image is UNDEFINED!");
     }
-      
+
   }
 }

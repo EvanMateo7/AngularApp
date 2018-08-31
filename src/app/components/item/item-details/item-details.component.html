@@ -1,5 +1,5 @@
 <div class="itemDetails" *ngIf="selectedItem | async as item">
-    <div class="itemImage">item image here</div>
+    <div class="itemImageContainer"><img class="itemImage" [src]="item.thumbnailURL"></div>
     <div class="itemInfo">
       <h3>{{item.name}}</h3>
       {{item.description}}

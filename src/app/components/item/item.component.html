@@ -1,6 +1,6 @@
 <div class="itemList">
   <a routerLink="/item/{{item.id}}" *ngFor="let item of items | async" >
-      <div class="itemImage"><img [src]="item.thumbnailURL"></div>
+      <div class="itemImageContainer"><img class="itemImage" [src]="item.thumbnailURL"></div>
       <div class="itemInfo">
         <h5>{{item.name}}</h5>
         {{item.description}}

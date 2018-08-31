@@ -5,13 +5,6 @@ a, a:hover {
     display: block;
 }
 
-img {
-    max-width: 100%;
-    max-height: 100%;
-    display: block;
-    margin: 0 auto;
-}
-
 .navbar {
     color: white;
 }
@@ -59,7 +52,7 @@ body {
 }
 
 .itemList {
-    max-width: 60%;
+    width: 60%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -68,18 +61,32 @@ body {
 
         .itemList > a {
             display: grid;
-            grid-template-columns: 1fr 4fr;
-            height: 15em;
+            grid-template-columns: 1fr 3fr;
             border-radius: 5px;
-            background-color: rgba(52, 58, 64, 0.1);
-            margin: 0.1em;
+            border-style: solid;
+            border-width: 1px;
+            border-color: rgba(52, 58, 64, 0.2);
+            margin: 3px;
         }
 
         .itemList > a:hover {
-            box-shadow: 2px 1px 1px 0 rgba(52, 58, 64, 1);;
-            transform: translate(-2px, -1px);
+            box-shadow: none;
+            transform: translate(3px, 1px);
+            transition: all 0.2s ease-out;
             cursor: pointer;
         }
+
+.itemImage {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.itemImageContainer {
+    min-width: 15em;
+    min-height: 15em;
+}
 
 .itemInfo {
     margin: 10px;

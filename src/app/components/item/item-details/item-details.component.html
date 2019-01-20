@@ -1,7 +1,10 @@
 <div class="itemDetails" *ngIf="selectedItem | async as item">
-    <div class="itemImageContainer"><img class="itemImage" [src]="item.thumbnailURL"></div>
-    <div class="itemInfo">
+    <img class="itemImage" [src]="item.thumbnailURL">
+    <div class="itemDetailsInfo">
       <h3>{{item.name}}</h3>
-      {{item.description}}
+      <p>{{item.description}}</p>
     </div>
+    <hr>
 </div>
+
+

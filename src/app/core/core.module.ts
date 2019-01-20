@@ -7,8 +7,10 @@ import { AngularFirestoreModule } from "angularfire2/firestore";
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from "../../environments/environment";
 export const firebaseConfig = environment.firebaseConfig;
+
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthService } from './auth.service';
+import { AuthGuard } from "./auth.guard";
 
 @NgModule({
   imports: [
@@ -28,6 +30,7 @@ import { AuthService } from './auth.service';
     AngularFontAwesomeModule,
   ],
   providers: [
+    AuthGuard,
     AuthService
   ],
   declarations: []

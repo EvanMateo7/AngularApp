@@ -21,9 +21,7 @@ export class UserComponent implements OnInit {
   newUser: User;
 
 
-  constructor(private auth: AuthService, private afs: AngularFirestore) {
-    console.log('Constructing: UserComponent with AngularFirestore...');
-  };
+  constructor(private auth: AuthService, private afs: AngularFirestore) { };
 
   ngOnInit() {
     console.log('Initialize: UserComponent...');

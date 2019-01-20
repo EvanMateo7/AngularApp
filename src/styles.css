@@ -1,4 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+    /*overflow-x: hidden;*/
+}
+
+body { 
+    margin: 0; 
+    font-size: 62.5%;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.content {
+    overflow-x: auto;
+}
+
 a, a:hover {
     color: inherit;
     text-decoration: none;
@@ -7,6 +21,7 @@ a, a:hover {
 
 .navbar {
     color: white;
+    margin: 0;
 }
 
 .navbarmenu li:hover a {
@@ -17,16 +32,19 @@ a, a:hover {
     cursor: pointer;
 }
 
-body { 
-    margin: 0; 
-    font-size: 62.5%;
-    font-family: Helvetica, Arial, sans-serif
+.userTableContainer, .itemTableContainer{
+    font-size: 1.3em;
+    width: 600px;
+    margin: auto;
 }
 
-.userTable, .itemTable{
-    font-size: 1.3em;
-    max-width: 60%;
-    margin: auto;
+.itemTable {
+    table-layout: fixed;
+}
+
+.itemTableContainer td {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .userPhoto {
@@ -47,50 +65,65 @@ body {
 }
 
 .itemDetails {
-    max-width: 70%;
+    max-width: 70vw;
     margin: 20px auto;
 }
 
 .itemList {
-    width: 60%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(50em, .8fr));
     justify-content: space-around;
+    padding: 2em;
+    padding-right: 3em;
+    margin: 0 auto;
 }
 
-        .itemList > a {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            border-radius: 5px;
-            border-style: solid;
-            border-width: 1px;
-            border-color: rgba(52, 58, 64, 0.2);
-            margin: 3px;
-        }
+@media screen and (max-width: 60em){
+    .itemList {
+        width: 70em;
+        grid-template-columns: minmax(50em, .8fr);
+    }
+  }
 
-        .itemList > a:hover {
-            box-shadow: none;
-            transform: translate(3px, 1px);
-            transition: all 0.2s ease-out;
-            cursor: pointer;
-        }
+.itemTile a {
+    height: 20em;
+    display: grid;
+    grid-template-columns: .2fr minmax(0, 1fr);
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(52, 58, 64, 0.2);
+    margin: 3px;
+}
+
+.itemTile a:hover {
+    box-shadow: none;
+    transform: translate(3px, 1px);
+    transition: all 0.2s ease-out;
+    cursor: pointer;
+}
 
 .itemImage {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    max-height: 100%;
+    height: inherit;
+    padding: 10px;
 }
 
-.itemImageContainer {
-    min-width: 15em;
-    min-height: 15em;
-}
-
-.itemInfo {
+.itemInfo, .itemDetailsInfo {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
     margin: 10px;
     font-size: 1.3em;
+}
+
+.itemInfo p, .itemDetailsInfo p {
+    overflow: hidden;
+    overflow-wrap: break-word;
+    /*text-overflow: ellipsis;*/
+}
+
+.itemDetailsInfo p {
+    word-wrap: break-word;
 }
 
 #uploader {

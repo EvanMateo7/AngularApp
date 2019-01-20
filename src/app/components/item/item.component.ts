@@ -29,16 +29,13 @@ export class ItemComponent implements OnInit {
   uploadImage: any;
 
 
-  constructor(private auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) {
-    console.log('Constructing: ItemComponent with AngularFirestore...');
-  }
+  constructor(private auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { }
 
   ngOnInit() {
     console.log('Initialize: ItemComponent...');
 
     const itemDataObject = _ => {
       const data = _.payload.doc.data() as Item;
-      console.log(data.thumbnailURL);
       data.id = _.payload.doc.id;
       return data;
     }

@@ -12,14 +12,16 @@ import { ItemComponent } from './components/item//item.component';
 import { AboutComponent } from './components/about/about.component';
 import { DataService } from './services/data.service';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
+import { AuthGuard } from './core/auth.guard';
 
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
   {path: 'item/:itemId', component: ItemDetailsComponent},
-  {path: 'users', component: UserComponent},
+  {path: 'users', component: UserComponent, canActivate: [AuthGuard]},
   {path: 'about', component: AboutComponent},
+  {path: '**', component: AboutComponent},
 ];
 
 @NgModule({

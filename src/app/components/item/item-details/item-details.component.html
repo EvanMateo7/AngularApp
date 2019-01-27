@@ -1,17 +1,22 @@
 <div class="itemDetails" *ngIf="selectedItem | async as item">
     <img class="itemImage" [src]="item.thumbnailURL">
     <div class="itemDetailsInfo">
-      <h3>{{item.name}}</h3>
+      <p class="itemName">{{item.name}}</p>
       <p>{{item.description}}</p>
-      <h5>${{item.price}}</h5>
+      <p class="itemPrice">${{item.price}}</p>
     </div>
     <hr>
 
+    <div class="commentsList"  *ngFor="let comment of comments | async">
+      <div class="commentUser">{{comment.user}}</div>
+      <p class="comment">{{comment.comment}}</p>
+    </div>  
+
     <form *ngIf="auth.getCurrentUser()" #commentForm="ngForm">
 
-      <div class="commentsForm form-group">
+      <div class="commentForm form-group">
         <label for="comment">Comment</label><br>
-        <textarea type="text" maxlength="500" class="comments form-control form-control-sm" [(ngModel)]="comment" name="commentInput" required #commentInput="ngModel"></textarea>
+        <textarea type="text" maxlength="500" class="commentInput form-control form-control-sm" [(ngModel)]="comment" name="commentInput" required #commentInput="ngModel"></textarea>
         <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
       </div>
 

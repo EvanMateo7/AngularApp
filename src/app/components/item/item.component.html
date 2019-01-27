@@ -3,9 +3,9 @@
     <a routerLink="/item/{{item.id}}"  >
       <img class="itemImage" [src]="item.thumbnailURL">
       <div class="itemInfo">
-        <h5>{{item.name}}</h5>
+        <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
-        <p>${{item.price}}</p>
+        <p class="itemPrice">${{item.price}}</p>
       </div>
     </a>
   </div>

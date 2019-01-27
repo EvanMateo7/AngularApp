@@ -33,13 +33,22 @@ textarea {
     cursor: pointer;
 }
 
-.commentsForm button {
+.commentForm button {
     margin: 5px auto;
 }
 
-.comments {
+.commentInput {
     height: 5em;
     max-width: 30em;
+}
+
+.commentUser {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.comment {
+    font-size: 1.3em;
 }
 
 .userTableContainer, .itemTableContainer{
@@ -124,6 +133,14 @@ textarea {
     margin: 10px;
     font-size: 1.3em;
 }
+
+.itemName {
+    font-size: 1.8em;
+} 
+
+.itemPrice {
+    font-size: 1.3em;
+} 
 
 .itemInfo p, .itemDetailsInfo p {
     overflow: hidden;

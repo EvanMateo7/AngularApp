@@ -15,6 +15,7 @@ export class ItemDetailsComponent implements OnInit {
 
   selectedItem: Observable<Item>;
   itemDoc: AngularFirestoreDocument<Item>;
+  comment: String;
 
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
@@ -29,5 +30,7 @@ export class ItemDetailsComponent implements OnInit {
     this.itemDoc = this.afs.doc(`items/${itemId}`);
     this.selectedItem = this.itemDoc.valueChanges();
   }
+
+  
 
 }

@@ -5,6 +5,20 @@
       <p>{{item.description}}</p>
     </div>
     <hr>
+
+    <form *ngIf="auth.getCurrentUser()" #commentForm="ngForm">
+
+      <div class="form-group">
+        <label for="comment">Comment</label><br>
+        <input type="text" class="form-control form-control-sm" [(ngModel)]="comment" name="commentInput" required #commentInput="ngModel">
+        <div [hidden]="commentInput.valid" class="alert-sm alert-danger sm">
+            Comment is required
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
+      </div>
+
+    </form>
+
 </div>
 
 

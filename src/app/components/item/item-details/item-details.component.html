@@ -3,17 +3,15 @@
     <div class="itemDetailsInfo">
       <h3>{{item.name}}</h3>
       <p>{{item.description}}</p>
+      <h5>${{item.price}}</h5>
     </div>
     <hr>
 
     <form *ngIf="auth.getCurrentUser()" #commentForm="ngForm">
 
-      <div class="form-group">
+      <div class="commentsForm form-group">
         <label for="comment">Comment</label><br>
-        <input type="text" class="form-control form-control-sm" [(ngModel)]="comment" name="commentInput" required #commentInput="ngModel">
-        <div [hidden]="commentInput.valid" class="alert-sm alert-danger sm">
-            Comment is required
-        </div>
+        <textarea type="text" maxlength="500" class="comments form-control form-control-sm" [(ngModel)]="comment" name="commentInput" required #commentInput="ngModel"></textarea>
         <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
       </div>
 

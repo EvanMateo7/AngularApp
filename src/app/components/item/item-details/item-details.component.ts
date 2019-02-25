@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
-import { Item } from '../../../models';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData } from "angularfire2/firestore";
-import { Observable } from 'rxjs'
+import { User, Item, ItemComment } from '../../../models';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentChange } from "angularfire2/firestore";
+import { Observable, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators';
+
+import * as firebase from "firebase/app";
 
 
 @Component({
@@ -16,23 +18,62 @@ export class ItemDetailsComponent implements OnInit {
 
   selectedItem: Observable<Item> = null;
   itemDoc: AngularFirestoreDocument<Item>;
-  comment: String;
-  comments: Observable<DocumentData[]>;
-
+  comment: ItemComment = {userId: "", comment: "", timestamp: null};
+  commentsCollection: AngularFirestoreCollection;
+  comments: DocumentData[];
+  currentUser: User;
+  currentUserSubscription: Subscription;
+  
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
   ngOnInit() {
     console.log("Initialize: ItemDetailsComponent...");
     
     this.getItemDoc(); 
+    this.currentUserSubscription = this.auth.user.subscribe(user => {
+      if(user)
+      {
+        this.currentUser = user;
+        this.comment.userId = this.auth.getCurrentUser().uid;
+        console.log("User:" + this.auth.getCurrentUser().uid);
+      }
+    })
+    this.commentsCollection = this.itemDoc.collection("comments");
 
-    this.comments = this.itemDoc.collection("comments").valueChanges();
+    this.commentsCollection.ref.orderBy("timestamp").get().then(querySnapshot => {
+      this.comments = querySnapshot.docs.map(doc => doc.data());
+    });
+
+    // this.commentsCollection.ref.orderBy("timestamp").get().then( querySnapshot =>{
+    //   this.comments = querySnapshot.docChanges();
+    //   querySnapshot.forEach(s => console.log(s.data() ))
+    // });
+
+    
+    //this.comments = this.commentsCollection.valueChanges();
+  }
+
+  ngOnDestroy() {
+    this.currentUserSubscription.unsubscribe();
   }
 
   getItemDoc(): void {
     const itemId = this.route.snapshot.paramMap.get("itemId");
     this.itemDoc = this.afs.doc(`items/${itemId}`);
     this.selectedItem = this.itemDoc.valueChanges();
+  }
+
+  addComment() {
+    this.commentsCollection.ref.orderBy("timestamp").get().then(querySnapshot => {
+      this.comments = querySnapshot.docs.map(doc => doc.data());
+    });
+    console.log("adding comment...");
+    if(this.currentUser)
+    {
+      this.comment.id = this.currentUser.id;
+      this.comment.timestamp = Date.now();
+      this.commentsCollection.add(this.comment);
+    }
   }
 
 }

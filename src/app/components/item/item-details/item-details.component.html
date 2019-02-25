@@ -7,17 +7,18 @@
     </div>
     <hr>
 
-    <div class="commentsList"  *ngFor="let comment of comments | async">
-      <div class="commentUser">{{comment.user}}</div>
+    <div class="commentsList"  *ngFor="let comment of comments">
+      <div class="commentUser">{{comment.userId}}</div>
       <p class="comment">{{comment.comment}}</p>
+      <p class="timestamp">{{comment.timestamp | date:'short'}}</p>
     </div>  
 
-    <form *ngIf="auth.getCurrentUser()" #commentForm="ngForm">
+    <form *ngIf="auth.user | async as user" #commentForm="ngForm">
 
       <div class="commentForm form-group">
         <label for="comment">Comment</label><br>
-        <textarea type="text" maxlength="500" class="commentInput form-control form-control-sm" [(ngModel)]="comment" name="commentInput" required #commentInput="ngModel"></textarea>
-        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
+        <textarea type="text" maxlength="500" class="commentInput form-control form-control-sm" [(ngModel)]="comment.comment" name="commentInput" required #commentInput="ngModel"></textarea>
+        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid" (click)="addComment()">Save</button>
       </div>
 
     </form>

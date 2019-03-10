@@ -38,8 +38,7 @@ textarea {
 }
 
 .commentInput {
-    height: 5em;
-    max-width: 30em;
+    max-width: 40em;
 }
 
 .commentUser {
@@ -49,6 +48,7 @@ textarea {
 
 .comment {
     font-size: 1.3em;
+    white-space: pre-wrap;
 }
 
 .userTableContainer, .itemTableContainer{

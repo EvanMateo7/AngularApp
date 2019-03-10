@@ -17,8 +17,16 @@
 
       <div class="commentForm form-group">
         <label for="comment">Comment</label><br>
-        <textarea type="text" maxlength="500" class="commentInput form-control form-control-sm" [(ngModel)]="comment.comment" name="commentInput" required #commentInput="ngModel"></textarea>
-        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid" (click)="addComment()">Save</button>
+        <div class="commentInput">
+          <textarea type="text" maxlength="300" rows=4 class="form-control form-control-sm" [(ngModel)]="comment.comment" name="commentInput" required #commentInput="ngModel"></textarea>
+          <div [hidden]="commentInput.valid  || commentInput.pristine" class="alert-sm alert-danger sm">
+            Empty.
+          </div>
+          <div [hidden]="maxLinesValid || commentInput.pristine" class="alert-sm alert-danger sm">
+            Too many lines.
+          </div>
+        </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid" (click)="addComment()">Save</button>
       </div>
 
     </form>

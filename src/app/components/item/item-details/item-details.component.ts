@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { User, Item, ItemComment } from '../../../models';
@@ -15,6 +15,7 @@ import * as firebase from "firebase/app";
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
+  @ViewChild('commentForm') commentForm;
 
   selectedItem: Observable<Item> = null;
   itemDoc: AngularFirestoreDocument<Item>;
@@ -23,6 +24,7 @@ export class ItemDetailsComponent implements OnInit {
   comments: DocumentData[];
   currentUser: User;
   currentUserSubscription: Subscription;
+  maxLinesValid: boolean = true;
   
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
@@ -39,18 +41,7 @@ export class ItemDetailsComponent implements OnInit {
       }
     })
     this.commentsCollection = this.itemDoc.collection("comments");
-
-    this.commentsCollection.ref.orderBy("timestamp").get().then(querySnapshot => {
-      this.comments = querySnapshot.docs.map(doc => doc.data());
-    });
-
-    // this.commentsCollection.ref.orderBy("timestamp").get().then( querySnapshot =>{
-    //   this.comments = querySnapshot.docChanges();
-    //   querySnapshot.forEach(s => console.log(s.data() ))
-    // });
-
-    
-    //this.comments = this.commentsCollection.valueChanges();
+    this.getComments();
   }
 
   ngOnDestroy() {
@@ -63,17 +54,30 @@ export class ItemDetailsComponent implements OnInit {
     this.selectedItem = this.itemDoc.valueChanges();
   }
 
-  addComment() {
+  getComments(): void {
     this.commentsCollection.ref.orderBy("timestamp").get().then(querySnapshot => {
       this.comments = querySnapshot.docs.map(doc => doc.data());
     });
-    console.log("adding comment...");
-    if(this.currentUser)
+  }
+
+  addComment() {
+    let str = this.comment.comment;
+    let count = (str.match(/\r|\n/g) || []).length;
+    if(count > 20)
+      this.maxLinesValid = false;
+    else
+      this.maxLinesValid = true;
+    
+    if(this.currentUser && this.maxLinesValid)
     {
+      console.log("adding comment...");
       this.comment.id = this.currentUser.id;
       this.comment.timestamp = Date.now();
       this.commentsCollection.add(this.comment);
+      this.commentForm.resetForm();
     }
+
+    this.getComments();
   }
 
 }

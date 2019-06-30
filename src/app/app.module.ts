@@ -19,7 +19,8 @@ const appRoutes: Routes = [
   {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
   {path: 'item/:itemId', component: ItemDetailsComponent},
-  {path: 'user', component: UserComponent},
+  {path: 'profile', component: UserProfileComponent},
+  {path: 'users', component: UserComponent},
   {path: 'about', component: AboutComponent},
 ];
 

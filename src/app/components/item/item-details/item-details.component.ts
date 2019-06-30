@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { User, Item, ItemComment } from '../../../models';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentChange } from "angularfire2/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentChange, DocumentSnapshot } from "angularfire2/firestore";
 import { Observable, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators';
 
@@ -21,7 +21,8 @@ export class ItemDetailsComponent implements OnInit {
   itemDoc: AngularFirestoreDocument<Item>;
   comment: ItemComment = {userId: "", comment: "", timestamp: null};
   commentsCollection: AngularFirestoreCollection;
-  comments: DocumentData[];
+  comments: DocumentData[] = [];
+  lastCommentTimestamp: any;
   currentUser: User;
   currentUserSubscription: Subscription;
   maxLinesValid: boolean = true;
@@ -55,8 +56,18 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   getComments(): void {
-    this.commentsCollection.ref.orderBy("timestamp").get().then(querySnapshot => {
+    this.commentsCollection.ref.orderBy("timestamp", "desc").limit(5).get().then(querySnapshot => {
       this.comments = querySnapshot.docs.map(doc => doc.data());
+      this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+    });
+  }
+
+  getMoreComments(): void {
+    this.commentsCollection.ref.orderBy("timestamp", "desc").startAfter(this.lastCommentTimestamp).limit(5).get().then(querySnapshot => {
+      this.comments = this.comments.concat(querySnapshot.docs.map(doc => doc.data()));
+      this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+      console.log(this.lastCommentTimestamp);
+      
     });
   }
 

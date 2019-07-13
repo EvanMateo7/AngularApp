@@ -41,7 +41,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    CoreModule
+    CoreModule.forRoot()
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

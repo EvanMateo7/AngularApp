@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AngularFireModule, FirebaseApp } from "angularfire2";
@@ -30,9 +30,15 @@ import { AuthGuard } from "./auth.guard";
     AngularFontAwesomeModule,
   ],
   providers: [
-    AuthGuard,
-    AuthService
+    AuthGuard
   ],
   declarations: []
 })
-export class CoreModule { }
+export class CoreModule { 
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers: [AuthService]
+    };
+  }
+}

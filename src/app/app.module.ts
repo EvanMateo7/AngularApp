@@ -13,6 +13,7 @@ import { AboutComponent } from './components/about/about.component';
 import { DataService } from './services/data.service';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 import { AuthGuard } from './core/auth.guard';
+import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 
 
 const appRoutes: Routes = [
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   {path: 'item', component: ItemComponent},
   {path: 'item/:itemId', component: ItemDetailsComponent},
   {path: 'users', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: UserProfileComponent},
   {path: 'about', component: AboutComponent},
   {path: '**', component: AboutComponent},
 ];
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
     AboutComponent,
     ItemComponent,
     ItemDetailsComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     BrowserAnimationsModule,
-    CoreModule
+    CoreModule.forRoot()
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

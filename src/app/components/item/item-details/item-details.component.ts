@@ -38,7 +38,6 @@ export class ItemDetailsComponent implements OnInit {
       {
         this.currentUser = user;
         this.comment.userId = this.auth.getCurrentUser().uid;
-        console.log("User:" + this.auth.getCurrentUser().uid);
       }
     })
     this.commentsCollection = this.itemDoc.collection("comments");
@@ -58,16 +57,25 @@ export class ItemDetailsComponent implements OnInit {
   getComments(): void {
     this.commentsCollection.ref.orderBy("timestamp", "desc").limit(5).get().then(querySnapshot => {
       this.comments = querySnapshot.docs.map(doc => doc.data());
-      this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+      if(this.comments.length > 0) {
+        this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+      }    
+      else {
+        console.log("No comments");
+      }
     });
   }
 
   getMoreComments(): void {
     this.commentsCollection.ref.orderBy("timestamp", "desc").startAfter(this.lastCommentTimestamp).limit(5).get().then(querySnapshot => {
-      this.comments = this.comments.concat(querySnapshot.docs.map(doc => doc.data()));
-      this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
-      console.log(this.lastCommentTimestamp);
-      
+      let moreComments = querySnapshot.docs.map(doc => doc.data());
+      if(moreComments.length > 0) {
+        this.comments = this.comments.concat(moreComments);
+        this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+      }   
+      else {
+        console.log("No more comments");
+      }
     });
   }
 

@@ -80,14 +80,7 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   addComment() {
-    let str = this.comment.comment;
-    let count = (str.match(/\r|\n/g) || []).length;
-    if(count > 20)
-      this.maxLinesValid = false;
-    else
-      this.maxLinesValid = true;
-    
-    if(this.currentUser && this.maxLinesValid)
+    if(this.currentUser)
     {
       console.log("adding comment...");
       this.comment.id = this.currentUser.id;
@@ -95,7 +88,6 @@ export class ItemDetailsComponent implements OnInit {
       this.commentsCollection.add(this.comment);
       this.commentForm.resetForm();
     }
-
     this.getComments();
   }
 

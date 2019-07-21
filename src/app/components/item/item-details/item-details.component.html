@@ -7,19 +7,21 @@
     </div>
     <hr>
 
-    <form *ngIf="auth.user | async as user" #commentForm="ngForm">
+    <form *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()" #commentForm="ngForm">
       <div class="commentForm form-group">
         <label for="comment">Comment</label><br>
-        <div class="commentInput">
-          <textarea type="text" maxlength="300" rows=4 class="form-control form-control-sm" [(ngModel)]="comment.comment" name="commentInput" required #commentInput="ngModel"></textarea>
-          <div [hidden]="commentInput.valid  || commentInput.pristine" class="alert-sm alert-danger sm">
-            Empty.
-          </div>
-          <div [hidden]="maxLinesValid || commentInput.pristine" class="alert-sm alert-danger sm">
-            Too many lines.
-          </div>
+        <div class="commentGroup">
+          <textarea type="text" maxlength="500" rows=4 class="form-control form-control-sm" 
+            [(ngModel)]="comment.comment" 
+            name="commentInput" 
+            maxLineValidator 
+            required 
+            pattern="\s*\S+[\S\s]*" 
+            #commentInput="ngModel"></textarea>
+          <div [hidden]="!commentInput.errors?.pattern  || commentInput.pristine" class="alert-sm alert-danger sm">Empty.</div>
+          <div [hidden]="!commentInput.errors?.maxLineValidator || commentInput.pristine" class="alert-sm alert-danger sm">Too many lines.</div>
         </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid" (click)="addComment()">Save</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
       </div>
     </form>
 

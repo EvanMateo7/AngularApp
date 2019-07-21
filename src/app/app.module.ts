@@ -14,6 +14,7 @@ import { DataService } from './services/data.service';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 import { AuthGuard } from './core/auth.guard';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
+import { MaxLineValidatorDirective } from './validators/max-line-validator.directive';
 
 
 const appRoutes: Routes = [
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     ItemComponent,
     ItemDetailsComponent,
     UserProfileComponent,
+    MaxLineValidatorDirective,
   ],
   imports: [
     BrowserModule,

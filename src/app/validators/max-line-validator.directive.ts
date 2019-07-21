@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, Input } from '@angular/core';
 import { ValidatorFn, AbstractControl, Validator, FormControl, NG_VALIDATORS } from '@angular/forms';
 
 @Directive({
@@ -9,34 +9,35 @@ import { ValidatorFn, AbstractControl, Validator, FormControl, NG_VALIDATORS } f
 })
 export class MaxLineValidatorDirective implements Validator {
   validator: ValidatorFn;
+  @Input('maxLineValidator') maxLines: number;
 
   constructor() {
-    this.validator = maxLineValidator();
+    this.validator = this.maxLineValidatorFunction();
    }
   
    validate(control: FormControl) {
     return this.validator(control);
   }
 
-}
-
-function maxLineValidator() : ValidatorFn {
-  return (controller: AbstractControl) => {
-
-    let str = controller.value;
-    if(str) {
-      let count = (str.match(/\r|\n/g) || []).length;
-      if(count >= 20) {        
-        return {
-          maxLineValidator: {
-              valid: false
-          }
-        };
+  maxLineValidatorFunction() : ValidatorFn {
+    return (controller: AbstractControl) => {      
+      let str = controller.value;
+      if(str) {
+        let count = (str.match(/\r|\n/g) || []).length;
+        if(count >= this.maxLines) {        
+          return {
+            maxLineValidator: {
+                valid: false
+            }
+          };
+        }
+        else {
+          return null;
+        }
       }
-      else {
-        return null;
-      }
+      
     }
-    
   }
 }
+
+

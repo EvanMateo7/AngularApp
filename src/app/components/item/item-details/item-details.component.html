@@ -14,7 +14,7 @@
           <textarea type="text" maxlength="500" rows=4 class="form-control form-control-sm" 
             [(ngModel)]="comment.comment" 
             name="commentInput" 
-            maxLineValidator 
+            [maxLineValidator]="20"
             required 
             pattern="\s*\S+[\S\s]*" 
             #commentInput="ngModel"></textarea>

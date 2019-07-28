@@ -25,7 +25,8 @@ export class ItemDetailsComponent implements OnInit {
   lastCommentTimestamp: any;
   currentUser: User;
   currentUserSubscription: Subscription;
-  maxLinesValid: boolean = true;
+  noComments: boolean;
+  noMoreComments: boolean;
   
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
@@ -59,9 +60,11 @@ export class ItemDetailsComponent implements OnInit {
       this.comments = querySnapshot.docs.map(doc => doc.data());
       if(this.comments.length > 0) {
         this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+        this.noComments = false;
       }    
       else {
         console.log("No comments");
+        this.noComments = true;
       }
     });
   }
@@ -72,9 +75,11 @@ export class ItemDetailsComponent implements OnInit {
       if(moreComments.length > 0) {
         this.comments = this.comments.concat(moreComments);
         this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+        this.noMoreComments = false;
       }   
       else {
         console.log("No more comments");
+        this.noMoreComments = true;
       }
     });
   }

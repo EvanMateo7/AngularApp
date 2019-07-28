@@ -30,8 +30,9 @@
       <p class="comment">{{comment.comment}}</p>
       <p class="timestamp">{{comment.timestamp | date:'short'}}</p>
     </div>  
-    
-    <button (click)='getMoreComments()'>Load more comments</button>
+    <span *ngIf="noComments">No comments.</span>
+    <span *ngIf="noMoreComments">No more comments.</span>
+    <button *ngIf="!noComments && !noMoreComments" class="btn btn-sm btn-outline-dark" (click)='getMoreComments()'>Load more comments</button>
 
 </div>
 

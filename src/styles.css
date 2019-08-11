@@ -20,8 +20,8 @@ textarea {
 }
 
 .navbar {
+    width: 100vw;
     color: white;
-    min-width: 70em;
     margin: 0;
 }
 
@@ -57,7 +57,6 @@ textarea {
 
 .userTableContainer, .itemTableContainer{
     font-size: 1.3em;
-    width: 600px;
     margin: auto;
 }
 
@@ -94,30 +93,30 @@ textarea {
 
 .itemList {
     display: grid;
-    min-width: 70em;
-    grid-template-columns: repeat(auto-fit, minmax(50em, .8fr));
+    grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
     grid-gap: 10px;
-    justify-content: space-around;
     padding: 2em;
     padding-right: 3em;
+    justify-content: space-between;
     margin: 0 auto;
+    overflow: scroll;
 }
+
+.itemImage {
+    max-width: 100%;
+}
+
 
 .itemTile {
-    height: 20em;
-}
-
-.itemTile a {
-    height: inherit;
     display: grid;
-    grid-template-columns: .2fr minmax(0, 1fr);
+    grid-template-columns: .5fr minmax(0, 1fr);
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
     border-color: rgba(52, 58, 64, 0.2);
 }
 
-.itemTile a:hover {
+.itemTile:hover {
     box-shadow: none;
     transform: translate(3px, 1px);
     transition: all 0.2s ease-out;
@@ -125,8 +124,6 @@ textarea {
 }
 
 .itemImage {
-    height: inherit;
-    box-sizing: border-box;
     padding: 10px;
 }
 

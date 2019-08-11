@@ -1,6 +1,5 @@
 <div class="itemList">
-  <div class="itemTile" *ngFor="let item of items | async">
-    <a routerLink="/item/{{item.id}}"  >
+    <a class="itemTile" routerLink="/item/{{item.id}}" *ngFor="let item of items | async">
       <img class="itemImage" [src]="item.thumbnailURL">
       <div class="itemInfo">
         <p class="itemName">{{item.name}}</p>
@@ -8,7 +7,6 @@
         <p class="itemPrice">${{item.price}}</p>
       </div>
     </a>
-  </div>
 </div>
 
 <div class="itemTableContainer">

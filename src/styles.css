@@ -97,8 +97,6 @@ textarea {
     grid-gap: 10px;
     padding: 2em;
     padding-right: 3em;
-    justify-content: space-between;
-    margin: 0 auto;
     overflow: scroll;
 }
 
@@ -106,8 +104,7 @@ textarea {
     max-width: 100%;
 }
 
-
-.itemTile {
+.itemTile a {
     display: grid;
     grid-template-columns: .5fr minmax(0, 1fr);
     border-radius: 5px;
@@ -116,7 +113,7 @@ textarea {
     border-color: rgba(52, 58, 64, 0.2);
 }
 
-.itemTile:hover {
+.itemTile a:hover {
     box-shadow: none;
     transform: translate(3px, 1px);
     transition: all 0.2s ease-out;

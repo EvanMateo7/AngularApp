@@ -1,7 +1,7 @@
 <div class="itemDetails" *ngIf="selectedItem | async as item">
     <img class="itemImage" [src]="item.thumbnailURL">
     <div class="itemDetailsInfo">
-      <p class="itemName">{{item.name}}</p>
+      <span class="itemName">{{item.name}}</span>
       <p>{{item.description}}</p>
       <p class="itemPrice">${{item.price}}</p>
     </div>
@@ -26,7 +26,7 @@
     </form>
 
     <div class="commentsList"  *ngFor="let comment of comments">
-      <div class="commentUser">{{comment.userId}}</div>
+      <span class="commentUser">{{comment.userId}}</span>
       <p class="comment">{{comment.comment}}</p>
       <p class="timestamp">{{comment.timestamp | date:'short'}}</p>
     </div>  

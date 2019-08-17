@@ -20,9 +20,9 @@ textarea {
 }
 
 .navbar {
-    width: 100vw;
     color: white;
     margin: 0;
+    min-width: 400px;
 }
 
 .navbarmenu li a {
@@ -134,21 +134,12 @@ textarea {
 
 .itemName {
     font-size: 1.8em;
+    white-space: nowrap;
 } 
 
 .itemPrice {
     font-size: 1.3em;
 } 
-
-.itemInfo p, .itemDetailsInfo p {
-    overflow: hidden;
-    overflow-wrap: break-word;
-    /*text-overflow: ellipsis;*/
-}
-
-.itemDetailsInfo p {
-    word-wrap: break-word;
-}
 
 #uploader {
     display: flex;

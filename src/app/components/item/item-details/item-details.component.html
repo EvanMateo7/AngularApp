@@ -1,10 +1,39 @@
 <div class="itemDetails" *ngIf="selectedItem | async as item">
     <img class="itemImage" [src]="item.thumbnailURL">
     <div class="itemDetailsInfo">
-      <h3>{{item.name}}</h3>
+      <span class="itemName">{{item.name}}</span>
       <p>{{item.description}}</p>
+      <p class="itemPrice">${{item.price}}</p>
     </div>
     <hr>
+
+    <form *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()" #commentForm="ngForm">
+      <div class="commentForm form-group">
+        <label for="comment">Comment</label><br>
+        <div class="commentGroup">
+          <textarea type="text" maxlength="500" rows=4 class="form-control form-control-sm" 
+            [(ngModel)]="comment.comment" 
+            name="commentInput" 
+            [maxLineValidator]="20"
+            required 
+            pattern="\s*\S+[\S\s]*" 
+            #commentInput="ngModel"></textarea>
+          <div [hidden]="!commentInput.errors?.pattern  || commentInput.pristine" class="alert-sm alert-danger sm">Empty.</div>
+          <div [hidden]="!commentInput.errors?.maxLineValidator || commentInput.pristine" class="alert-sm alert-danger sm">Too many lines.</div>
+        </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
+      </div>
+    </form>
+
+    <div class="commentsList"  *ngFor="let comment of comments">
+      <span class="commentUser">{{comment.userId}}</span>
+      <p class="comment">{{comment.comment}}</p>
+      <p class="timestamp">{{comment.timestamp | date:'short'}}</p>
+    </div>  
+    <span *ngIf="noComments">No comments.</span>
+    <span *ngIf="noMoreComments">No more comments.</span>
+    <button *ngIf="!noComments && !noMoreComments" class="btn btn-sm btn-outline-dark" (click)='getMoreComments()'>Load more comments</button>
+
 </div>
 
 

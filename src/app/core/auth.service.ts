@@ -20,9 +20,10 @@ export class AuthService {
   constructor(private afAuth: AngularFireAuth, 
               private afs: AngularFirestore, 
               private router: Router) { 
-  
+    
     this.user = this.afAuth.authState.switchMap(user => {
       if(user) {
+        console.log("Observable Emitted: AuthState.");
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
       }
       else {
@@ -32,10 +33,7 @@ export class AuthService {
   }
   
   private updateUserData(credentiallUser): void {
-    console.log("Updating user data after login...");
-    
-    
-    const userDoc = this.afs.doc(`users/${credentiallUser.uid}`);
+      const userDoc = this.afs.doc(`users/${credentiallUser.uid}`);
       const existingUser: User = {
         id: credentiallUser.uid, 
         email: credentiallUser.email,
@@ -48,6 +46,9 @@ export class AuthService {
         photoURL: credentiallUser.photoURL,
       }
     userDoc.update(existingUser)
+      .then( _ => {
+        console.log('User data updated.');
+      })
       .catch(err => {
         console.error(`User: ${credentiallUser.displayName} does not exist in user collection!`);
         this.createUser(newUser);

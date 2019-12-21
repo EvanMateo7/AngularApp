@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from './core/auth.service';
+import { User } from './models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +9,18 @@ import { AuthService } from './core/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  constructor(private auth: AuthService) {}
+  user$: Subscription;
+  user: User;
+  constructor(private auth: AuthService, private cd: ChangeDetectorRef) {}
   
-  title = 'app';
+  ngOnInit() {
+    this.user$ = this.auth.user.subscribe(next => { 
+      this.user = next;
+      this.cd.detectChanges();
+    });
+  }
+
+  ngOnDestroy() {
+    this.user$.unsubscribe();
+  }
 }

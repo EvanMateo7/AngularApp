@@ -1,36 +1,42 @@
-
-
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-1">
-    <ul class="nav navbar-nav flex-row navbarmenu">
-        <li class="nav-item ">
-            <a class="navbar-brand font-weight-bold" routerLink="/">Items</a>
-        </li>
-        <li class="nav-item ">
-            <a class="navbar-brand font-weight-bold" routerLink="/users">Users</a>
-        </li>
-        <li class="nav-item">
-            <a class="navbar-brand font-weight-bold" routerLink="/about">About</a>
-        </li>
-    </ul> 
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav navbar-nav navbarmenu">
+            <li class="nav-item ">
+                <a class="navbar-brand font-weight-bold" routerLink="/">Items</a>
+            </li>
+            <li class="nav-item ">
+                <a class="navbar-brand font-weight-bold" routerLink="/users">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="navbar-brand font-weight-bold" routerLink="/about">About</a>
+            </li>
+        </ul>
+    </div>
+
     <ul class="nav navbar-nav flex-row ml-auto">
         <li class="nav-item ">
-            <div *ngIf="auth.user | async as user; then authenticated else unauthenticated" ></div>
+            <div *ngIf="user">
+                <div class="mr-3" *ngIf="user">
+                    <img class="userPhoto" src="{{user.photoURL}}?sz=32" alt="User Photo">
+                    {{user.displayName}}
+                    <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
+                </div>
+            </div>
+
+            <div *ngIf="user === null">
+                <a class="navbar-brand font-weight-bold" href="javascript: void(0)"
+                    (click)="auth.googleLogin()">Login</a>
+            </div>
         </li>
-    </ul>       
+    </ul>
 </nav>
 
-<ng-template #authenticated>
-    <div class="mr-3" *ngIf="auth.user | async as user">
-        <img class="userPhoto" src="{{user.photoURL}}?sz=32"  alt="User Photo">
-        {{user.displayName}}
-        <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
-    </div>   
-</ng-template>
 
-<ng-template #unauthenticated>
-        <a class="navbar-brand font-weight-bold" href="javascript: void(0)" (click)="auth.googleLogin()">Login</a>
-</ng-template>
 
-<div class="content">
+<div>
     <router-outlet></router-outlet>
 </div>

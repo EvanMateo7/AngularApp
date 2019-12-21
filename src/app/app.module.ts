@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
   {path: 'item/:itemId', component: ItemDetailsComponent},
-  {path: 'users', component: UserComponent, canActivate: [AuthGuard]},
+  {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: {role: 'ADMIN'}},
   {path: 'about', component: AboutComponent},
   {path: '**', component: AboutComponent},
 ];

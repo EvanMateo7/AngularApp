@@ -18,7 +18,10 @@ export class AuthGuard implements CanActivate {
     return this.auth.user
       .take(1)
       .map(user => {
-        return !!user && user.roles.includes(next.data.role)})
+        if(user.roles != null)
+          return !!user && user.roles.includes(next.data.role);
+        return false;
+        })
       .do(loggedIn => {
         if(!loggedIn) {
           console.error('Access Denied');

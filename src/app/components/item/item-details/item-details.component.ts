@@ -15,7 +15,7 @@ import * as firebase from "firebase/app";
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
-  @ViewChild('commentForm') commentForm;
+  @ViewChild('commentForm', {static: false}) commentForm;
 
   selectedItem: Observable<Item> = null;
   itemDoc: AngularFirestoreDocument<Item>;

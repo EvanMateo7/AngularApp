@@ -15,8 +15,8 @@ import { VariableAst } from '../../../../node_modules/@angular/compiler';
 })
 export class ItemComponent implements OnInit {
 
-  @ViewChild('itemImageInput') itemImageInput;
-  @ViewChild('addItemForm') addItemForm;
+  @ViewChild('itemImageInput', {static: false}) itemImageInput;
+  @ViewChild('addItemForm', {static: false}) addItemForm;
 
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;

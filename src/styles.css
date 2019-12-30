@@ -57,7 +57,7 @@ textarea {
 
 .userTableContainer, .itemTableContainer{
     font-size: 1.3em;
-    margin: auto;
+    margin: auto 5vw;
 }
 
 .itemTable {
@@ -97,7 +97,6 @@ textarea {
     grid-gap: 10px;
     padding: 2em;
     padding-right: 3em;
-    overflow: scroll;
 }
 
 .itemImage {

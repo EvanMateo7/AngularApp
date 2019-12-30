@@ -29,7 +29,7 @@ export class ItemComponent implements OnInit {
   uploadImage: any;
 
 
-  constructor(private auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { }
+  constructor(public auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { }
 
   ngOnInit() {
     console.log('Initialize: ItemComponent...');

@@ -22,12 +22,14 @@
         <td><a routerLink="/item/{{item.id}}">{{item.name}}</a></td>
         <td>{{item.description}}</td>
         <td>{{item.price | currency}}</td>
-        <td class="click editCell" (click)="selectItem(item)" data-toggle="modal" data-target="#editItemModal"><fa class="fa-lg" name="edit"></fa></td>
-        <td class="click deleteCell" (dblclick)="deleteItem(item)" ><fa class="fa-lg" name="times"></fa></td>
+        <ng-container *ngIf="auth.currentUser">
+          <td class="click editCell" (click)="selectItem(item)" data-toggle="modal" data-target="#editItemModal"><fa-icon class="fa-lg" [icon]="faEdit"></fa-icon></td>
+          <td class="click deleteCell" (dblclick)="deleteItem(item)" ><fa-icon class="fa-lg" [icon]="faTimes"></fa-icon></td>
+        </ng-container>
     </tr>
   </table>
 
-  <button *ngIf="auth.getCurrentUser()" (click)="addNewItem()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addItemModal">
+  <button *ngIf="auth.currentUser" (click)="addNewItem()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addItemModal">
     Create New Item
   </button>
 </div>

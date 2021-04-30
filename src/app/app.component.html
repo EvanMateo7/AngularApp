@@ -18,20 +18,18 @@
     </div>
 
     <ul class="nav navbar-nav flex-row ml-auto">
-        <li class="nav-item ">
-            <div *ngIf="user">
-                <div class="mr-3" *ngIf="user">
-                    <img class="userPhoto" src="{{user.photoURL}}?sz=32" alt="User Photo">
-                    {{user.displayName}}
-                    <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
-                </div>
-            </div>
+      <div *ngIf="user">
+        <div class="mr-3" *ngIf="user">
+            <img class="userPhoto" src="{{user.photoURL}}?sz=32" alt="User Photo">
+            {{user.displayName}}
+            <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
+        </div>
+      </div>
 
-            <div *ngIf="user === null">
-                <a class="navbar-brand font-weight-bold" href="javascript: void(0)"
-                    (click)="auth.googleLogin()">Login</a>
-            </div>
-        </li>
+      <div *ngIf="!user">
+        <a class="navbar-brand font-weight-bold" href="javascript: void(0)"
+            (click)="auth.googleLogin()">Login</a>
+      </div>
     </ul>
 </nav>
 

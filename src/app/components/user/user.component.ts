@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/auth.service';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators/map';
+import { map } from 'rxjs/operators';
 
 import { User } from '../../models';
 
@@ -13,6 +13,8 @@ import { User } from '../../models';
 })
 export class UserComponent implements OnInit {
 
+  currentUser: User;
+
   usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
   userDoc: AngularFirestoreDocument<User>;
@@ -20,11 +22,14 @@ export class UserComponent implements OnInit {
   selectedUser: User;
   newUser: User;
 
-
   constructor(public auth: AuthService, private afs: AngularFirestore) { };
 
   ngOnInit() {
     console.log('Initialize: UserComponent...');
+
+    this.auth.user.subscribe(next => { 
+      this.currentUser = next;
+    });
 
     const userDataObject = _ => {
       const data = _.payload.doc.data() as User;

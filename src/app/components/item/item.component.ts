@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../core/auth.service';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "angularfire2/firestore";
-import { AngularFireStorage } from 'angularfire2/storage';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs'
 import { map, finalize } from 'rxjs/operators';
 
-import { Item } from '../../models';
+import { Item, User } from '../../models';
 import { VariableAst } from '../../../../node_modules/@angular/compiler';
+import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-item',
@@ -15,8 +16,8 @@ import { VariableAst } from '../../../../node_modules/@angular/compiler';
 })
 export class ItemComponent implements OnInit {
 
-  @ViewChild('itemImageInput', {static: false}) itemImageInput;
-  @ViewChild('addItemForm', {static: false}) addItemForm;
+  @ViewChild('itemImageInput') itemImageInput;
+  @ViewChild('addItemForm') addItemForm;
 
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Observable<Item[]>;
@@ -28,6 +29,8 @@ export class ItemComponent implements OnInit {
   uploadPercent: Observable<number>;
   uploadImage: any;
 
+  faEdit = faEdit
+  faTimes = faTimes
 
   constructor(public auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { }
 
@@ -42,6 +45,7 @@ export class ItemComponent implements OnInit {
 
     this.itemsCollection = this.afs.collection("items");
     this.items = this.itemsCollection.snapshotChanges().pipe(map(changes => {
+        console.log('Initialize: ItemComponent sub...');
         return changes.map(itemDataObject);
       })
     );
@@ -56,17 +60,15 @@ export class ItemComponent implements OnInit {
     this.newItem = null;
   }
 
-  addNewItem(): void {
-    const currentUser = this.auth.getCurrentUser();
-    if(currentUser) {
-      this.newItem = {userId: currentUser.uid, name: "", description: "", price: 0};
+  addNewItem() {
+    if(this.auth.currentUser) {
+      this.newItem = {userId: this.auth.currentUser.id, name: "", description: "", price: 0};
     }
     this.selectedItem = null;
   }
 
   updateItem(): void {
-    const currentUser = this.auth.getCurrentUser();
-    if(currentUser) {
+    if(this.auth.currentUser) {
       console.log("updating item...");
       this.itemDoc = this.afs.doc(`items/${this.selectedItem.id}`);
       this.itemDoc.update(this.selectedItem);
@@ -74,8 +76,7 @@ export class ItemComponent implements OnInit {
   }
 
   deleteItem(item: Item): void {
-    const currentUser = this.auth.getCurrentUser();
-    if(currentUser) {
+    if(this.auth.currentUser) {
       console.log("deleting item...");
       this.itemDoc = this.afs.doc(`items/${item.id}`);
       this.itemDoc.delete();
@@ -107,7 +108,7 @@ export class ItemComponent implements OnInit {
       const uploadRef = this.storage.ref(filePath);
       const uploadTask = uploadRef.put(this.uploadImage);
       this.uploadPercent = uploadTask.percentageChanges();
-
+      uploadTask.then(_ => this.resetAddItemForm());
       // uploadTask.snapshotChanges().pipe(
       //   finalize(() => {
       //     let url = uploadRef.getDownloadURL().subscribe( next => {

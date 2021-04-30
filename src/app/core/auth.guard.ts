@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { tap, map, take } from 'rxjs/operators';
 import { AuthService } from "./auth.service";
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,17 +13,18 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     
-    return this.auth.user
-      .take(1)
-      .map(user => {
+    return this.auth.user.pipe(
+      take(1),
+      map(user => {
         if(user.roles != null)
           return !!user && user.roles.includes(next.data.role);
         return false;
-        })
-      .do(loggedIn => {
+        }),
+      tap(loggedIn => {
         if(!loggedIn) {
           console.error('Access Denied');
         }
-      });
+      })
+    );
   }
 }

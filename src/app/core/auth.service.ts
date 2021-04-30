@@ -1,34 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
 
-import * as firebase from "firebase/app";
-import { AngularFireAuth } from "angularfire2/auth";
-import { AngularFirestore, AngularFirestoreDocument } from "angularfire2/firestore";
+import firebase from 'firebase/app';
+import { AngularFireAuth } from "@angular/fire/auth";
+import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firestore";
 
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/take';
-import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
+import { switchMap } from "rxjs/operators";
 import { User } from '../models';
 
 
 @Injectable()
 export class AuthService {
 
+  currentUser: User;
   user: Observable<User>;
 
   constructor(private afAuth: AngularFireAuth, 
               private afs: AngularFirestore, 
               private router: Router) { 
-    
-    this.user = this.afAuth.authState.switchMap(user => {
-      if(user) {
-        console.log("Observable Emitted: AuthState.");
-        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-      }
-      else {
-        return Observable.of(null);
-      }
+    this.user = this.afAuth.authState.pipe(switchMap(user => {
+        if(user) {
+          console.log("Observable Emitted: AuthState.");
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+        }
+        else {
+          return of(null);
+        }
+      })
+    );
+
+    this.user.subscribe(next => { 
+      this.currentUser = next;
     });
   }
   
@@ -63,7 +66,7 @@ export class AuthService {
   
 
   private oAuthLogin(provider): Promise<any> {
-    return this.afAuth.auth.signInWithPopup(provider)
+    return this.afAuth.signInWithPopup(provider)
       .then( credential => {
         console.log("User logged in.");
         this.updateUserData(credential.user);
@@ -79,7 +82,7 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.afAuth.auth.signOut()
+    this.afAuth.signOut()
       .then(function() {
         console.log("User logged out.");
       })
@@ -88,7 +91,4 @@ export class AuthService {
       });
   }
   
-  public getCurrentUser(): firebase.User {
-    return this.afAuth.auth.currentUser;
-  }
 }

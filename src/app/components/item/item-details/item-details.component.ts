@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
 import { User, Item, ItemComment } from '../../../models';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentChange, DocumentSnapshot } from "angularfire2/firestore";
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentChange, DocumentSnapshot } from "@angular/fire/firestore";
 import { Observable, Subscription } from 'rxjs'
 import { map } from 'rxjs/operators';
 
@@ -15,7 +15,7 @@ import * as firebase from "firebase/app";
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
-  @ViewChild('commentForm', {static: false}) commentForm;
+  @ViewChild('commentForm') commentForm;
 
   selectedItem: Observable<Item> = null;
   itemDoc: AngularFirestoreDocument<Item>;
@@ -38,7 +38,7 @@ export class ItemDetailsComponent implements OnInit {
       if(user)
       {
         this.currentUser = user;
-        this.comment.userId = this.auth.getCurrentUser().uid;
+        this.comment.userId = user.id;
       }
     })
     this.commentsCollection = this.itemDoc.collection("comments");

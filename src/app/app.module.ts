@@ -15,6 +15,7 @@ import { ItemDetailsComponent } from './components/item/item-details/item-detail
 import { AuthGuard } from './core/auth.guard';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { MaxLineValidatorDirective } from './validators/max-line-validator.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 const appRoutes: Routes = [
@@ -41,9 +42,10 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     BrowserAnimationsModule,
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
+    FontAwesomeModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

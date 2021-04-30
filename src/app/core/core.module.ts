@@ -1,14 +1,13 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AngularFireModule, FirebaseApp } from "angularfire2";
-import { AngularFireAuthModule } from "angularfire2/auth";
-import { AngularFirestoreModule } from "angularfire2/firestore";
-import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireModule, FirebaseApp } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from "../../environments/environment";
 export const firebaseConfig = environment.firebaseConfig;
 
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AuthService } from './auth.service';
 import { AuthGuard } from "./auth.guard";
 
@@ -18,16 +17,14 @@ import { AuthGuard } from "./auth.guard";
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFontAwesomeModule,
+    AngularFireStorageModule
   ],
   exports: [
     CommonModule,
     AngularFireModule,
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFontAwesomeModule,
+    AngularFireStorageModule
   ],
   providers: [
     AuthGuard
@@ -35,7 +32,7 @@ import { AuthGuard } from "./auth.guard";
   declarations: []
 })
 export class CoreModule { 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
       providers: [AuthService]

@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
     return this.auth.user.pipe(
       take(1),
       map(user => {
-        if(user.roles != null)
+        if(user?.roles != null)
           return !!user && user.roles.includes(next.data.role);
         return false;
         }),

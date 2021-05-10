@@ -98,14 +98,14 @@
           <div class="form-group">
             <label for="name">Name</label><br>
             <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.name" name="name" required  #nameInput="ngModel">
-            <div [hidden]="nameInput.valid || name.pristine" class="alert-sm alert-danger sm">
+            <div [hidden]="nameInput.valid || nameInput.pristine" class="alert-sm alert-danger sm">
                 Name is required
             </div>  
           </div>
           <div class="form-group">
             <label for="description">Description</label><br>
             <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.description" name="description" required #descriptionInput="ngModel">
-            <div [hidden]="descriptionInput.valid  || description.pristine" class="alert-sm alert-danger sm">
+            <div [hidden]="descriptionInput.valid  || descriptionInput.pristine" class="alert-sm alert-danger sm">
                 Description is required
             </div>
             </div>

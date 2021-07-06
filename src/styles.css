@@ -107,6 +107,7 @@ textarea {
 .itemTile a {
     display: grid;
     grid-template-columns: .5fr minmax(0, 1fr);
+    box-shadow: 3px 3px 12px -5px;
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;

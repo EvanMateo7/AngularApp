@@ -1,0 +1,61 @@
+
+.itemList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
+  grid-gap: 10px;
+  padding: 2em;
+  padding-right: 3em;
+}
+
+.itemTileImage {
+  max-width: 100%;
+  margin: auto 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.itemTile a {
+  display: grid;
+  height: 100%;
+  grid-template-columns: .5fr minmax(0, 1fr);
+  box-shadow: 3px 3px 12px -5px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.itemTile a:hover {
+  box-shadow: none;
+  transform: translate(3px, 1px);
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+.itemName {
+  font-size: 1.8em;
+  white-space: nowrap;
+} 
+
+.itemInfo {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  font-size: 1.3em;
+}
+
+.itemPrice {
+  font-size: 1.3em;
+} 
+
+#uploader {
+  display: flex;
+  margin: 1em;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#uploadProgress {
+  margin: 0.5em;
+  width: 100%;
+}

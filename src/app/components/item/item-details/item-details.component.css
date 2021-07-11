@@ -1,0 +1,45 @@
+
+.itemDetails {
+  max-width: 70vw;
+  margin: 20px auto;
+}
+
+.itemDetailsImage {
+  height: 20em;
+  object-fit: contain;
+}
+
+.itemName {
+  font-size: 1.8em;
+  white-space: nowrap;
+} 
+
+.itemDetailsInfo {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  font-size: 1.3em;
+}
+
+.itemPrice {
+  font-size: 1.3em;
+} 
+
+.commentForm button {
+  margin: 5px auto;
+}
+
+.commentGroup {
+  max-width: 40em;
+}
+
+.commentUser {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.comment {
+  font-size: 1.3em;
+  white-space: pre-wrap;
+}

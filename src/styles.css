@@ -19,42 +19,11 @@ textarea {
     resize: none;
 }
 
-.navbar {
-    color: white;
-    margin: 0;
-    box-shadow: 0px 0px 20px 0px black;
-}
-
-.navbarmenu li a {
-    border-top: 2px solid transparent; 
-}
-
-.navbarmenu li:hover a {
-    border-top: 2px solid white; 
-}
-
 .click:hover {
     cursor: pointer;
 }
 
-.commentForm button {
-    margin: 5px auto;
-}
-
-.commentGroup {
-    max-width: 40em;
-}
-
-.commentUser {
-    font-size: 1.3em;
-    font-weight: 600;
-}
-
-.comment {
-    font-size: 1.3em;
-    white-space: pre-wrap;
-}
-
+/* Temporary tables */
 .userTableContainer, .itemTableContainer{
     font-size: 1.3em;
     margin: auto 5vw;
@@ -69,11 +38,6 @@ textarea {
     text-overflow: ellipsis;
 }
 
-.userPhoto {
-    border-radius: 50%;
-    max-height: 30px;
-}
-
 .deleteCell, .editCell {
     text-align: center;
     vertical-align: middle !important;
@@ -85,75 +49,4 @@ textarea {
 
 .editCell:hover {
     background-color: rgba(50, 255, 50, 0.6);
-}
-
-.itemDetails {
-    max-width: 70vw;
-    margin: 20px auto;
-}
-
-.itemList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
-    grid-gap: 10px;
-    padding: 2em;
-    padding-right: 3em;
-}
-
-.itemTileImage {
-    max-width: 100%;
-    margin: auto 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-.itemTile a {
-    display: grid;
-    height: 100%;
-    grid-template-columns: .5fr minmax(0, 1fr);
-    box-shadow: 3px 3px 12px -5px;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.itemTile a:hover {
-    box-shadow: none;
-    transform: translate(3px, 1px);
-    transition: all 0.2s ease-out;
-    cursor: pointer;
-}
-
-.itemImage {
-    height: 20em;
-    object-fit: contain;
-}
-
-.itemInfo, .itemDetailsInfo {
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    font-size: 1.3em;
-}
-
-.itemName {
-    font-size: 1.8em;
-    white-space: nowrap;
-} 
-
-.itemPrice {
-    font-size: 1.3em;
-} 
-
-#uploader {
-    display: flex;
-    margin: 1em;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-#uploadProgress {
-    margin: 0.5em;
-    width: 100%;
 }

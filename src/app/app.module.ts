@@ -21,7 +21,6 @@ import { Roles } from './models';
 const appRoutes: Routes = [
   {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
-  {path: 'item/:itemId', component: ItemDetailsComponent},
   {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: {role: Roles.ADMIN}},
   {path: 'profile', component: UserProfileComponent},
   {path: '**', component: ItemComponent},

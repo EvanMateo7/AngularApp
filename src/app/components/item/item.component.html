@@ -5,16 +5,14 @@
 
 
   <div class="itemList">
-    <div class="itemTile" *ngFor="let item of items | async">
-        <a routerLink="/item/{{item.id}}" >
-          <img class="itemTileImage" [src]="item.thumbnailURL">
-          <div class="itemInfo">
-            <p class="itemName">{{item.name}}</p>
-            <p>{{item.description}}</p>
-            <p class="itemPrice">${{item.price}}</p>
-          </div>
-        </a>
+    <div class="itemTile" *ngFor="let item of items | async" (click)="selectItem(item)" data-toggle="modal" data-target="#itemDetailsModal">
+      <img class="itemTileImage" [src]="item.thumbnailURL">
+      <div class="itemInfo">
+        <p class="itemName">{{item.name}}</p>
+        <p>{{item.description}}</p>
+        <p class="itemPrice">${{item.price}}</p>
       </div>
+    </div>
   </div>
 
 
@@ -130,6 +128,24 @@
 
           </form>
 
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Item Details -->
+  <div class="modal fade" id="itemDetailsModal" tabindex="-1" role="dialog" aria-labelledby="itemDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header itemDetailsModelHeader">
+          <h5 class="modal-title" id="itemDetailsModal">{{selectedItem?.name}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-item-details [itemId]="selectedItem?.id"></app-item-details>
         </div>
       </div>
     </div>

@@ -1,9 +1,4 @@
 
-.itemDetails {
-  max-width: 70vw;
-  margin: 20px auto;
-}
-
 .itemDetailsImage {
   height: 20em;
   object-fit: contain;

@@ -3,10 +3,9 @@ import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs'
-import { map, finalize } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
-import { Item, User } from '../../models';
-import { VariableAst } from '../../../../node_modules/@angular/compiler';
+import { Item } from '../../models';
 import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

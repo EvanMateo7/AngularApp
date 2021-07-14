@@ -31,16 +31,17 @@
   object-fit: cover;
 }
 
-.itemTile a {
+.itemTile {
   display: grid;
   height: 100%;
   grid-template-columns: .5fr minmax(0, 1fr);
   box-shadow: 3px 3px 12px -5px;
   border-radius: 5px;
   overflow: hidden;
+  cursor: pointer;
 }
 
-.itemTile a:hover {
+.itemTile:hover {
   box-shadow: none;
   transform: translate(3px, 1px);
   transition: all 0.2s ease-out;
@@ -63,6 +64,13 @@
 .itemPrice {
   font-size: 1.3em;
 } 
+
+.itemDetailsModelHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: inherit;
+}
 
 #uploader {
   display: flex;

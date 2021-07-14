@@ -1,9 +1,11 @@
-<div class="itemDetails" *ngIf="selectedItem | async as item">
-    <img class="itemDetailsImage" [src]="item.originalURL || item.thumbnailURL">
-    <div class="itemDetailsInfo">
-      <span class="itemName">{{item.name}}</span>
-      <p>{{item.description}}</p>
-      <p class="itemPrice">${{item.price}}</p>
+<div *ngIf="selectedItem | async as item">
+    <div class="d-flex flex-column align-items-center">
+      <img class="itemDetailsImage" [src]="item.originalURL || item.thumbnailURL">
+      <div class="itemDetailsInfo">
+        <span class="itemName">{{item.name}}</span>
+        <p>{{item.description}}</p>
+        <p class="itemPrice">${{item.price}}</p>
+      </div>
     </div>
     <hr>
 
@@ -33,7 +35,4 @@
     <span *ngIf="noComments">No comments.</span>
     <span *ngIf="noMoreComments">No more comments.</span>
     <button *ngIf="!noComments && !noMoreComments" class="btn btn-sm btn-outline-dark" (click)='getMoreComments()'>Load more comments</button>
-
 </div>
-
-

@@ -1,12 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../core/auth.service';
-import { User, Item, ItemComment } from '../../../models';
+import { Item, ItemComment } from '../../../models';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentData, DocumentChange, DocumentSnapshot } from "@angular/fire/firestore";
-import { Observable, Subscription } from 'rxjs'
-import { map } from 'rxjs/operators';
-
-import * as firebase from "firebase/app";
+import { Observable } from 'rxjs'
 
 
 @Component({
@@ -15,6 +12,7 @@ import * as firebase from "firebase/app";
   styleUrls: ['./item-details.component.css']
 })
 export class ItemDetailsComponent implements OnInit {
+  @Input() itemId: string;
   @ViewChild('commentForm') commentForm;
 
   selectedItem: Observable<Item> = null;
@@ -23,8 +21,6 @@ export class ItemDetailsComponent implements OnInit {
   commentsCollection: AngularFirestoreCollection;
   comments: DocumentData[] = [];
   lastCommentTimestamp: any;
-  currentUser: User;
-  currentUserSubscription: Subscription;
   noComments: boolean;
   noMoreComments: boolean;
   
@@ -33,29 +29,28 @@ export class ItemDetailsComponent implements OnInit {
   ngOnInit() {
     console.log("Initialize: ItemDetailsComponent...");
     
-    this.getItemDoc(); 
-    this.currentUserSubscription = this.auth.user.subscribe(user => {
-      if(user)
-      {
-        this.currentUser = user;
-        this.comment.userId = user.id;
-      }
-    })
+    this.init();
+  }
+  
+  ngOnChanges() {
+    this.init();
+  }
+  
+  getItemDoc(): void {
+    this.itemDoc = this.afs.doc(`items/${this.itemId}`);
+    this.selectedItem = this.itemDoc.valueChanges();
+  }
+  
+  init() {
+    this.getItemDoc();
     this.commentsCollection = this.itemDoc.collection("comments");
     this.getComments();
   }
 
-  ngOnDestroy() {
-    this.currentUserSubscription.unsubscribe();
-  }
-
-  getItemDoc(): void {
-    const itemId = this.route.snapshot.paramMap.get("itemId");
-    this.itemDoc = this.afs.doc(`items/${itemId}`);
-    this.selectedItem = this.itemDoc.valueChanges();
-  }
-
   getComments(): void {
+    this.comments = [];
+    this.noComments = false;
+    this.noMoreComments = false;
     this.commentsCollection.ref.orderBy("timestamp", "desc").limit(5).get().then(querySnapshot => {
       this.comments = querySnapshot.docs.map(doc => doc.data());
       if(this.comments.length > 0) {
@@ -85,13 +80,14 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   addComment() {
-    if(this.currentUser)
+    if(this.auth.currentUser)
     {
       console.log("adding comment...");
-      this.comment.id = this.currentUser.id;
+      this.comment.userId = this.auth.currentUser.id;
       this.comment.timestamp = Date.now();
       this.commentsCollection.add(this.comment);
       this.commentForm.resetForm();
+      console.log("comment",this.comment)
     }
     this.getComments();
   }

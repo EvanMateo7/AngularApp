@@ -9,7 +9,6 @@ import { CoreModule } from "./core/core.module";
 import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
 import { ItemComponent } from './components/item//item.component';
-import { AboutComponent } from './components/about/about.component';
 import { DataService } from './services/data.service';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 import { AuthGuard } from './core/auth.guard';
@@ -24,15 +23,13 @@ const appRoutes: Routes = [
   {path: 'item/:itemId', component: ItemDetailsComponent},
   {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: {role: 'ADMIN'}},
   {path: 'profile', component: UserProfileComponent},
-  {path: 'about', component: AboutComponent},
-  {path: '**', component: AboutComponent},
+  {path: '**', component: ItemComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    AboutComponent,
     ItemComponent,
     ItemDetailsComponent,
     UserProfileComponent,

@@ -26,3 +26,8 @@ export interface ItemComment {
     userId: string,
     timestamp: number;
 }
+
+export enum Roles {
+  ADMIN = "ADMIN",
+  USER = "USER"
+}

@@ -15,13 +15,14 @@ import { AuthGuard } from './core/auth.guard';
 import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { MaxLineValidatorDirective } from './validators/max-line-validator.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { Roles } from './models';
 
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
   {path: 'item/:itemId', component: ItemDetailsComponent},
-  {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: {role: 'ADMIN'}},
+  {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: {role: Roles.ADMIN}},
   {path: 'profile', component: UserProfileComponent},
   {path: '**', component: ItemComponent},
 ];

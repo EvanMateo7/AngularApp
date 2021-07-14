@@ -15,9 +15,7 @@ export interface User {
     email: string,
     displayName?: string,
     photoURL?: string,
-    age?: number,
     roles?: string[]
-
 }
 
 export interface ItemComment {

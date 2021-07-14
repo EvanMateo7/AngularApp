@@ -1,10 +1,26 @@
 
+.addItemButton {
+  position: sticky;
+  top: 10px;
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.addItemButton:focus {
+  outline: none;
+}
+
 .itemList {
   display: grid;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
   grid-gap: 10px;
   padding: 2em;
-  padding-right: 3em;
 }
 
 .itemTileImage {

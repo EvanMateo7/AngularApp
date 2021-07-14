@@ -29,8 +29,8 @@ export class ItemComponent implements OnInit {
   uploadPercent: Observable<number>;
   uploadImage: any;
 
-  faEdit = faEdit
-  faTimes = faTimes
+  faEdit = faEdit;
+  faTimes = faTimes;
 
   constructor(public auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { }
 

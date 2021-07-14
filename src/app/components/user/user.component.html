@@ -3,18 +3,16 @@
     <tr>
         <th>Name</th>
         <th>Age</th>
+        <th>Roles</th>
     </tr>
     <tr *ngFor="let user of users | async" >
         <td>{{user.displayName}}</td>
         <td>{{user.age}}</td>
-        <td class="click editCell" (click)='selectUser(user)' data-toggle="modal" data-target="#editUserModal"><fa class="fa-lg" name="edit"></fa></td>
-        <td class="click deleteCell" (dblclick)='deleteUser(user)' ><fa class="fa-lg" name="times"></fa></td>
+        <td>{{user.roles}}</td>
+        <td class="click editCell" (click)='selectUser(user)' data-toggle="modal" data-target="#editUserModal"><fa-icon class="fa-lg" [icon]="faEdit"></fa-icon></td>
+        <td class="click deleteCell" (dblclick)='deleteUser(user)' ><fa-icon class="fa-lg" [icon]="faTimes"></fa-icon></td>
     </tr>
   </table>
-
-  <button *ngIf="currentUser" (click)="addNewUser()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addUserModal">
-    Create New User
-  </button>
 </div>
 
 
@@ -49,43 +47,6 @@
             <button type="submit" class="btn btn-primary" [disabled]="!editUserForm.valid" (click)="updateUser()" data-dismiss="modal">Save</button>
           </div>
 
-        </form>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Add User -->
-<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addUserModalLabel">New User</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="false">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-        <form *ngIf="newUser" #addUserForm="ngForm">
-          <div class="form-group">
-            <label for="name">Name</label><br>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="newUser.displayName" name="name" required #name="ngModel">
-            <div [hidden]="name.valid || name.pristine" class="alert-sm alert-danger sm">
-                Name is required
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="age">Age</label><br>
-            <input type="number" class="form-control form-control-sm" [(ngModel)]="newUser.age" name="age" >
-          </div>
-          <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" (click)="addUserForm.resetForm()" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!addUserForm.valid" (click)="addUser()" data-dismiss="modal">Save</button>
-          </div>
-          
         </form>
 
       </div>

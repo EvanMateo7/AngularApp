@@ -28,9 +28,10 @@
     </form>
 
     <div class="commentsList"  *ngFor="let comment of comments">
-      <span class="commentUser">{{comment.userId}}</span>
+      <div class="commentHeader">
+        <span class="commentUser badge badge-pill badge-dark">{{comment.userId}}</span><span class="d-inline-block mx-1 text-nowrap">{{comment.timestamp | date:'short'}}</span>
+      </div>
       <p class="comment">{{comment.comment}}</p>
-      <p class="timestamp">{{comment.timestamp | date:'short'}}</p>
     </div>  
     <span *ngIf="noComments">No comments.</span>
     <span *ngIf="noMoreComments">No more comments.</span>

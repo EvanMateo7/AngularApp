@@ -29,9 +29,19 @@
   max-width: 40em;
 }
 
+.commentHeader {
+  display: flex;
+  align-items: baseline;
+  line-height: 3em;
+}
+
 .commentUser {
+  display: inline-block;
   font-size: 1.3em;
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .comment {

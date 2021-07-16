@@ -7,7 +7,7 @@ import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/firest
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from "rxjs/operators";
-import { User } from '../models';
+import { Roles, User } from '../models';
 
 
 @Injectable()
@@ -79,6 +79,10 @@ export class AuthService {
       prompt: 'select_account'
     });
     return this.oAuthLogin(provider);
+  }
+
+  public get isAdmin(): boolean {
+    return !!this.currentUser.roles?.includes(Roles.ADMIN);
   }
 
   public logout(): void {

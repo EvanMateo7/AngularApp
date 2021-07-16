@@ -1,9 +1,11 @@
-<div class="itemDetails" *ngIf="selectedItem | async as item">
-    <img class="itemImage" [src]="item.thumbnailURL">
-    <div class="itemDetailsInfo">
-      <span class="itemName">{{item.name}}</span>
-      <p>{{item.description}}</p>
-      <p class="itemPrice">${{item.price}}</p>
+<div *ngIf="selectedItem | async as item">
+    <div class="d-flex flex-column align-items-center">
+      <img class="itemDetailsImage" [src]="item.originalURL || item.thumbnailURL">
+      <div class="itemDetailsInfo">
+        <span class="itemName">{{item.name}}</span>
+        <p>{{item.description}}</p>
+        <p class="itemPrice">${{item.price}}</p>
+      </div>
     </div>
     <hr>
 
@@ -26,14 +28,12 @@
     </form>
 
     <div class="commentsList"  *ngFor="let comment of comments">
-      <span class="commentUser">{{comment.userId}}</span>
+      <div class="commentHeader">
+        <span class="commentUser badge badge-pill badge-dark">{{comment.userId}}</span><span class="d-inline-block mx-1 text-nowrap">{{comment.timestamp | date:'short'}}</span>
+      </div>
       <p class="comment">{{comment.comment}}</p>
-      <p class="timestamp">{{comment.timestamp | date:'short'}}</p>
     </div>  
     <span *ngIf="noComments">No comments.</span>
     <span *ngIf="noMoreComments">No more comments.</span>
     <button *ngIf="!noComments && !noMoreComments" class="btn btn-sm btn-outline-dark" (click)='getMoreComments()'>Load more comments</button>
-
 </div>
-
-

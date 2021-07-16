@@ -1,12 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 html, body {
-    /*overflow-x: hidden;*/
+    min-width: fit-content;
 }
 
 body { 
     margin: 0; 
     font-size: 62.5%;
     font-family: Helvetica, Arial, sans-serif;
+}
+
+label {
+  line-height: 1.5rem;
 }
 
 a, a:hover {
@@ -19,42 +23,11 @@ textarea {
     resize: none;
 }
 
-.navbar {
-    color: white;
-    margin: 0;
-    min-width: 400px;
-}
-
-.navbarmenu li a {
-    border-top: 2px solid transparent; 
-}
-
-.navbarmenu li:hover a {
-    border-top: 2px solid white; 
-}
-
 .click:hover {
     cursor: pointer;
 }
 
-.commentForm button {
-    margin: 5px auto;
-}
-
-.commentGroup {
-    max-width: 40em;
-}
-
-.commentUser {
-    font-size: 1.3em;
-    font-weight: 600;
-}
-
-.comment {
-    font-size: 1.3em;
-    white-space: pre-wrap;
-}
-
+/* Temporary tables */
 .userTableContainer, .itemTableContainer{
     font-size: 1.3em;
     margin: auto 5vw;
@@ -69,11 +42,6 @@ textarea {
     text-overflow: ellipsis;
 }
 
-.userPhoto {
-    border-radius: 50%;
-    max-height: 30px;
-}
-
 .deleteCell, .editCell {
     text-align: center;
     vertical-align: middle !important;
@@ -85,70 +53,4 @@ textarea {
 
 .editCell:hover {
     background-color: rgba(50, 255, 50, 0.6);
-}
-
-.itemDetails {
-    max-width: 70vw;
-    margin: 20px auto;
-}
-
-.itemList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40em, 1fr));
-    grid-gap: 10px;
-    padding: 2em;
-    padding-right: 3em;
-}
-
-.itemImage {
-    max-width: 100%;
-}
-
-.itemTile a {
-    display: grid;
-    grid-template-columns: .5fr minmax(0, 1fr);
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgba(52, 58, 64, 0.2);
-}
-
-.itemTile a:hover {
-    box-shadow: none;
-    transform: translate(3px, 1px);
-    transition: all 0.2s ease-out;
-    cursor: pointer;
-}
-
-.itemImage {
-    padding: 10px;
-}
-
-.itemInfo, .itemDetailsInfo {
-    height: inherit;
-    display: flex;
-    flex-direction: column;
-    margin: 10px;
-    font-size: 1.3em;
-}
-
-.itemName {
-    font-size: 1.8em;
-    white-space: nowrap;
-} 
-
-.itemPrice {
-    font-size: 1.3em;
-} 
-
-#uploader {
-    display: flex;
-    margin: 1em;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-#uploadProgress {
-    margin: 0.5em;
-    width: 100%;
 }

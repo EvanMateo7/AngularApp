@@ -3,8 +3,9 @@ import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators';
+import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-import { User } from '../../models';
+import { Roles, User } from '../../models';
 
 @Component({
   selector: 'app-user',
@@ -21,6 +22,11 @@ export class UserComponent implements OnInit {
 
   selectedUser: User;
   newUser: User;
+
+  roles: string[];
+
+  faEdit = faEdit;
+  faTimes = faTimes;
 
   constructor(public auth: AuthService, private afs: AngularFirestore) { };
 
@@ -45,19 +51,26 @@ export class UserComponent implements OnInit {
 
     this.selectedUser = null;
     this.newUser = null;
+
+    this.roles = Object.values(Roles);
   }
 
+  roleChange(role, checked): void {
+    if (!this.selectedUser.roles) {
+      this.selectedUser.roles = [];
+    }
+    
+    if (checked && !this.selectedUser.roles.includes(role)) {
+      this.selectedUser.roles = [...this.selectedUser.roles, role];
+    }
+    else {
+      this.selectedUser.roles = this.selectedUser.roles.filter(r => r != role);
+    }
+  }
 
   selectUser(user): void {
     this.selectedUser = user;
     this.newUser = null;
-  }
-
-  addNewUser(): void {
-    // Disabled for now...
-    //this.newUser = {displayName: "", age: 0, email: ""};
-    console.error("Adding new user is disabled!");
-    this.selectedUser = null;
   }
 
   updateUser(): void {
@@ -71,12 +84,4 @@ export class UserComponent implements OnInit {
     this.userDoc = this.afs.doc(`users/${user.id}`);
     this.userDoc.delete();
   }
-
-  addUser(): void {
-    console.log("adding user...");
-    this.usersCollection.add(this.newUser);
-  }
 }
-
-
-

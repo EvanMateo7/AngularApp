@@ -1,4 +1,3 @@
-import { timestamp } from "rxjs/operators";
 
 export interface Item {
     id?: string
@@ -15,9 +14,7 @@ export interface User {
     email: string,
     displayName?: string,
     photoURL?: string,
-    age?: number,
     roles?: string[]
-
 }
 
 export interface ItemComment {
@@ -25,4 +22,9 @@ export interface ItemComment {
     comment: string,
     userId: string,
     timestamp: number;
+}
+
+export enum Roles {
+  ADMIN = "ADMIN",
+  USER = "USER"
 }

@@ -1,133 +1,154 @@
-<div class="itemList">
-  <div class="itemTile" *ngFor="let item of items | async">
-      <a routerLink="/item/{{item.id}}" >
-        <img class="itemImage" [src]="item.thumbnailURL">
-        <div class="itemInfo">
-          <p class="itemName">{{item.name}}</p>
-          <p>{{item.description}}</p>
-          <p class="itemPrice">${{item.price}}</p>
-        </div>
-      </a>
-    </div>
-</div>
-
-<div class="itemTableContainer">
-  <table class="itemTable table table-dark table-striped table-hover table-sm" >
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-    </tr>
-    <tr *ngFor="let item of items | async" >
-        <td><a routerLink="/item/{{item.id}}">{{item.name}}</a></td>
-        <td>{{item.description}}</td>
-        <td>{{item.price | currency}}</td>
-        <ng-container *ngIf="auth.currentUser">
-          <td class="click editCell" (click)="selectItem(item)" data-toggle="modal" data-target="#editItemModal"><fa-icon class="fa-lg" [icon]="faEdit"></fa-icon></td>
-          <td class="click deleteCell" (dblclick)="deleteItem(item)" ><fa-icon class="fa-lg" [icon]="faTimes"></fa-icon></td>
-        </ng-container>
-    </tr>
-  </table>
-
-  <button *ngIf="auth.currentUser" (click)="addNewItem()" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addItemModal">
-    Create New Item
+<div class="d-flex flex-column align-items-center">
+  <button *ngIf="auth.currentUser" (click)="addNewItem()" type="button" class="addItemButton btn-primary" data-toggle="modal" data-target="#addItemModal">
+    <i class="bi bi-plus-lg"></i>
   </button>
-</div>
 
 
-<!-- Edit Item -->
-<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editItemModalLabel">Edit Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="false">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-        <form *ngIf="selectedItem" #editItemForm="ngForm">
-
-          <div class="form-group">
-            <label for="name">Name</label><br>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.name" name="name" required #nameInput="ngModel">
-            <div [hidden]="nameInput.valid" class="alert-sm alert-danger sm">
-                Name is required
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label><br>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.description" name="description" required #descriptionInput="ngModel">
-            <div [hidden]="descriptionInput.valid" class="alert-sm alert-danger sm">
-                Description is required
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="price">Price</label><br>
-            <input type="number" class="form-control form-control-sm" [(ngModel)]="selectedItem.price" name="price" >
-          </div>
-
-          <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!editItemForm.valid" (click)="updateItem()" data-dismiss="modal" >Save</button>
-          </div>
-
-        </form>
-
+  <div class="itemList">
+    <div class="itemTile" *ngFor="let item of items | async" (click)="selectItem(item)" data-toggle="modal" data-target="#itemDetailsModal">
+      <img class="itemTileImage" [src]="item.thumbnailURL">
+      <div class="itemInfo">
+        <p class="itemName">{{item.name}}</p>
+        <p>{{item.description}}</p>
+        <p class="itemPrice">${{item.price}}</p>
       </div>
     </div>
   </div>
-</div>
-      
-      
-<!-- Add Item -->
-<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addItemModalLabel">New Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="false">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-        <form *ngIf="newItem" #addItemForm="ngForm">
 
-          <div class="form-group">
-            <label for="name">Name</label><br>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.name" name="name" required  #nameInput="ngModel">
-            <div [hidden]="nameInput.valid || nameInput.pristine" class="alert-sm alert-danger sm">
-                Name is required
-            </div>  
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label><br>
-            <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.description" name="description" required #descriptionInput="ngModel">
-            <div [hidden]="descriptionInput.valid  || descriptionInput.pristine" class="alert-sm alert-danger sm">
-                Description is required
-            </div>
-            </div>
-          <div class="form-group">
-            <label for="price">Price</label><br>
-            <input type="number" class="form-control form-control-sm" [(ngModel)]="newItem.price" name="price" >
-          </div>
+
+  <div class="itemTableContainer">
+    <table class="itemTable table table-dark table-striped table-hover table-sm" >
+      <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+      </tr>
+      <tr *ngFor="let item of items | async" >
+          <td><a routerLink="/item/{{item.id}}">{{item.name}}</a></td>
+          <td>{{item.description}}</td>
+          <td>{{item.price | currency}}</td>
+          <ng-container *ngIf="auth.currentUser">
+            <td class="click editCell" (click)="selectItem(item)" data-toggle="modal" data-target="#editItemModal"><fa-icon class="fa-lg" [icon]="faEdit"></fa-icon></td>
+            <td class="click deleteCell" (dblclick)="deleteItem(item)" ><fa-icon class="fa-lg" [icon]="faTimes"></fa-icon></td>
+          </ng-container>
+      </tr>
+    </table>
+  </div>
+
+
+  <!-- Edit Item -->
+  <div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editItemModalLabel">Edit Item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
           
-          <div id="uploader">
-            <progress [value]="uploadPercent | async" max="100" id="uploadProgress">0</progress>
-            <input type="file" value="upload" id="uploadButton" (change)="getUploadFile($event)" #itemImageInput> 
-          </div>
-          
+          <form *ngIf="selectedItem" #editItemForm="ngForm">
 
-          <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" (click)="resetAddItemForm()" data-dismiss="modal">Cancel</button>
-            <button type="submit" class="btn btn-primary" [disabled]="!addItemForm.valid" (click)="addItem()" data-dismiss="modal">Save</button>
-          </div>
+            <div class="form-group">
+              <label for="name">Name</label><br>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.name" name="name" required #nameInput="ngModel">
+              <div [hidden]="nameInput.valid" class="alert-sm alert-danger sm">
+                  Name is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label><br>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.description" name="description" required #descriptionInput="ngModel">
+              <div [hidden]="descriptionInput.valid" class="alert-sm alert-danger sm">
+                  Description is required
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="price">Price</label><br>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="selectedItem.price" name="price" >
+            </div>
 
-        </form>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!editItemForm.valid" (click)="updateItem()" data-dismiss="modal" >Save</button>
+            </div>
 
+          </form>
+
+        </div>
       </div>
     </div>
   </div>
+        
+        
+  <!-- Add Item -->
+  <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog" aria-labelledby="addItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addItemModalLabel">New Item</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+          <form *ngIf="newItem" #addItemForm="ngForm">
+
+            <div class="form-group">
+              <label for="name">Name</label><br>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.name" name="name" required  #nameInput="ngModel">
+              <div [hidden]="nameInput.valid || nameInput.pristine" class="alert-sm alert-danger sm">
+                  Name is required
+              </div>  
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label><br>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.description" name="description" required #descriptionInput="ngModel">
+              <div [hidden]="descriptionInput.valid  || descriptionInput.pristine" class="alert-sm alert-danger sm">
+                  Description is required
+              </div>
+              </div>
+            <div class="form-group">
+              <label for="price">Price</label><br>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="newItem.price" name="price" >
+            </div>
+            
+            <div id="uploader">
+              <progress [value]="uploadPercent | async" max="100" id="uploadProgress">0</progress>
+              <input type="file" value="upload" id="uploadButton" (change)="getUploadFile($event)" #itemImageInput> 
+            </div>
+            
+
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" (click)="resetAddItemForm()" data-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!addItemForm.valid" (click)="addItem()" data-dismiss="modal">Save</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Item Details -->
+  <div class="modal fade" id="itemDetailsModal" tabindex="-1" role="dialog" aria-labelledby="itemDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-dark itemDetailsModelHeader">
+          <h5 class="modal-title" id="itemDetailsModal">{{selectedItem?.name}}</h5>
+          <button type="button" class="text-white close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-item-details [itemId]="selectedItem?.id"></app-item-details>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

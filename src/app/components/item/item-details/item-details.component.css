@@ -1,0 +1,50 @@
+
+.itemDetailsImage {
+  height: 20em;
+  object-fit: contain;
+}
+
+.itemName {
+  font-size: 1.8em;
+  white-space: nowrap;
+} 
+
+.itemDetailsInfo {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  font-size: 1.3em;
+}
+
+.itemPrice {
+  font-size: 1.3em;
+} 
+
+.commentForm button {
+  margin: 5px auto;
+}
+
+.commentGroup {
+  max-width: 40em;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: baseline;
+  line-height: 3em;
+}
+
+.commentUser {
+  display: inline-block;
+  font-size: 1.3em;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.comment {
+  font-size: 1.3em;
+  white-space: pre-wrap;
+}

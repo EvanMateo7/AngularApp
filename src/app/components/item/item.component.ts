@@ -61,7 +61,7 @@ export class ItemComponent implements OnInit {
 
   addNewItem() {
     if(this.auth.currentUser) {
-      this.newItem = {userId: this.auth.currentUser.id, name: "", description: "", price: 0};
+      this.newItem = {userId: this.auth.currentUser.id, name: "", description: ""};
     }
     this.selectedItem = null;
   }

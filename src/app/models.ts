@@ -3,7 +3,6 @@ export interface Item {
     id?: string
     name:string,
     description: string,
-    price:number,
     userId: string,
     thumbnailURL?: string
   }

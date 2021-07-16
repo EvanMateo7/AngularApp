@@ -1,0 +1,12 @@
+<div class="like-dislike">
+  <span (mouseover)="hoverUp=true" (mouseout)="hoverUp=false">
+    <i *ngIf="!hoverUp" class="bi bi-hand-thumbs-up thumb"></i>
+    <i *ngIf="hoverUp" class="bi bi-hand-thumbs-up-fill thumb"></i>
+    <span>{{likes || 0}}</span>
+  </span>
+  <span (mouseover)="hoverDown=true" (mouseout)="hoverDown=false">
+    <i *ngIf="!hoverDown" class="bi bi-hand-thumbs-down thumb"></i>
+    <i *ngIf="hoverDown" class="bi bi-hand-thumbs-down-fill thumb"></i>
+    <span>{{dislikes || 0}}</span>
+  </span>
+</div>

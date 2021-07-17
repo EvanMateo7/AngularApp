@@ -2,7 +2,7 @@
     <div class="d-flex flex-column align-items-center">
       <img class="itemDetailsImage" [src]="item.originalURL || item.thumbnailURL">
       <div class="itemDetailsInfo">
-        <span class="itemName">{{item.name}}</span>
+        <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
         <app-like-dislike [firestoreDoc]="itemDoc" [firestoreDir]="'items'"></app-like-dislike>
       </div>

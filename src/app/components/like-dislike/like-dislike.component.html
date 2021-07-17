@@ -1,28 +1,27 @@
-
 <div class="like-dislike">
-  <ng-container *ngIf="doc; then interactive; else notInteractive"></ng-container>
+  <ng-container *ngIf="isInteractive; then interactive; else notInteractive"></ng-container>
 </div>
 
 <ng-template #interactive>
-  <span class="thumbInput" (mouseover)="hoverUp=true" (mouseout)="hoverUp=false" (click)="like($event)">
+  <button class="btn thumbBtn" (mouseover)="hoverUp=true" (mouseout)="hoverUp=false" (click)="update($event, true)">
     <i *ngIf="!hoverUp" class="bi bi-hand-thumbs-up thumb"></i>
     <i *ngIf="hoverUp" class="bi bi-hand-thumbs-up-fill thumb"></i>
-  </span>
-    <span>{{doc?.likes || 0}}</span>
-  <span class="thumbInput" (mouseover)="hoverDown=true" (mouseout)="hoverDown=false" (click)="dislike($event)">
+  </button>
+  <span>{{likeDislike?.like || 0}}</span>
+  <button class="btn thumbBtn" (mouseover)="hoverDown=true" (mouseout)="hoverDown=false" (click)="update($event, false)">
     <i *ngIf="!hoverDown" class="bi bi-hand-thumbs-down thumb"></i>
     <i *ngIf="hoverDown" class="bi bi-hand-thumbs-down-fill thumb"></i>
-  </span>
-    <span>{{doc?.dislikes || 0}}</span>
+  </button>
+  <span>{{likeDislike?.dislike || 0}}</span>
 </ng-template>
 
 <ng-template #notInteractive>
-  <span class="thumbInput">
+  <button class="thumbBtn" disabled>
     <i class="bi bi-hand-thumbs-up thumb"></i>
-  </span>
-    <span>{{likes || 0}}</span>
-  <span class="thumbInput">
+  </button>
+  <span>{{likeDislike?.like || 0}}</span>
+  <button class="thumbBtn" disabled>
     <i class="bi bi-hand-thumbs-down thumb"></i>
-  </span>
-    <span>{{dislikes || 0}}</span>
+  </button>
+  <span>{{likeDislike?.dislike || 0}}</span>
 </ng-template>

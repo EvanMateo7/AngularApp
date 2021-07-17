@@ -4,7 +4,7 @@
       <div class="itemDetailsInfo">
         <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
-        <app-like-dislike [firestoreDoc]="itemDoc" [firestoreDir]="'items'"></app-like-dislike>
+        <app-like-dislike [docId]="item.id"></app-like-dislike>
       </div>
     </div>
     <hr>

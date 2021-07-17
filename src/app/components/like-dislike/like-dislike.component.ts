@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, CollectionReference, DocumentSnapshot } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-like-dislike',
@@ -7,36 +8,31 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
   styleUrls: ['./like-dislike.component.css']
 })
 export class LikeDislikeComponent implements OnInit {
-  @Input() firestoreDoc: AngularFirestoreDocument;
-  @Input() firestoreDir: string;
+  @Input() docId: string;
+  @Input() isInteractive: boolean = true;
 
-  @Input() likes: number;
-  @Input() dislikes: number;
-
-  doc: any;
+  likeDislikeCollection: AngularFirestoreCollection;
+  likeDislikeDoc: AngularFirestoreDocument<any>;
+  likeDislike: any;
 
   constructor(private afs: AngularFirestore) { }
 
   ngOnInit(): void {
-    if (this.firestoreDoc) {
-      this.doc = this.firestoreDoc.get().toPromise().then(doc => {
-        this.doc = doc.data();
-      })
-    }
+    this.likeDislikeCollection = this.afs.collection("like_dislike");
+    this.likeDislikeDoc = this.likeDislikeCollection.doc(this.docId);
+    this.likeDislikeDoc.get().toPromise().then((doc: DocumentSnapshot<any>) => {
+      this.likeDislike = doc.data() ?? {};
+    })
   }
 
-  like(event: Event) {
-    if (this.doc) {
-      console.log("liking...");
-      this.firestoreDoc.update({likes: (this.doc?.likes || 0) + 1});
-      event.stopPropagation();
-    }
-  }
-
-  dislike(event: Event) {
-    if (this.doc) {
-      console.log("disliking...");
-      this.firestoreDoc.update({dislikes: (this.doc?.dislikes || 0) + 1});
+  update(event: Event, like: boolean) {
+    if (this.likeDislike) {
+      const property = like ? "like" : "dislike";
+      const data = { [property]: firebase.firestore.FieldValue.increment(1) }
+      this.likeDislikeCollection.doc(this.docId).update(data)
+        .catch((error) => {
+          this.likeDislikeCollection.doc(this.docId).set(data);
+        });;
       event.stopPropagation();
     }
   }

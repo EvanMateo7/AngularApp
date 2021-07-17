@@ -10,7 +10,7 @@
       <div class="itemInfo">
         <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
-        <app-like-dislike></app-like-dislike>
+        <app-like-dislike [likes]="item?.likes" [dislikes]="item?.dislikes"></app-like-dislike>
       </div>
     </div>
   </div>

@@ -1,12 +1,28 @@
+
 <div class="like-dislike">
-  <span (mouseover)="hoverUp=true" (mouseout)="hoverUp=false">
+  <ng-container *ngIf="doc; then interactive; else notInteractive"></ng-container>
+</div>
+
+<ng-template #interactive>
+  <span class="thumbInput" (mouseover)="hoverUp=true" (mouseout)="hoverUp=false" (click)="like($event)">
     <i *ngIf="!hoverUp" class="bi bi-hand-thumbs-up thumb"></i>
     <i *ngIf="hoverUp" class="bi bi-hand-thumbs-up-fill thumb"></i>
-    <span>{{likes || 0}}</span>
   </span>
-  <span (mouseover)="hoverDown=true" (mouseout)="hoverDown=false">
+    <span>{{doc?.likes || 0}}</span>
+  <span class="thumbInput" (mouseover)="hoverDown=true" (mouseout)="hoverDown=false" (click)="dislike($event)">
     <i *ngIf="!hoverDown" class="bi bi-hand-thumbs-down thumb"></i>
     <i *ngIf="hoverDown" class="bi bi-hand-thumbs-down-fill thumb"></i>
-    <span>{{dislikes || 0}}</span>
   </span>
-</div>
+    <span>{{doc?.dislikes || 0}}</span>
+</ng-template>
+
+<ng-template #notInteractive>
+  <span class="thumbInput">
+    <i class="bi bi-hand-thumbs-up thumb"></i>
+  </span>
+    <span>{{likes || 0}}</span>
+  <span class="thumbInput">
+    <i class="bi bi-hand-thumbs-down thumb"></i>
+  </span>
+    <span>{{dislikes || 0}}</span>
+</ng-template>

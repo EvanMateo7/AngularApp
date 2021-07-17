@@ -1,4 +1,8 @@
 
+.thumbInput {
+  cursor: pointer;
+}
+
 .thumb {
   font-size: 1.3em;
   margin-left: 0.3em;

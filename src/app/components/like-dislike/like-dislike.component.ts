@@ -37,4 +37,8 @@ export class LikeDislikeComponent implements OnInit {
     }
   }
 
+  get likeDislikeRatio() {
+    return (this.likeDislike?.like / (this.likeDislike?.like + this.likeDislike?.dislike)) * 100 || 0;
+  }
+
 }

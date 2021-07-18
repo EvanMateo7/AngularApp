@@ -6,12 +6,12 @@
 </div>
 
 <ng-template #interactive>
-  <button class="btn thumbBtn" (mouseover)="hoverUp=true" (mouseout)="hoverUp=false" (click)="update($event, true)">
+  <button class="btn thumbBtn" (mouseenter)="hoverUp=true" (mouseout)="hoverUp=false" (click)="update($event, true)">
     <i *ngIf="!hoverUp" class="bi bi-hand-thumbs-up thumbIcon"></i>
     <i *ngIf="hoverUp" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
   </button>
   <span>{{likeDislike?.like || 0}}</span>
-  <button class="btn thumbBtn" (mouseover)="hoverDown=true" (mouseout)="hoverDown=false" (click)="update($event, false)">
+  <button class="btn thumbBtn" (mouseenter)="hoverDown=true" (mouseout)="hoverDown=false" (click)="update($event, false)">
     <i *ngIf="!hoverDown" class="bi bi-hand-thumbs-down thumbIcon"></i>
     <i *ngIf="hoverDown" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
   </button>

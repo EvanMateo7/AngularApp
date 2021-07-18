@@ -19,6 +19,10 @@ a, a:hover {
     display: block;
 }
 
+p {
+  word-break: break-all;
+}
+
 textarea {
     resize: none;
 }

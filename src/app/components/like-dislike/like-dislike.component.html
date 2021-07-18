@@ -7,24 +7,24 @@
 
 <ng-template #interactive>
   <button class="btn thumbBtn" (mouseenter)="hoverUp=true" (mouseout)="hoverUp=false" (click)="update($event, true)">
-    <i *ngIf="!hoverUp" class="bi bi-hand-thumbs-up thumbIcon"></i>
-    <i *ngIf="hoverUp" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
+    <i *ngIf="!hoverUp && !likeDislikeUser.like" class="bi bi-hand-thumbs-up thumbIcon"></i>
+    <i *ngIf="hoverUp || likeDislikeUser.like" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
   </button>
-  <span>{{likeDislike?.like || 0}}</span>
+  <span>{{likeDislikeData?.like || 0}}</span>
   <button class="btn thumbBtn" (mouseenter)="hoverDown=true" (mouseout)="hoverDown=false" (click)="update($event, false)">
-    <i *ngIf="!hoverDown" class="bi bi-hand-thumbs-down thumbIcon"></i>
-    <i *ngIf="hoverDown" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
+    <i *ngIf="!hoverDown && !likeDislikeUser.dislike" class="bi bi-hand-thumbs-down thumbIcon"></i>
+    <i *ngIf="hoverDown || likeDislikeUser.dislike" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
   </button>
-  <span>{{likeDislike?.dislike || 0}}</span>
+  <span>{{likeDislikeData?.dislike || 0}}</span>
 </ng-template>
 
 <ng-template #notInteractive>
   <button class="thumbBtn" disabled>
     <i class="bi bi-hand-thumbs-up thumbIcon"></i>
   </button>
-  <span>{{likeDislike?.like || 0}}</span>
+  <span>{{likeDislikeData?.like || 0}}</span>
   <button class="thumbBtn" disabled>
     <i class="bi bi-hand-thumbs-down thumbIcon"></i>
   </button>
-  <span>{{likeDislike?.dislike || 0}}</span>
+  <span>{{likeDislikeData?.dislike || 0}}</span>
 </ng-template>

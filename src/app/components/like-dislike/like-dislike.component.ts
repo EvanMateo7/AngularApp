@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, CollectionReference, DocumentSnapshot } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, DocumentSnapshot } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-like-dislike',
@@ -10,39 +11,69 @@ import firebase from 'firebase/app';
 export class LikeDislikeComponent implements OnInit {
   @Input() docId: string;
   @Input() isInteractive: boolean = true;
+  @Input() likeDislikeUser: any = {};
 
-  likeDislikeCollection: AngularFirestoreCollection;
+  likeDislikeUserDoc: AngularFirestoreDocument<any>;
   likeDislikeDoc: AngularFirestoreDocument<any>;
-  likeDislike: any = {like: 0, dislike: 0};
+  likeDislikeData: any = { like: 0, dislike: 0 };
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(public auth: AuthService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
-    this.likeDislikeCollection = this.afs.collection("like_dislike");
-    this.likeDislikeDoc = this.likeDislikeCollection.doc(this.docId);
+    const likeDislikeCollection = this.afs.collection("like_dislike");
+    this.likeDislikeDoc = likeDislikeCollection.doc(this.docId);
     this.likeDislikeDoc.get().toPromise().then((doc: DocumentSnapshot<any>) => {
       if (doc.data() != undefined) {
-        this.likeDislike = doc.data();
+        this.likeDislikeData = doc.data();
+      }
+    })
+
+    const likeDislikeUserCollection = this.afs.collection(`like_dislike/${this.docId}/users`);
+    this.likeDislikeUserDoc = likeDislikeUserCollection.doc(this.auth.currentUser.id);
+    this.likeDislikeUserDoc.get().toPromise().then((doc: DocumentSnapshot<any>) => {
+      if (doc.data() != undefined) {
+        this.likeDislikeUser = doc.data();
       }
     })
   }
 
   update(event: Event, like: boolean) {
-    const property = like ? "like" : "dislike";
-    const data = { [property]: firebase.firestore.FieldValue.increment(1) }
-    this.likeDislikeCollection.doc(this.docId).update(data)
+    const likeOrDislike = like ? "like" : "dislike";
+    const likeOrDislikeOther = like ? "dislike" : "like";
+
+    // Check if already like/dislike
+    const incOrDec = likeOrDislike in this.likeDislikeUser ? -1 : 1;
+    let likeDislikeUpdate = { [likeOrDislike]: firebase.firestore.FieldValue.increment(incOrDec) }
+
+    if (likeOrDislikeOther in this.likeDislikeUser) {
+      likeDislikeUpdate = {
+        ...likeDislikeUpdate,
+        [likeOrDislikeOther]: firebase.firestore.FieldValue.increment(-1),
+      }
+    }
+
+    // Update like_dislike in firestore
+    this.likeDislikeDoc.update(likeDislikeUpdate)
       .catch((error) => {
-        const firstLikeDislike = Object.assign(data, this.likeDislike);
-        console.log(firstLikeDislike)
-        this.likeDislikeCollection.doc(this.docId).set(firstLikeDislike);
+        const firstLikeDislike = Object.assign(likeDislikeUpdate, this.likeDislikeData);
+        this.likeDislikeDoc.set(firstLikeDislike);
       });
-    
-      this.likeDislike[property] += 1;
+
+    // Update locals
+    this.likeDislikeData[likeOrDislike] += incOrDec;
+    if (likeOrDislikeOther in this.likeDislikeUser) {
+      this.likeDislikeData[likeOrDislikeOther] -= 1;
+    }
+    this.likeDislikeUser = incOrDec < 0 ? {} : { [likeOrDislike]: 1 }
+
+    // Update like_dislike users in firestore
+    this.likeDislikeUserDoc.set(this.likeDislikeUser);
+
     event.stopPropagation();
   }
 
   get likeDislikeRatio() {
-    return (this.likeDislike.like / (this.likeDislike.like + this.likeDislike.dislike)) * 100 || 0;
+    return (this.likeDislikeData.like / (this.likeDislikeData.like + this.likeDislikeData.dislike)) * 100 || 0;
 
   }
 

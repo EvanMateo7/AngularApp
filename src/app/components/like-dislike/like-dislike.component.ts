@@ -13,7 +13,7 @@ export class LikeDislikeComponent implements OnInit {
 
   likeDislikeCollection: AngularFirestoreCollection;
   likeDislikeDoc: AngularFirestoreDocument<any>;
-  likeDislike: any;
+  likeDislike: any = {like: 0, dislike: 0};
 
   constructor(private afs: AngularFirestore) { }
 
@@ -21,24 +21,29 @@ export class LikeDislikeComponent implements OnInit {
     this.likeDislikeCollection = this.afs.collection("like_dislike");
     this.likeDislikeDoc = this.likeDislikeCollection.doc(this.docId);
     this.likeDislikeDoc.get().toPromise().then((doc: DocumentSnapshot<any>) => {
-      this.likeDislike = doc.data() ?? {};
+      if (doc.data() != undefined) {
+        this.likeDislike = doc.data();
+      }
     })
   }
 
   update(event: Event, like: boolean) {
-    if (this.likeDislike) {
-      const property = like ? "like" : "dislike";
-      const data = { [property]: firebase.firestore.FieldValue.increment(1) }
-      this.likeDislikeCollection.doc(this.docId).update(data)
-        .catch((error) => {
-          this.likeDislikeCollection.doc(this.docId).set(data);
-        });;
-      event.stopPropagation();
-    }
+    const property = like ? "like" : "dislike";
+    const data = { [property]: firebase.firestore.FieldValue.increment(1) }
+    this.likeDislikeCollection.doc(this.docId).update(data)
+      .catch((error) => {
+        const firstLikeDislike = Object.assign(data, this.likeDislike);
+        console.log(firstLikeDislike)
+        this.likeDislikeCollection.doc(this.docId).set(firstLikeDislike);
+      });
+    
+      this.likeDislike[property] += 1;
+    event.stopPropagation();
   }
 
   get likeDislikeRatio() {
-    return (this.likeDislike?.like / (this.likeDislike?.like + this.likeDislike?.dislike)) * 100 || 0;
+    return (this.likeDislike.like / (this.likeDislike.like + this.likeDislike.dislike)) * 100 || 0;
+
   }
 
 }

@@ -11,11 +11,11 @@ import { AuthService } from '../../core/auth.service';
 export class LikeDislikeComponent implements OnInit {
   @Input() docId: string;
   @Input() isInteractive: boolean = true;
-  @Input() likeDislikeUser: any = {};
 
   likeDislikeUserDoc: AngularFirestoreDocument<any>;
   likeDislikeDoc: AngularFirestoreDocument<any>;
   likeDislikeData: any = { like: 0, dislike: 0 };
+  likeDislikeUser: any = {};
 
   constructor(public auth: AuthService, private afs: AngularFirestore) { }
 
@@ -41,40 +41,40 @@ export class LikeDislikeComponent implements OnInit {
     const likeOrDislike = like ? "like" : "dislike";
     const likeOrDislikeOther = like ? "dislike" : "like";
 
-    // Check if already like/dislike
-    const incOrDec = likeOrDislike in this.likeDislikeUser ? -1 : 1;
-    let likeDislikeUpdate = { [likeOrDislike]: firebase.firestore.FieldValue.increment(incOrDec) }
+    this.afs.firestore.runTransaction(async (transaction) => {
+      return transaction.get(this.likeDislikeUserDoc.ref).then((doc) => {
+        if (doc.data() != undefined) {
+          this.likeDislikeUser = doc.data();
+        }
 
-    if (likeOrDislikeOther in this.likeDislikeUser) {
-      likeDislikeUpdate = {
-        ...likeDislikeUpdate,
-        [likeOrDislikeOther]: firebase.firestore.FieldValue.increment(-1),
-      }
-    }
+        // Update like_dislike in firestore
+        const incOrDec = likeOrDislike in this.likeDislikeUser ? -1 : 1;
+        let likeDislikeUpdate = { [likeOrDislike]: firebase.firestore.FieldValue.increment(incOrDec) };
 
-    // Update like_dislike in firestore
-    this.likeDislikeDoc.update(likeDislikeUpdate)
-      .catch((error) => {
-        const firstLikeDislike = Object.assign(likeDislikeUpdate, this.likeDislikeData);
-        this.likeDislikeDoc.set(firstLikeDislike);
+        if (likeOrDislikeOther in this.likeDislikeUser) {
+          likeDislikeUpdate = {
+            ...likeDislikeUpdate,
+            [likeOrDislikeOther]: firebase.firestore.FieldValue.increment(-1),
+          };
+        }
+        transaction.set(this.likeDislikeDoc.ref, likeDislikeUpdate, {merge: true});
+        
+        // Update locals
+        this.likeDislikeData[likeOrDislike] += incOrDec;
+        if (likeOrDislikeOther in this.likeDislikeUser) {
+          this.likeDislikeData[likeOrDislikeOther] -= 1;
+        }
+        this.likeDislikeUser = incOrDec < 0 ? {} : { [likeOrDislike]: 1 };
+
+        // Update like_dislike user in firestore
+        transaction.set(this.likeDislikeUserDoc.ref, this.likeDislikeUser);
       });
-
-    // Update locals
-    this.likeDislikeData[likeOrDislike] += incOrDec;
-    if (likeOrDislikeOther in this.likeDislikeUser) {
-      this.likeDislikeData[likeOrDislikeOther] -= 1;
-    }
-    this.likeDislikeUser = incOrDec < 0 ? {} : { [likeOrDislike]: 1 }
-
-    // Update like_dislike users in firestore
-    this.likeDislikeUserDoc.set(this.likeDislikeUser);
+    });
 
     event.stopPropagation();
   }
 
   get likeDislikeRatio() {
     return (this.likeDislikeData.like / (this.likeDislikeData.like + this.likeDislikeData.dislike)) * 100 || 0;
-
   }
-
 }

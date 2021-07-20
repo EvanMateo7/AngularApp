@@ -1,10 +1,11 @@
-<div *ngIf="selectedItem | async as item">
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-10" *ngIf="selectedItem | async as item">
     <div class="d-flex flex-column align-items-center">
       <img class="itemDetailsImage" [src]="item.originalURL || item.thumbnailURL">
       <div class="itemDetailsInfo">
-        <span class="itemName">{{item.name}}</span>
+        <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
-        <p class="itemPrice">${{item.price}}</p>
+        <app-like-dislike [docId]="item.id"></app-like-dislike>
       </div>
     </div>
     <hr>
@@ -13,27 +14,29 @@
       <div class="commentForm form-group">
         <label for="comment">Comment</label><br>
         <div class="commentGroup">
-          <textarea type="text" maxlength="500" rows=4 class="form-control form-control-sm" 
-            [(ngModel)]="comment.comment" 
-            name="commentInput" 
-            [maxLineValidator]="20"
-            required 
-            pattern="\s*\S+[\S\s]*" 
+          <textarea type="text" maxlength="500" rows=4 class="form-control form-control-sm"
+            [(ngModel)]="comment.comment" name="commentInput" [maxLineValidator]="20" required pattern="\s*\S+[\S\s]*"
             #commentInput="ngModel"></textarea>
-          <div [hidden]="!commentInput.errors?.pattern  || commentInput.pristine" class="alert-sm alert-danger sm">Empty.</div>
-          <div [hidden]="!commentInput.errors?.maxLineValidator || commentInput.pristine" class="alert-sm alert-danger sm">Too many lines.</div>
+          <div [hidden]="!commentInput.errors?.pattern  || commentInput.pristine" class="alert-sm alert-danger sm">
+            Empty.</div>
+          <div [hidden]="!commentInput.errors?.maxLineValidator || commentInput.pristine"
+            class="alert-sm alert-danger sm">Too many lines.</div>
         </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
       </div>
     </form>
 
-    <div class="commentsList"  *ngFor="let comment of comments">
+    <div class="commentsList" *ngFor="let comment of comments">
       <div class="commentHeader">
-        <span class="commentUser badge badge-pill badge-dark">{{comment.userId}}</span><span class="d-inline-block mx-1 text-nowrap">{{comment.timestamp | date:'short'}}</span>
+        <span class="commentUser badge badge-pill badge-dark">{{comment.userId}}</span><span
+          class="d-inline-block mx-1 text-nowrap">{{comment.timestamp | date:'short'}}</span>
       </div>
       <p class="comment">{{comment.comment}}</p>
-    </div>  
+    </div>
     <span *ngIf="noComments">No comments.</span>
     <span *ngIf="noMoreComments">No more comments.</span>
-    <button *ngIf="!noComments && !noMoreComments" class="btn btn-sm btn-outline-dark" (click)='getMoreComments()'>Load more comments</button>
+    <button *ngIf="!noComments && !noMoreComments" class="btn btn-sm btn-outline-dark" (click)='getMoreComments()'>
+      Load more comments
+    </button>
+  </div>
 </div>

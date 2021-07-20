@@ -1,0 +1,18 @@
+
+span {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+}
+
+.thumbBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.thumbIcon {
+  font-size: 1.3em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+}

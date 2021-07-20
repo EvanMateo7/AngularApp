@@ -57,13 +57,10 @@
   height: inherit;
   display: flex;
   flex-direction: column;
+  align-items: start;
   margin: 10px;
   font-size: 1.3em;
 }
-
-.itemPrice {
-  font-size: 1.3em;
-} 
 
 .itemDetailsModelHeader {
   position: sticky;

@@ -10,7 +10,7 @@
       <div class="itemInfo">
         <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
-        <p class="itemPrice">${{item.price}}</p>
+        <app-like-dislike [docId]="item.id" [isInteractive]="false"></app-like-dislike>
       </div>
     </div>
   </div>
@@ -21,12 +21,10 @@
       <tr>
           <th>Name</th>
           <th>Description</th>
-          <th>Price</th>
       </tr>
       <tr *ngFor="let item of items | async" >
           <td><a routerLink="/item/{{item.id}}">{{item.name}}</a></td>
           <td>{{item.description}}</td>
-          <td>{{item.price | currency}}</td>
           <ng-container *ngIf="auth.currentUser">
             <td class="click editCell" (click)="selectItem(item)" data-toggle="modal" data-target="#editItemModal"><fa-icon class="fa-lg" [icon]="faEdit"></fa-icon></td>
             <td class="click deleteCell" (dblclick)="deleteItem(item)" ><fa-icon class="fa-lg" [icon]="faTimes"></fa-icon></td>
@@ -63,10 +61,6 @@
               <div [hidden]="descriptionInput.valid" class="alert-sm alert-danger sm">
                   Description is required
               </div>
-            </div>
-            <div class="form-group">
-              <label for="price">Price</label><br>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="selectedItem.price" name="price" >
             </div>
 
             <div class="modal-footer">
@@ -110,10 +104,6 @@
                   Description is required
               </div>
               </div>
-            <div class="form-group">
-              <label for="price">Price</label><br>
-              <input type="number" class="form-control form-control-sm" [(ngModel)]="newItem.price" name="price" >
-            </div>
             
             <div id="uploader">
               <progress [value]="uploadPercent | async" max="100" id="uploadProgress">0</progress>

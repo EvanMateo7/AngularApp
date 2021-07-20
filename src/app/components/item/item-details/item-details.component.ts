@@ -38,7 +38,7 @@ export class ItemDetailsComponent implements OnInit {
   
   getItemDoc(): void {
     this.itemDoc = this.afs.doc(`items/${this.itemId}`);
-    this.selectedItem = this.itemDoc.valueChanges();
+    this.selectedItem = this.itemDoc.valueChanges({ idField: 'id' });
   }
   
   init() {

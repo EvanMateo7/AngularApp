@@ -1,0 +1,30 @@
+<div class="like-dislike">
+  <ng-container *ngIf="isInteractive; then interactive; else notInteractive"></ng-container>
+  <div class="progress" style="height: 2px;">
+    <div class="progress-bar" role="progressbar" [style.width.%]="likeDislikeRatio" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+</div>
+
+<ng-template #interactive>
+  <button class="btn thumbBtn" (click)="update($event, true)">
+    <i *ngIf="!likeDislikeUser.like" class="bi bi-hand-thumbs-up thumbIcon"></i>
+    <i *ngIf="likeDislikeUser.like" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
+  </button>
+  <span>{{likeDislikeData?.like || 0}}</span>
+  <button class="btn thumbBtn" (click)="update($event, false)">
+    <i *ngIf="!likeDislikeUser.dislike" class="bi bi-hand-thumbs-down thumbIcon"></i>
+    <i *ngIf="likeDislikeUser.dislike" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
+  </button>
+  <span>{{likeDislikeData?.dislike || 0}}</span>
+</ng-template>
+
+<ng-template #notInteractive>
+  <button class="thumbBtn" disabled>
+    <i class="bi bi-hand-thumbs-up thumbIcon"></i>
+  </button>
+  <span>{{likeDislikeData?.like || 0}}</span>
+  <button class="thumbBtn" disabled>
+    <i class="bi bi-hand-thumbs-down thumbIcon"></i>
+  </button>
+  <span>{{likeDislikeData?.dislike || 0}}</span>
+</ng-template>

@@ -27,6 +27,13 @@ textarea {
     resize: none;
 }
 
+.iconBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
 .click:hover {
     cursor: pointer;
 }

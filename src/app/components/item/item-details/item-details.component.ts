@@ -17,7 +17,7 @@ export class ItemDetailsComponent implements OnInit {
 
   selectedItem: Observable<Item> = null;
   itemDoc: AngularFirestoreDocument<Item>;
-  comment: ItemComment = {userId: "", comment: "", timestamp: null};
+  comment: ItemComment = {userID: "", comment: "", timestamp: null};
   commentsCollection: AngularFirestoreCollection;
   comments: DocumentData[] = [];
   lastCommentTimestamp: any;
@@ -83,7 +83,7 @@ export class ItemDetailsComponent implements OnInit {
     if(this.auth.currentUser)
     {
       console.log("adding comment...");
-      this.comment.userId = this.auth.currentUser.id;
+      this.comment.userID = this.auth.currentUser.id;
       this.comment.timestamp = Date.now();
       this.commentsCollection.add(this.comment);
       this.commentForm.resetForm();

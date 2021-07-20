@@ -3,7 +3,7 @@ export interface Item {
     id?: string
     name:string,
     description: string,
-    userId: string,
+    userID: string,
     thumbnailURL?: string
   }
 
@@ -19,7 +19,7 @@ export interface User {
 export interface ItemComment {
     id?: string,
     comment: string,
-    userId: string,
+    userID: string,
     timestamp: number;
 }
 

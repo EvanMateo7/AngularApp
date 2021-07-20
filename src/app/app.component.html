@@ -1,33 +1,35 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-2">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav navbar-nav navbarmenu">
+      <ul class="nav navbar-nav navbarmenu">
             <li class="nav-item ">
-                <a class="navbar-brand font-weight-bold" routerLink="/">Items</a>
+              <a class="navbar-brand font-weight-bold" routerLink="/">Items</a>
             </li>
             <li class="nav-item " *ngIf="auth.isAdmin">
-                <a class="navbar-brand font-weight-bold" routerLink="/users">Users</a>
+              <a class="navbar-brand font-weight-bold" routerLink="/users">Users</a>
             </li>
-        </ul>
-    </div>
-
-    <ul class="nav navbar-nav flex-row ml-auto">
-      <div *ngIf="user">
-        <div class="mr-3" *ngIf="user">
-            <img class="userPhoto" src="{{user.photoURL}}?sz=32" alt="User Photo">
-            {{user.displayName}}
-            <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
+          </ul>
         </div>
-      </div>
-
-      <div *ngIf="!user">
-        <a class="navbar-brand font-weight-bold" href="javascript: void(0)"
+        
+        <ul class="nav navbar-nav flex-row ml-auto">
+          <div *ngIf="user">
+            <div class="mr-3" *ngIf="user">
+              <img class="userPhoto" src="{{user.photoURL}}?sz=32" alt="User Photo">
+              {{user.displayName}}
+              <a class="" href="javascript: void(0)" (click)="auth.logout()">Logout</a>
+            </div>
+          </div>
+          
+          <div *ngIf="!user">
+            <a class="navbar-brand font-weight-bold" href="javascript: void(0)"
             (click)="auth.googleLogin()">Login</a>
       </div>
     </ul>
+  </div>
 </nav>
 
 

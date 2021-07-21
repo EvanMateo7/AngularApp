@@ -5,10 +5,7 @@ span {
 }
 
 .thumbBtn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  border: 0;
 }
 
 .thumbIcon {

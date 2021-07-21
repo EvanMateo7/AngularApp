@@ -54,14 +54,14 @@ export class ItemComponent implements OnInit {
   }
 
 
-  selectItem(item): void {
+  selectItem(event: Event, item: Item): void {
     this.selectedItem = item;
     this.newItem = null;
   }
 
   addNewItem() {
     if(this.auth.currentUser) {
-      this.newItem = {userId: this.auth.currentUser.id, name: "", description: ""};
+      this.newItem = {userID: this.auth.currentUser.id, name: "", description: ""};
     }
     this.selectedItem = null;
   }

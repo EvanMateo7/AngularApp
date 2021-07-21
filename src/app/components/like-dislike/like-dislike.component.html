@@ -6,12 +6,12 @@
 </div>
 
 <ng-template #interactive>
-  <button class="btn thumbBtn" (click)="update($event, true)">
+  <button class="btn thumbBtn iconBtn" (click)="update($event, true)">
     <i *ngIf="!likeDislikeUser.like" class="bi bi-hand-thumbs-up thumbIcon"></i>
     <i *ngIf="likeDislikeUser.like" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
   </button>
   <span>{{likeDislikeData?.like || 0}}</span>
-  <button class="btn thumbBtn" (click)="update($event, false)">
+  <button class="btn thumbBtn iconBtn" (click)="update($event, false)">
     <i *ngIf="!likeDislikeUser.dislike" class="bi bi-hand-thumbs-down thumbIcon"></i>
     <i *ngIf="likeDislikeUser.dislike" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
   </button>
@@ -19,11 +19,11 @@
 </ng-template>
 
 <ng-template #notInteractive>
-  <button class="thumbBtn" disabled>
+  <button class="thumbBtn iconBtn" disabled>
     <i class="bi bi-hand-thumbs-up thumbIcon"></i>
   </button>
   <span>{{likeDislikeData?.like || 0}}</span>
-  <button class="thumbBtn" disabled>
+  <button class="thumbBtn iconBtn" disabled>
     <i class="bi bi-hand-thumbs-down thumbIcon"></i>
   </button>
   <span>{{likeDislikeData?.dislike || 0}}</span>

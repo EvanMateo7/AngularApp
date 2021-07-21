@@ -4,6 +4,10 @@ span {
   margin-right: 0.3em;
 }
 
+.thumbBtn {
+  border: 0;
+}
+
 .thumbIcon {
   font-size: 1.3em;
   margin-left: 0.3em;

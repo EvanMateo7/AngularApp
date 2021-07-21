@@ -54,7 +54,7 @@ export class ItemComponent implements OnInit {
   }
 
 
-  selectItem(item): void {
+  selectItem(event: Event, item: Item): void {
     this.selectedItem = item;
     this.newItem = null;
   }

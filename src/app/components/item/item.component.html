@@ -5,40 +5,25 @@
 
 
   <div class="itemList">
-    <div class="itemTile" *ngFor="let item of items | async" (click)="selectItem(item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">
-      <img class="itemTileImage" [src]="item.thumbnailURL">
-      <div class="itemInfo">
-        <p class="itemName">{{item.name}}</p>
-        <p>{{item.description}}</p>
-        <app-like-dislike [docId]="item.id" [isInteractive]="false"></app-like-dislike>
+    <div class="itemTileContainer" *ngFor="let item of items | async">
+      <div class="itemTile" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">
+        <img class="itemTileImage" [src]="item.thumbnailURL">
+        <div class="itemInfo">
+          <p class="itemName">{{item.name}}</p>
+          <p>{{item.description}}</p>
+          <app-like-dislike [docId]="item.id" [isInteractive]="false"></app-like-dislike>
+        </div>
+      </div>
+      <div class="itemActionList">
+        <button class="btn btn-primary iconBtn itemActionBtn" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#editItemModal">
+          <fa-icon class="fa-lg" [icon]="faEdit"></fa-icon>
+        </button>
+        <button class="btn btn-danger iconBtn itemActionBtn" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
+          <fa-icon class="fa-lg" [icon]="faTimes"></fa-icon>
+        </button>
       </div>
     </div>
   </div>
-
-
-  <div class="itemTableContainer">
-    <table class="itemTable table table-dark table-striped table-hover table-sm" >
-      <thead>  
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of items | async" >
-          <td>{{item.name}}</td>
-          <td>{{item.description}}</td>
-          <ng-container *ngIf="auth.currentUser">
-            <td class="click editCell" (click)="selectItem(item)" data-bs-toggle="modal" data-bs-target="#editItemModal"><fa-icon class="fa-lg" [icon]="faEdit"></fa-icon></td>
-            <td class="click deleteCell" (dblclick)="deleteItem(item)" ><fa-icon class="fa-lg" [icon]="faTimes"></fa-icon></td>
-          </ng-container>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
 
   <!-- Edit Item -->
   <div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalLabel" aria-hidden="true">
@@ -76,6 +61,31 @@
 
           </form>
 
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Delete Item -->
+  <div class="modal" id="deleteItemModal" tabindex="-1" role="dialog" aria-labelledby="deleteItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteItemModalLabel">Delete Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form *ngIf="selectedItem">
+            <div class="form-group mb-2">
+              <label for="name">Name</label><br>
+              <input type="text" class="form-control form-control-sm" [ngModel]="selectedItem.name" name="name" readonly>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="deleteItem(selectedItem)" data-bs-dismiss="modal" >Delete</button>
         </div>
       </div>
     </div>

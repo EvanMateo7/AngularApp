@@ -54,14 +54,14 @@
           
           <form *ngIf="selectedItem" #editItemForm="ngForm">
 
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="name">Name</label><br>
               <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.name" name="name" required #nameInput="ngModel">
               <div [hidden]="nameInput.valid" class="alert-sm alert-danger sm">
                   Name is required
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="description">Description</label><br>
               <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.description" name="description" required #descriptionInput="ngModel">
               <div [hidden]="descriptionInput.valid" class="alert-sm alert-danger sm">
@@ -96,14 +96,14 @@
           
           <form *ngIf="newItem" #addItemForm="ngForm">
 
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="name">Name</label><br>
               <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.name" name="name" required  #nameInput="ngModel">
               <div [hidden]="nameInput.valid || nameInput.pristine" class="alert-sm alert-danger sm">
                   Name is required
               </div>  
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="description">Description</label><br>
               <input type="text" class="form-control form-control-sm" [(ngModel)]="newItem.description" name="description" required #descriptionInput="ngModel">
               <div [hidden]="descriptionInput.valid  || descriptionInput.pristine" class="alert-sm alert-danger sm">

@@ -11,7 +11,7 @@
     <hr>
 
     <form class="m-2" *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()" #commentForm="ngForm">
-      <div class="commentForm form-group">
+      <div class="commentForm form-group mb-2">
         <label for="comment">Comment</label><br>
         <div class="commentGroup">
           <textarea type="text" maxlength="500" rows=4 class="form-control form-control-sm"

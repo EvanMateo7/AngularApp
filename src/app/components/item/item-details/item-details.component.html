@@ -10,7 +10,7 @@
     </div>
     <hr>
 
-    <form *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()" #commentForm="ngForm">
+    <form class="m-2" *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()" #commentForm="ngForm">
       <div class="commentForm form-group">
         <label for="comment">Comment</label><br>
         <div class="commentGroup">
@@ -22,13 +22,13 @@
           <div [hidden]="!commentInput.errors?.maxLineValidator || commentInput.pristine"
             class="alert-sm alert-danger sm">Too many lines.</div>
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Save</button>
+        <button type="submit" class="btn btn-primary my-2" [disabled]="!commentForm.valid">Save</button>
       </div>
     </form>
 
     <div class="commentsList" *ngFor="let comment of comments">
       <div class="commentHeader">
-        <span class="commentUser badge badge-pill badge-dark">{{comment.userID}}</span><span
+        <span class="commentUser badge rounded-pill bg-dark">{{comment.userID}}</span><span
           class="d-inline-block mx-1 text-nowrap">{{comment.timestamp | date:'short'}}</span>
       </div>
       <p class="comment">{{comment.comment}}</p>

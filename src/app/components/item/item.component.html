@@ -20,8 +20,10 @@
         <img class="itemTileImage" [src]="item.thumbnailURL">
         <div class="itemInfo">
           <p class="itemName">{{item.name}}</p>
-          <p>{{item.description}}</p>
-          <app-like-dislike [docId]="item.id" [isInteractive]="false"></app-like-dislike>
+          <p class="itemDescription ellipsisMultiline">{{item.description}}</p>
+          <div class="itemLikeDislike">
+            <app-like-dislike [docId]="item.id" [isInteractive]="false"></app-like-dislike>
+          </div>
         </div>
       </div>
       <div class="itemActionList">

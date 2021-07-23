@@ -28,7 +28,7 @@
 
     <div class="commentsList" *ngFor="let comment of comments">
       <div class="commentHeader">
-        <span class="commentUser ellipsisText badge rounded-pill bg-dark">{{comment.userID}}</span><span
+        <span class="commentUser ellipsisLine badge rounded-pill bg-dark">{{comment.userID}}</span><span
           class="d-inline-block mx-1 text-nowrap">{{comment.timestamp | date:'short'}}</span>
       </div>
       <p class="comment">{{comment.comment}}</p>

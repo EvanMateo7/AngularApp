@@ -23,9 +23,14 @@ textarea {
     resize: none;
 }
 
-.ellipsisText {
+.ellipsisLine {
   text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: hidden;
+}
+
+.ellipsisMultiline {
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 

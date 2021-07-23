@@ -69,6 +69,9 @@
 }
 
 .itemActionBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 1px 1px 5px 0px black;
   margin: 2px;
   transform: scale(0);

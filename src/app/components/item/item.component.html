@@ -3,6 +3,16 @@
     <i class="bi bi-plus-lg"></i>
   </button>
 
+  <div class="container-fluid row justify-content-center my-3">
+    <div class="col-12 col-lg-5">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="search" aria-label="search" aria-describedby="item-search-btn">
+        <button class="btn btn-outline-primary" type="button" id="item-search-btn">
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <div class="itemList">
     <div class="itemTileContainer" *ngFor="let item of items | async">

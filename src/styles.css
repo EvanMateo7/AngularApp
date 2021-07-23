@@ -23,6 +23,12 @@ textarea {
     resize: none;
 }
 
+.ellipsisText {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .iconBtn {
   padding: 0;
   border-radius: 50%;

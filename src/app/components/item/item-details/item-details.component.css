@@ -31,9 +31,6 @@
   display: inline-block;
   font-size: 1.3em;
   font-weight: 600;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .comment {

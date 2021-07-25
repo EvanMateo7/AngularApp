@@ -5,7 +5,10 @@
       <div class="itemDetailsInfo">
         <p class="itemName">{{item.name}}</p>
         <p>{{item.description}}</p>
-        <app-like-dislike [docId]="item.id"></app-like-dislike>
+        <div class="d-flex justify-content-between align-items-baseline w-100">
+          <app-like-dislike [docId]="item.id"></app-like-dislike>
+          <div>{{item.dateCreated?.toDate() | date:'mediumDate' }}</div>
+        </div>
       </div>
     </div>
     <hr>

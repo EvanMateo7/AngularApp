@@ -101,11 +101,6 @@
   height: 3em;
 }
 
-.itemLikeDislike {
-  margin-top: auto;
-  margin-left: auto;
-}
-
 .itemInfo {
   height: inherit;
   display: flex;

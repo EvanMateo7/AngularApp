@@ -3,6 +3,7 @@ import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs'
+import firebase from 'firebase/app';
 
 import { Item } from '../../models';
 import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -45,7 +46,12 @@ export class ItemComponent implements OnInit {
 
     this.itemsCollection.get().toPromise()
       .then(querySnapshot => {
-        this.items = querySnapshot.docs.map(doc => doc.data());
+        this.items = querySnapshot.docs.map(doc => {
+          return {
+            id: doc.id,
+            ...doc.data()
+          }
+        });
       })
       .catch(err => console.error(err));
 
@@ -61,7 +67,13 @@ export class ItemComponent implements OnInit {
 
   addNewItem() {
     if (this.auth.currentUser) {
-      this.newItem = { userID: this.auth.currentUser.id, name: "", description: "" };
+      this.newItem = { 
+        id: "",
+        userID: this.auth.currentUser.id,
+        name: "",
+        description: "",
+        dateCreated: firebase.firestore.FieldValue.serverTimestamp() 
+      };
     }
     this.selectedItem = null;
   }
@@ -84,9 +96,10 @@ export class ItemComponent implements OnInit {
 
   async addItem() {
     console.log("adding item...");
-    let newItem = await this.itemsCollection.add(this.newItem);
-    console.log(newItem.id);
-    this.uploadFile(newItem.id);
+    const newItemRef = this.itemsCollection.doc();
+    this.newItem.id = newItemRef.ref.id;
+    await newItemRef.set(this.newItem);
+    this.uploadFile(this.newItem.id);
   }
 
   resetAddItemForm(): void {

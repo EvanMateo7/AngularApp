@@ -1,10 +1,11 @@
 
 export interface Item {
-    id?: string
+    id: string
     name:string,
     description: string,
     userID: string,
-    thumbnailURL?: string
+    thumbnailURL?: string,
+    dateCreated: any
   }
 
 export interface User {

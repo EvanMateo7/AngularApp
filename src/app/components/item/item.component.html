@@ -14,6 +14,10 @@
     </div>
   </div>
 
+  <div *ngIf="!items" class="spinner-border text-dark" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+
   <div class="itemList">
     <div class="itemTileContainer" *ngFor="let item of items">
       <div class="itemTile" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">

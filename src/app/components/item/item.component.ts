@@ -3,7 +3,6 @@ import { AuthService } from '../../core/auth.service';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from "@angular/fire/firestore";
 import { AngularFireStorage } from '@angular/fire/storage';
 import { Observable } from 'rxjs'
-import { map } from 'rxjs/operators';
 
 import { Item } from '../../models';
 import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +18,7 @@ export class ItemComponent implements OnInit {
   @ViewChild('addItemForm') addItemForm;
 
   itemsCollection: AngularFirestoreCollection<Item>;
-  items: Observable<Item[]>;
+  items: Item[];
   itemDoc: AngularFirestoreDocument<Item>;
 
   selectedItem: Item;
@@ -43,11 +42,12 @@ export class ItemComponent implements OnInit {
     }
 
     this.itemsCollection = this.afs.collection("items");
-    this.items = this.itemsCollection.snapshotChanges().pipe(map(changes => {
-        console.log('Initialize: ItemComponent sub...');
-        return changes.map(itemDataObject);
+
+    this.itemsCollection.get().toPromise()
+      .then(querySnapshot => {
+        this.items = querySnapshot.docs.map(doc => doc.data());
       })
-    );
+      .catch(err => console.error(err));
 
     this.selectedItem = null;
     this.newItem = null;
@@ -60,14 +60,14 @@ export class ItemComponent implements OnInit {
   }
 
   addNewItem() {
-    if(this.auth.currentUser) {
-      this.newItem = {userID: this.auth.currentUser.id, name: "", description: ""};
+    if (this.auth.currentUser) {
+      this.newItem = { userID: this.auth.currentUser.id, name: "", description: "" };
     }
     this.selectedItem = null;
   }
 
   updateItem(): void {
-    if(this.auth.currentUser) {
+    if (this.auth.currentUser) {
       console.log("updating item...");
       this.itemDoc = this.afs.doc(`items/${this.selectedItem.id}`);
       this.itemDoc.update(this.selectedItem);
@@ -75,7 +75,7 @@ export class ItemComponent implements OnInit {
   }
 
   deleteItem(item: Item): void {
-    if(this.auth.currentUser) {
+    if (this.auth.currentUser) {
       console.log("deleting item...");
       this.itemDoc = this.afs.doc(`items/${item.id}`);
       this.itemDoc.delete();
@@ -102,7 +102,7 @@ export class ItemComponent implements OnInit {
   uploadFile(itemID: String): void {
 
     const filePath = `images/${itemID}`;
-    if(this.uploadImage != undefined) {
+    if (this.uploadImage != undefined) {
       console.log("uploading file...");
       const uploadRef = this.storage.ref(filePath);
       const uploadTask = uploadRef.put(this.uploadImage);

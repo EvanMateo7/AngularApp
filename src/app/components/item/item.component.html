@@ -15,7 +15,7 @@
   </div>
 
   <div class="itemList">
-    <div class="itemTileContainer" *ngFor="let item of items | async">
+    <div class="itemTileContainer" *ngFor="let item of items">
       <div class="itemTile" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">
         <img class="itemTileImage" [src]="item.thumbnailURL">
         <div class="itemInfo">

@@ -7,13 +7,13 @@
 
 <ng-template #interactive>
   <button class="btn thumbBtn iconBtn" (click)="update($event, true)">
-    <i *ngIf="!likeDislikeUser.like" class="bi bi-hand-thumbs-up thumbIcon"></i>
-    <i *ngIf="likeDislikeUser.like" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
+    <i *ngIf="!liked" class="bi bi-hand-thumbs-up thumbIcon"></i>
+    <i *ngIf="liked" class="bi bi-hand-thumbs-up-fill thumbIcon"></i>
   </button>
   <span>{{likeDislikeData?.like || 0}}</span>
   <button class="btn thumbBtn iconBtn" (click)="update($event, false)">
-    <i *ngIf="!likeDislikeUser.dislike" class="bi bi-hand-thumbs-down thumbIcon"></i>
-    <i *ngIf="likeDislikeUser.dislike" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
+    <i *ngIf="!disliked" class="bi bi-hand-thumbs-down thumbIcon"></i>
+    <i *ngIf="disliked" class="bi bi-hand-thumbs-down-fill thumbIcon"></i>
   </button>
   <span>{{likeDislikeData?.dislike || 0}}</span>
 </ng-template>

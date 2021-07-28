@@ -7,11 +7,13 @@ import firebase from 'firebase/app';
 
 import { Item } from '../../models';
 import { faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { ItemSearchService } from '../../services/item-search.service';
 
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css']
+  styleUrls: ['./item.component.css'],
+  providers: [ItemSearchService]
 })
 export class ItemComponent implements OnInit {
 
@@ -19,7 +21,7 @@ export class ItemComponent implements OnInit {
   @ViewChild('addItemForm') addItemForm;
 
   itemsCollection: AngularFirestoreCollection<Item>;
-  items: Item[];
+  items: Partial<Item>[];
   itemDoc: AngularFirestoreDocument<Item>;
 
   selectedItem: Item;
@@ -31,7 +33,12 @@ export class ItemComponent implements OnInit {
   faEdit = faEdit;
   faTimes = faTimes;
 
-  constructor(public auth: AuthService, private afs: AngularFirestore, private storage: AngularFireStorage) { }
+  constructor(
+    public auth: AuthService, 
+    private afs: AngularFirestore, 
+    private storage: AngularFireStorage,
+    public algoliaItemSeach: ItemSearchService
+  ) { }
 
   ngOnInit() {
     console.log('Initialize: ItemComponent...');
@@ -55,10 +62,58 @@ export class ItemComponent implements OnInit {
       })
       .catch(err => console.error(err));
 
+    this.algoliaItemSeach.results.subscribe((next) => {
+      this.items = next;
+    })
+
     this.selectedItem = null;
     this.newItem = null;
   }
 
+  get currentPage(): number {
+    return this.algoliaItemSeach.currentPage;
+  }
+
+  get pages(): number[] {
+    return this.algoliaItemSeach.pages;
+  }
+
+  get numPages(): number {
+    return this.algoliaItemSeach.numPages;
+  }
+
+  get isFirstPage(): boolean {
+    return this.algoliaItemSeach.isFirstPage;
+  }
+
+  get isLastPage(): boolean {
+    return this.algoliaItemSeach.isLastPage;
+  }
+  
+  prevPage(): void {
+    this.algoliaItemSeach.prevPage();
+  }
+
+  setPage(page: number): void {
+    this.algoliaItemSeach.setPage(page);
+  }
+
+  nextPage(): void {
+    this.algoliaItemSeach.nextPage();
+  }
+
+  getItemDate(item: Partial<Item>): Date {
+    if (typeof item.dateCreated === 'number') {
+      return new Date(item.dateCreated);
+    }
+    else if (typeof item.dateCreated.toDate === 'function') {
+      return item.dateCreated.toDate();
+    }
+  }
+
+  async searchItem(query: string) {
+    await this.algoliaItemSeach.search(query);
+  }
 
   selectItem(event: Event, item: Item): void {
     this.selectedItem = item;
@@ -72,7 +127,7 @@ export class ItemComponent implements OnInit {
         userID: this.auth.currentUser.id,
         name: "",
         description: "",
-        dateCreated: firebase.firestore.FieldValue.serverTimestamp() 
+        dateCreated: firebase.firestore.FieldValue.serverTimestamp()
       };
     }
     this.selectedItem = null;
@@ -133,6 +188,6 @@ export class ItemComponent implements OnInit {
     else {
       console.error("upload image is UNDEFINED!");
     }
-
   }
+
 }

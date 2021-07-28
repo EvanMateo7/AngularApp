@@ -4,8 +4,9 @@ export interface Item {
     name:string,
     description: string,
     userID: string,
+    originalURL?: string,
     thumbnailURL?: string,
-    dateCreated: any
+    dateCreated: any;
   }
 
 export interface User {

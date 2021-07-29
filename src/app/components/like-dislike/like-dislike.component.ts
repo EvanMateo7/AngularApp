@@ -16,16 +16,17 @@ export class LikeDislikeComponent implements OnInit {
   userLikeDislikeData: any = {};
 
   likeDislikeDoc: AngularFirestoreDocument<any>;
-  likeDislikeData: any = { like: 0, dislike: 0 };
+  likeDislikeData: any = { likes: 0, dislikes: 0 };
 
   constructor(public auth: AuthService, private afs: AngularFirestore) { }
 
   ngOnInit(): void {
-    const likeDislikeCollection = this.afs.collection("like_dislike");
+    const likeDislikeCollection = this.afs.collection('items');
     this.likeDislikeDoc = likeDislikeCollection.doc(this.docId);
     this.likeDislikeDoc.get().toPromise().then((doc: DocumentSnapshot<any>) => {
       if (doc.data() != undefined) {
-        this.likeDislikeData = doc.data();
+        const itemLikesDislikes = (({likes = 0, dislikes = 0}) => ({likes, dislikes}))(doc.data());
+        this.likeDislikeData = itemLikesDislikes;
       }
     })
 
@@ -49,8 +50,8 @@ export class LikeDislikeComponent implements OnInit {
 
         // Update like_dislike of item
         const existingUserRating = this.userLikeDislikeData.like_dislike || 0;
-        const likeOrDislike = like ? "like" : "dislike";
-        const likeOrDislikeOther = like ? "dislike" : "like";
+        const likeOrDislike = like ? "likes" : "dislikes";
+        const likeOrDislikeOther = like ? "dislikes" : "likes";
         let likeDislikeUpdate = {
           [likeOrDislike]: firebase.firestore.FieldValue.increment(1),
         };
@@ -95,6 +96,6 @@ export class LikeDislikeComponent implements OnInit {
   }
 
   get likeDislikeRatio() {
-    return (this.likeDislikeData.like / (this.likeDislikeData.like + this.likeDislikeData.dislike)) * 100 || 0;
+    return (this.likeDislikeData.likes / (this.likeDislikeData.likes + this.likeDislikeData.dislikes)) * 100 || 0;
   }
 }

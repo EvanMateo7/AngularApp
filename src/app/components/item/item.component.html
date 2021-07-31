@@ -3,21 +3,25 @@
     <i class="bi bi-plus-lg"></i>
   </button>
 
+  <!-- Search bar -->
   <div class="container-fluid row justify-content-center my-3">
     <div class="col-12 col-lg-5">
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="search" aria-label="search" aria-describedby="item-search-btn" [(ngModel)]="searchQuery">
+        <input type="text" class="form-control" placeholder="search" aria-label="search" aria-describedby="item-search-btn" 
+          (keyup.enter)="searchItem(searchQuery)" [(ngModel)]="searchQuery">
         <button class="btn btn-outline-primary" type="button" id="item-search-btn" (click)="searchItem(searchQuery)">
           <i class="bi bi-search"></i>
         </button>
       </div>
     </div>
   </div>
-
+  
+  <!-- Spinner -->
   <div *ngIf="!items" class="spinner-border text-dark" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
-
+  
+  <!-- Item List -->
   <div class="itemList">
     <div class="itemTileContainer" *ngFor="let item of items">
       <div class="itemTile" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">
@@ -41,7 +45,8 @@
       </div>
     </div>
   </div>
-
+  
+  <!-- Page navigation -->
   <nav *ngIf="numPages > 0" aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item" [ngClass]="{'disabled' : isFirstPage}" (click)="prevPage()"><a class="page-link">Previous</a></li>

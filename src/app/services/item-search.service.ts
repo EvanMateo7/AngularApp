@@ -56,7 +56,7 @@ export class ItemSearchService {
     this.pages = Array.from(Array(this.numPages).keys());
   }
 
-  async search(query: string, page: number = 0, numPerPage: number = 2): Promise<void> {
+  async search(query: string, page: number = 0, numPerPage: number = 20): Promise<void> {
     this.searchQuery = query;
     const result = await algoliaIndex.search(query, {
       page: page,

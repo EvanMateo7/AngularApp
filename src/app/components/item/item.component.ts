@@ -23,6 +23,7 @@ export class ItemComponent implements OnInit {
   itemsCollection: AngularFirestoreCollection<Item>;
   items: Partial<Item>[];
   itemDoc: AngularFirestoreDocument<Item>;
+  itemsPerPage: number = 20;
 
   selectedItem: Item;
   newItem: Item;
@@ -37,69 +38,53 @@ export class ItemComponent implements OnInit {
     public auth: AuthService, 
     private afs: AngularFirestore, 
     private storage: AngularFireStorage,
-    public algoliaItemSeach: ItemSearchService
+    public itemSearchService: ItemSearchService
   ) { }
 
   ngOnInit() {
     console.log('Initialize: ItemComponent...');
 
-    const itemDataObject = _ => {
-      const data = _.payload.doc.data() as Item;
-      data.id = _.payload.doc.id;
-      return data;
-    }
-
     this.itemsCollection = this.afs.collection("items");
 
-    this.itemsCollection.get().toPromise()
-      .then(querySnapshot => {
-        this.items = querySnapshot.docs.map(doc => {
-          return {
-            id: doc.id,
-            ...doc.data()
-          }
-        });
-      })
-      .catch(err => console.error(err));
-
-    this.algoliaItemSeach.results.subscribe((next) => {
+    this.itemSearchService.results.subscribe((next) => {
       this.items = next;
-    })
+    });
+    this.searchItem('');
 
     this.selectedItem = null;
     this.newItem = null;
   }
 
   get currentPage(): number {
-    return this.algoliaItemSeach.currentPage;
+    return this.itemSearchService.currentPage;
   }
 
   get pages(): number[] {
-    return this.algoliaItemSeach.pages;
+    return this.itemSearchService.pages;
   }
 
   get numPages(): number {
-    return this.algoliaItemSeach.numPages;
+    return this.itemSearchService.numPages;
   }
 
   get isFirstPage(): boolean {
-    return this.algoliaItemSeach.isFirstPage;
+    return this.itemSearchService.isFirstPage;
   }
 
   get isLastPage(): boolean {
-    return this.algoliaItemSeach.isLastPage;
+    return this.itemSearchService.isLastPage;
   }
   
   prevPage(): void {
-    this.algoliaItemSeach.prevPage();
+    this.itemSearchService.prevPage();
   }
 
   setPage(page: number): void {
-    this.algoliaItemSeach.setPage(page);
+    this.itemSearchService.setPage(page);
   }
 
   nextPage(): void {
-    this.algoliaItemSeach.nextPage();
+    this.itemSearchService.nextPage();
   }
 
   getItemDate(item: Partial<Item>): Date {
@@ -112,7 +97,7 @@ export class ItemComponent implements OnInit {
   }
 
   async searchItem(query: string) {
-    await this.algoliaItemSeach.search(query);
+    await this.itemSearchService.search(query, 0, this.itemsPerPage);
   }
 
   selectItem(event: Event, item: Item): void {

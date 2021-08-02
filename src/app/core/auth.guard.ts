@@ -7,21 +7,21 @@ import { AuthService } from "./auth.service";
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: AuthService, private router: Router){}
+  constructor(private auth: AuthService, private router: Router) { }
 
-  canActivate( 
+  canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    
+
     return this.auth.user.pipe(
       take(1),
       map(user => {
-        if(user?.roles != null)
+        if (user?.roles != null)
           return !!user && user.roles.includes(next.data.role);
         return false;
-        }),
+      }),
       tap(loggedIn => {
-        if(!loggedIn) {
+        if (!loggedIn) {
           console.error('Access Denied');
         }
       })

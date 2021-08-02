@@ -33,7 +33,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     console.log('Initialize: UserComponent...');
 
-    this.auth.user.subscribe(next => { 
+    this.auth.user.subscribe(next => {
       this.currentUser = next;
     });
 
@@ -45,8 +45,8 @@ export class UserComponent implements OnInit {
 
     this.usersCollection = this.afs.collection("users");
     this.users = this.usersCollection.snapshotChanges().pipe(map(changes => {
-        return changes.map(userDataObject);
-      })
+      return changes.map(userDataObject);
+    })
     );
 
     this.selectedUser = null;
@@ -59,7 +59,7 @@ export class UserComponent implements OnInit {
     if (!this.selectedUser.roles) {
       this.selectedUser.roles = [];
     }
-    
+
     if (checked && !this.selectedUser.roles.includes(role)) {
       this.selectedUser.roles = [...this.selectedUser.roles, role];
     }

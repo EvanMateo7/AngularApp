@@ -17,30 +17,30 @@ export class ItemDetailsComponent implements OnInit {
 
   selectedItem: Observable<Item> = null;
   itemDoc: AngularFirestoreDocument<Item>;
-  comment: ItemComment = {userID: "", comment: "", timestamp: null};
+  comment: ItemComment = { userID: "", comment: "", timestamp: null };
   commentsCollection: AngularFirestoreCollection;
   comments: DocumentData[] = [];
   lastCommentTimestamp: any;
   noComments: boolean;
   noMoreComments: boolean;
-  
+
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
   ngOnInit() {
     console.log("Initialize: ItemDetailsComponent...");
-    
+
     this.init();
   }
-  
+
   ngOnChanges() {
     this.init();
   }
-  
+
   getItemDoc(): void {
     this.itemDoc = this.afs.doc(`items/${this.itemId}`);
     this.selectedItem = this.itemDoc.valueChanges({ idField: 'id' });
   }
-  
+
   init() {
     this.getItemDoc();
     this.commentsCollection = this.itemDoc.collection("comments");
@@ -53,10 +53,10 @@ export class ItemDetailsComponent implements OnInit {
     this.noMoreComments = false;
     this.commentsCollection.ref.orderBy("timestamp", "desc").limit(5).get().then(querySnapshot => {
       this.comments = querySnapshot.docs.map(doc => doc.data());
-      if(this.comments.length > 0) {
-        this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+      if (this.comments.length > 0) {
+        this.lastCommentTimestamp = this.comments[this.comments.length - 1].timestamp;
         this.noComments = false;
-      }    
+      }
       else {
         console.log("No comments");
         this.noComments = true;
@@ -67,11 +67,11 @@ export class ItemDetailsComponent implements OnInit {
   getMoreComments(): void {
     this.commentsCollection.ref.orderBy("timestamp", "desc").startAfter(this.lastCommentTimestamp).limit(5).get().then(querySnapshot => {
       let moreComments = querySnapshot.docs.map(doc => doc.data());
-      if(moreComments.length > 0) {
+      if (moreComments.length > 0) {
         this.comments = this.comments.concat(moreComments);
-        this.lastCommentTimestamp = this.comments[this.comments.length-1].timestamp;
+        this.lastCommentTimestamp = this.comments[this.comments.length - 1].timestamp;
         this.noMoreComments = false;
-      }   
+      }
       else {
         console.log("No more comments");
         this.noMoreComments = true;
@@ -80,14 +80,13 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   addComment() {
-    if(this.auth.currentUser)
-    {
+    if (this.auth.currentUser) {
       console.log("adding comment...");
       this.comment.userID = this.auth.currentUser.id;
       this.comment.timestamp = Date.now();
       this.commentsCollection.add(this.comment);
       this.commentForm.resetForm();
-      console.log("comment",this.comment)
+      console.log("comment", this.comment)
     }
     this.getComments();
   }

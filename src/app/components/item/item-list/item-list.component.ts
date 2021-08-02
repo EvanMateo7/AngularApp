@@ -15,7 +15,7 @@ export class ItemListComponent implements OnInit {
   @Input('items') set items(items: Item[]) {
     this._items = items;
   }
-  @Output() selectedItemEvent = new EventEmitter<Item>();
+  @Output() selectedItemIDEvent = new EventEmitter<string>();
 
   constructor() { }
 
@@ -27,7 +27,7 @@ export class ItemListComponent implements OnInit {
   }
 
   selectItem(item: Item): void {
-    this.selectedItemEvent.emit(item);
+    this.selectedItemIDEvent.emit(item.id);
   }
 
   getItemDate(item: Partial<Item>): Date {

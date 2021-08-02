@@ -12,23 +12,22 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent {
   user$: Subscription;
   user: User;
-  constructor(private auth: AuthService, private router: Router, private cd: ChangeDetectorRef) {}
-  
+  constructor(private auth: AuthService, private router: Router, private cd: ChangeDetectorRef) { }
+
   ngOnInit() {
-    this.user$ = this.auth.user.subscribe(next => { 
+    this.user$ = this.auth.user.subscribe(next => {
       this.user = next;
       this.cd.detectChanges();
     });
 
-    // Remove modal backdrop manually when change locations
+    // Remove modal backdrop manually when changing locations
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        Array.prototype.forEach.call(document.getElementsByClassName("modal-backdrop"), function(element: Element) {
+        Array.prototype.forEach.call(document.getElementsByClassName("modal-backdrop"), (element: Element) => {
           element.remove();
-          console.log(element)
         });
       }
-  });
+    });
   }
 
   ngOnDestroy() {

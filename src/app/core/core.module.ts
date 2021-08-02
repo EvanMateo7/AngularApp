@@ -31,7 +31,7 @@ import { AuthGuard } from "./auth.guard";
   ],
   declarations: []
 })
-export class CoreModule { 
+export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,

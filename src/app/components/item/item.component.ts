@@ -35,8 +35,8 @@ export class ItemComponent implements OnInit {
   faTimes = faTimes;
 
   constructor(
-    public auth: AuthService, 
-    private afs: AngularFirestore, 
+    public auth: AuthService,
+    private afs: AngularFirestore,
     private storage: AngularFireStorage,
     public itemSearchService: ItemSearchService
   ) { }
@@ -74,7 +74,7 @@ export class ItemComponent implements OnInit {
   get isLastPage(): boolean {
     return this.itemSearchService.isLastPage;
   }
-  
+
   prevPage(): void {
     this.itemSearchService.prevPage();
   }
@@ -88,17 +88,23 @@ export class ItemComponent implements OnInit {
   }
 
   async searchItem(query: string) {
+    this.items = null;
     await this.itemSearchService.search(query, 0, this.itemsPerPage);
   }
 
-  selectItem(item: Item): void {
-    this.selectedItem = item;
+  selectItem(itemID: string): void {
+    this.itemDoc = this.afs.doc(`items/${itemID}`);
+    this.itemDoc.ref.get().then(docSnapshot => {
+      if (docSnapshot.exists) {
+        this.selectedItem = docSnapshot.data();
+      }
+    });
     this.newItem = null;
   }
 
   addNewItem() {
     if (this.auth.currentUser) {
-      this.newItem = { 
+      this.newItem = {
         id: "",
         userID: this.auth.currentUser.id,
         name: "",

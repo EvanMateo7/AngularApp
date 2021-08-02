@@ -1,4 +1,3 @@
-
 <div class="itemList">
   <div class="itemTileContainer" *ngFor="let item of items">
     <div class="itemTile" (click)="selectItem(item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">
@@ -13,10 +12,12 @@
       </div>
     </div>
     <div class="itemActionList">
-      <button class="btn btn-primary iconBtn itemActionBtn" (click)="selectItem(item)" data-bs-toggle="modal" data-bs-target="#editItemModal">
+      <button class="btn btn-primary iconBtn itemActionBtn" (click)="selectItem(item)" data-bs-toggle="modal"
+        data-bs-target="#editItemModal">
         <fa-icon class="fa-lg" [icon]="faEdit"></fa-icon>
       </button>
-      <button class="btn btn-danger iconBtn itemActionBtn" (click)="selectItem(item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
+      <button class="btn btn-danger iconBtn itemActionBtn" (click)="selectItem(item)" data-bs-toggle="modal"
+        data-bs-target="#deleteItemModal">
         <fa-icon class="fa-lg" [icon]="faTimes"></fa-icon>
       </button>
     </div>

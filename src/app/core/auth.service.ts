@@ -16,40 +16,40 @@ export class AuthService {
   currentUser: User;
   user: Observable<User>;
 
-  constructor(private afAuth: AngularFireAuth, 
-              private afs: AngularFirestore, 
-              private router: Router) { 
+  constructor(private afAuth: AngularFireAuth,
+    private afs: AngularFirestore,
+    private router: Router) {
     this.user = this.afAuth.authState.pipe(switchMap(user => {
-        if(user) {
-          console.log("Observable Emitted: AuthState.");
-          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
-        }
-        else {
-          return of(null);
-        }
-      })
+      if (user) {
+        console.log("Observable Emitted: AuthState.");
+        return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+      }
+      else {
+        return of(null);
+      }
+    })
     );
 
-    this.user.subscribe(next => { 
+    this.user.subscribe(next => {
       this.currentUser = next;
     });
   }
-  
+
   private updateUserData(credentiallUser): void {
-      const userDoc = this.afs.doc(`users/${credentiallUser.uid}`);
-      const existingUser: User = {
-        id: credentiallUser.uid, 
-        email: credentiallUser.email,
-        photoURL: credentiallUser.photoURL,
-      }
-      const newUser: User = {
-        id: credentiallUser.uid, 
-        email: credentiallUser.email,
-        displayName: credentiallUser.displayName,
-        photoURL: credentiallUser.photoURL,
-      }
+    const userDoc = this.afs.doc(`users/${credentiallUser.uid}`);
+    const existingUser: User = {
+      id: credentiallUser.uid,
+      email: credentiallUser.email,
+      photoURL: credentiallUser.photoURL,
+    }
+    const newUser: User = {
+      id: credentiallUser.uid,
+      email: credentiallUser.email,
+      displayName: credentiallUser.displayName,
+      photoURL: credentiallUser.photoURL,
+    }
     userDoc.update(existingUser)
-      .then( _ => {
+      .then(_ => {
         console.log('User data updated.');
       })
       .catch(err => {
@@ -57,17 +57,17 @@ export class AuthService {
         this.createUser(newUser);
       });
   }
-    
+
   private createUser(newUser): void {
     console.log("Creating User...");
     const newUserDoc = this.afs.collection("users").doc(newUser.id);
     newUserDoc.set(newUser);
   }
-  
+
 
   private oAuthLogin(provider): Promise<any> {
     return this.afAuth.signInWithPopup(provider)
-      .then( credential => {
+      .then(credential => {
         console.log("User logged in.");
         this.updateUserData(credential.user);
       })
@@ -87,12 +87,12 @@ export class AuthService {
 
   public logout(): void {
     this.afAuth.signOut()
-      .then(function() {
+      .then(function () {
         console.log("User logged out.");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.error("Error logging out!");
       });
   }
-  
+
 }

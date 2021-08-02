@@ -13,21 +13,21 @@ export class MaxLineValidatorDirective implements Validator {
 
   constructor() {
     this.validator = this.maxLineValidatorFunction();
-   }
-  
-   validate(control: FormControl) {
+  }
+
+  validate(control: FormControl) {
     return this.validator(control);
   }
 
-  maxLineValidatorFunction() : ValidatorFn {
-    return (controller: AbstractControl) => {      
+  maxLineValidatorFunction(): ValidatorFn {
+    return (controller: AbstractControl) => {
       let str = controller.value;
-      if(str) {
+      if (str) {
         let count = (str.match(/\r|\n/g) || []).length;
-        if(count >= this.maxLines) {        
+        if (count >= this.maxLines) {
           return {
             maxLineValidator: {
-                valid: false
+              valid: false
             }
           };
         }
@@ -35,9 +35,7 @@ export class MaxLineValidatorDirective implements Validator {
           return null;
         }
       }
-      
+
     }
   }
 }
-
-

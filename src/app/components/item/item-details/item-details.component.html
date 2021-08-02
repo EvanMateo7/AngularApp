@@ -13,7 +13,8 @@
     </div>
     <hr>
 
-    <form class="m-2" *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()" #commentForm="ngForm">
+    <form class="m-2" *ngIf="auth.user | async as user" (ngSubmit)="commentForm.valid && addComment()"
+      #commentForm="ngForm">
       <div class="commentForm form-group mb-2">
         <label for="comment">Comment</label><br>
         <div class="commentGroup">

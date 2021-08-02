@@ -25,7 +25,7 @@ export class LikeDislikeComponent implements OnInit {
     this.likeDislikeDoc = likeDislikeCollection.doc(this.docId);
     this.likeDislikeDoc.get().toPromise().then((doc: DocumentSnapshot<any>) => {
       if (doc.data() != undefined) {
-        const itemLikesDislikes = (({likes = 0, dislikes = 0}) => ({likes, dislikes}))(doc.data());
+        const itemLikesDislikes = (({ likes = 0, dislikes = 0 }) => ({ likes, dislikes }))(doc.data());
         this.likeDislikeData = itemLikesDislikes;
       }
     })

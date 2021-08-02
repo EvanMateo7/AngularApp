@@ -52,10 +52,8 @@
             <fa-icon class="fa-lg" [icon]="faTimes"></fa-icon>
           </button>
         </div>
-        <div class="modal-body">
-
-          <form *ngIf="selectedItem" #editItemForm="ngForm">
-
+        <form *ngIf="selectedItem" #editItemForm="ngForm">
+          <div class="modal-body">
             <div class="form-group mb-2">
               <label for="name">Name</label><br>
               <input type="text" class="form-control form-control-sm" [(ngModel)]="selectedItem.name" name="name"
@@ -72,16 +70,13 @@
                 Description is required
               </div>
             </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="button" class="btn btn-primary" [disabled]="!editItemForm.valid" (click)="updateItem()"
-                data-bs-dismiss="modal">Save</button>
-            </div>
-
-          </form>
-
-        </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" [disabled]="!editItemForm.valid" (click)="updateItem()"
+              data-bs-dismiss="modal">Save</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

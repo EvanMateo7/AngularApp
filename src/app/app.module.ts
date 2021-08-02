@@ -21,11 +21,10 @@ import { ItemListComponent } from './components/item/item-list/item-list.compone
 
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/item', pathMatch: 'full'},
   {path: 'item', component: ItemComponent},
   {path: 'users', component: UserComponent, canActivate: [AuthGuard], data: {role: Roles.ADMIN}},
   {path: 'profile', component: UserProfileComponent},
-  {path: '**', component: ItemComponent},
+  {path: '**', redirectTo: '/item', pathMatch: 'full'},
 ];
 
 @NgModule({

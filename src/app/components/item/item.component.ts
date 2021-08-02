@@ -93,6 +93,7 @@ export class ItemComponent implements OnInit {
   }
 
   selectItem(itemID: string): void {
+    this.selectedItem = null;
     this.itemDoc = this.afs.doc(`items/${itemID}`);
     this.itemDoc.ref.get().then(docSnapshot => {
       if (docSnapshot.exists) {

@@ -1,0 +1,95 @@
+
+.itemList {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
+  grid-gap: 10px;
+  padding: 2em;
+}
+
+.itemList * {
+  transition: all 0.2s ease-out, z-index 0s;
+}
+
+.itemTileImage {
+  max-width: 100%;
+  margin: auto 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.itemTile {
+  display: grid;
+  position: relative;
+  height: 100%;
+  grid-template-columns: .5fr minmax(0, 1fr);
+}
+
+.itemTileContainer {
+  position: relative;
+  box-shadow: 3px 3px 12px -5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.itemTileContainer:hover {
+  box-shadow: none;
+  transform: translate(3px, 1px);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.itemActionList {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.itemActionBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 1px 1px 5px 0px black;
+  margin: 2px;
+  transform: scale(0);
+}
+
+.itemActionBtn:before {
+  content:'';
+  display:inline-block;;
+  vertical-align:middle;
+  padding-top:100%;
+}
+
+.itemTileContainer:hover .itemActionBtn {
+  transform: scale(1);
+}
+
+.itemTileContainer:hover .itemActionBtn:hover {
+  transform: scale(1.5) !important;
+  z-index: 1;
+}
+
+.itemName {
+  font-size: 1.8em;
+  white-space: nowrap;
+}
+
+.itemDescription {
+  height: 3em;
+}
+
+.itemInfo {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 10px;
+  font-size: 1.3em;
+}

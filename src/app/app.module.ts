@@ -17,6 +17,7 @@ import { MaxLineValidatorDirective } from './validators/max-line-validator.direc
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Roles } from './models';
 import { LikeDislikeComponent } from './components/like-dislike/like-dislike.component';
+import { ItemListComponent } from './components/item/item-list/item-list.component';
 
 
 const appRoutes: Routes = [
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
     UserProfileComponent,
     MaxLineValidatorDirective,
     LikeDislikeComponent,
+    ItemListComponent,
   ],
   imports: [
     BrowserModule,

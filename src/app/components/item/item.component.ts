@@ -87,20 +87,11 @@ export class ItemComponent implements OnInit {
     this.itemSearchService.nextPage();
   }
 
-  getItemDate(item: Partial<Item>): Date {
-    if (typeof item.dateCreated === 'number') {
-      return new Date(item.dateCreated);
-    }
-    else if (typeof item.dateCreated.toDate === 'function') {
-      return item.dateCreated.toDate();
-    }
-  }
-
   async searchItem(query: string) {
     await this.itemSearchService.search(query, 0, this.itemsPerPage);
   }
 
-  selectItem(event: Event, item: Item): void {
+  selectItem(item: Item): void {
     this.selectedItem = item;
     this.newItem = null;
   }

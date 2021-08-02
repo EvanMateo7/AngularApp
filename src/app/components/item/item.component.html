@@ -22,28 +22,8 @@
   </div>
   
   <!-- Item List -->
-  <div class="itemList">
-    <div class="itemTileContainer" *ngFor="let item of items">
-      <div class="itemTile" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#itemDetailsModal">
-        <img class="itemTileImage" [src]="item.thumbnailURL">
-        <div class="itemInfo">
-          <p class="itemName">{{item.name}}</p>
-          <p class="itemDescription ellipsisMultiline">{{item.description}}</p>
-          <div class="d-flex justify-content-between align-items-baseline w-100">
-            <app-like-dislike [docId]="item.id" [isInteractive]="false"></app-like-dislike>
-            <div>{{getItemDate(item) | date:'mediumDate' }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="itemActionList">
-        <button class="btn btn-primary iconBtn itemActionBtn" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#editItemModal">
-          <fa-icon class="fa-lg" [icon]="faEdit"></fa-icon>
-        </button>
-        <button class="btn btn-danger iconBtn itemActionBtn" (click)="selectItem($event, item)" data-bs-toggle="modal" data-bs-target="#deleteItemModal">
-          <fa-icon class="fa-lg" [icon]="faTimes"></fa-icon>
-        </button>
-      </div>
-    </div>
+  <div class="w-100">
+    <app-item-list [items]="items" (selectedItemEvent)="selectItem($event)"></app-item-list>
   </div>
   
   <!-- Page navigation -->

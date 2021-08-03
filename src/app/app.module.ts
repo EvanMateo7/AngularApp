@@ -10,7 +10,6 @@ import { UserComponent } from './components/user/user.component';
 import { ItemComponent } from './components/item//item.component';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 import { AuthGuard } from './core/auth.guard';
-import { UserProfileComponent } from './components/user/user-profile/user-profile.component';
 import { MaxLineValidatorDirective } from './validators/max-line-validator.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Roles } from './models';
@@ -21,7 +20,6 @@ import { ItemListComponent } from './components/item/item-list/item-list.compone
 const appRoutes: Routes = [
   { path: 'item', component: ItemComponent },
   { path: 'users', component: UserComponent, canActivate: [AuthGuard], data: { role: Roles.ADMIN } },
-  { path: 'profile', component: UserProfileComponent },
   { path: '**', redirectTo: '/item', pathMatch: 'full' },
 ];
 
@@ -31,7 +29,6 @@ const appRoutes: Routes = [
     UserComponent,
     ItemComponent,
     ItemDetailsComponent,
-    UserProfileComponent,
     MaxLineValidatorDirective,
     LikeDislikeComponent,
     ItemListComponent,

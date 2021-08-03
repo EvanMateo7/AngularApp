@@ -1,5 +1,5 @@
 
-.itemList {
+.item-list {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(40em, 1fr));
@@ -7,11 +7,11 @@
   padding: 2em;
 }
 
-.itemList * {
+.item-list * {
   transition: all 0.2s ease-out, z-index 0s;
 }
 
-.itemTileImage {
+.item-tile-image {
   max-width: 100%;
   margin: auto 0;
   height: 100%;
@@ -19,28 +19,28 @@
   object-fit: cover;
 }
 
-.itemTile {
+.item-tile {
   display: grid;
   position: relative;
   height: 100%;
   grid-template-columns: .5fr minmax(0, 1fr);
 }
 
-.itemTileContainer {
+.item-tile-container {
   position: relative;
   box-shadow: 3px 3px 12px -5px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.itemTileContainer:hover {
+.item-tile-container:hover {
   box-shadow: none;
   transform: translate(3px, 1px);
   cursor: pointer;
   z-index: 1;
 }
 
-.itemActionList {
+.item-action-list {
   position: absolute;
   top: 0;
   right: 0;
@@ -51,7 +51,7 @@
   align-items: stretch;
 }
 
-.itemActionBtn {
+.item-action-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,32 +60,32 @@
   transform: scale(0);
 }
 
-.itemActionBtn:before {
+.item-action-btn:before {
   content:'';
   display:inline-block;;
   vertical-align:middle;
   padding-top:100%;
 }
 
-.itemTileContainer:hover .itemActionBtn {
+.item-tile-container:hover .item-action-btn {
   transform: scale(1);
 }
 
-.itemTileContainer:hover .itemActionBtn:hover {
+.item-tile-container:hover .item-action-btn:hover {
   transform: scale(1.5) !important;
   z-index: 1;
 }
 
-.itemName {
+.item-name {
   font-size: 1.8em;
   white-space: nowrap;
 }
 
-.itemDescription {
+.item-description {
   height: 3em;
 }
 
-.itemInfo {
+.item-info {
   height: inherit;
   display: flex;
   flex-direction: column;

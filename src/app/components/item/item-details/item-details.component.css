@@ -1,14 +1,14 @@
 
-.itemDetailsImage {
+.item-details-image {
   height: 20em;
   object-fit: contain;
 }
 
-.itemName {
+.item-name {
   font-size: 1.8em;
 } 
 
-.itemDetailsInfo {
+.item-details-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -17,17 +17,17 @@
   width: 100%;
 }
 
-.commentGroup {
+.comment-group {
   max-width: 40em;
 }
 
-.commentHeader {
+.comment-header {
   display: flex;
   align-items: baseline;
   line-height: 3em;
 }
 
-.commentUser {
+.comment-user {
   display: inline-block;
   font-size: 1.3em;
   font-weight: 600;

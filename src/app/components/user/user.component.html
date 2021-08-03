@@ -12,10 +12,10 @@
       <tr *ngFor="let user of users | async">
         <td>{{user.displayName}}</td>
         <td>{{user.roles}}</td>
-        <td class="click editCell" (click)='selectUser(user)' data-bs-toggle="modal" data-bs-target="#editUserModal">
+        <td class="click edit-cell" (click)='selectUser(user)' data-bs-toggle="modal" data-bs-target="#editUserModal">
           <fa-icon class="fa-lg" [icon]="faEdit"></fa-icon>
         </td>
-        <td class="click deleteCell" (dblclick)='deleteUser(user)'>
+        <td class="click delete-cell" (dblclick)='deleteUser(user)'>
           <fa-icon class="fa-lg" [icon]="faTimes"></fa-icon>
         </td>
       </tr>

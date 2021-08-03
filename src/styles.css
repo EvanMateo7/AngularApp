@@ -24,18 +24,18 @@ textarea {
     resize: none;
 }
 
-.ellipsisLine {
+.ellipsis-line {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.ellipsisMultiline {
+.ellipsis-multiline {
   text-overflow: ellipsis;
   overflow: hidden;
 }
 
-.iconBtn {
+.icon-btn {
   padding: 0;
   border-radius: 50%;
   cursor: pointer;
@@ -51,16 +51,16 @@ textarea {
 }
 
 /* Temporary tables */
-.deleteCell, .editCell {
+.delete-cell, .edit-cell {
     text-align: center;
     vertical-align: middle !important;
 }
 
-.deleteCell:hover {
+.delete-cell:hover {
     color: rgba(255, 50, 50, 0.6);
 }
 
-.editCell:hover {
+.edit-cell:hover {
     color: rgba(50, 255, 50, 0.6);
 }
 

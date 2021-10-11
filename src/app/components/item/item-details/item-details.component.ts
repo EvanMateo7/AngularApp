@@ -27,8 +27,6 @@ export class ItemDetailsComponent implements OnInit {
   constructor(private auth: AuthService, private route: ActivatedRoute, private afs: AngularFirestore) { }
 
   ngOnInit() {
-    console.log("Initialize: ItemDetailsComponent...");
-
     this.init();
   }
 
@@ -58,7 +56,7 @@ export class ItemDetailsComponent implements OnInit {
         this.noComments = false;
       }
       else {
-        console.log("No comments");
+        console.log("no comments.");
         this.noComments = true;
       }
     });
@@ -73,7 +71,7 @@ export class ItemDetailsComponent implements OnInit {
         this.noMoreComments = false;
       }
       else {
-        console.log("No more comments");
+        console.log("no more comments.");
         this.noMoreComments = true;
       }
     });
@@ -86,7 +84,6 @@ export class ItemDetailsComponent implements OnInit {
       this.comment.timestamp = Date.now();
       this.commentsCollection.add(this.comment);
       this.commentForm.resetForm();
-      console.log("comment", this.comment)
     }
     this.getComments();
   }

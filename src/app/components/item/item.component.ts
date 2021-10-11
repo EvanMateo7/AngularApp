@@ -42,8 +42,6 @@ export class ItemComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('Initialize: ItemComponent...');
-
     this.itemsCollection = this.afs.collection("items");
 
     this.itemSearchService.results.subscribe((next) => {
@@ -143,7 +141,6 @@ export class ItemComponent implements OnInit {
   resetAddItemForm(): void {
     this.addItemForm.resetForm();
     this.itemImageInput.nativeElement.value = "";
-    console.log("addItemForm reset.");
   }
 
   getUploadFile(event): void {

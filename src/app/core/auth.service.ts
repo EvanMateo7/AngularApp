@@ -21,7 +21,6 @@ export class AuthService {
     private router: Router) {
     this.user = this.afAuth.authState.pipe(switchMap(user => {
       if (user) {
-        console.log("Observable Emitted: AuthState.");
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
       }
       else {
@@ -50,7 +49,7 @@ export class AuthService {
     }
     userDoc.update(existingUser)
       .then(_ => {
-        console.log('User data updated.');
+        console.log('user data updated.');
       })
       .catch(err => {
         console.error(`User: ${credentiallUser.displayName} does not exist in user collection!`);
@@ -59,7 +58,7 @@ export class AuthService {
   }
 
   private createUser(newUser): void {
-    console.log("Creating User...");
+    console.log("creating User...");
     const newUserDoc = this.afs.collection("users").doc(newUser.id);
     newUserDoc.set(newUser);
   }
@@ -68,7 +67,7 @@ export class AuthService {
   private oAuthLogin(provider): Promise<any> {
     return this.afAuth.signInWithPopup(provider)
       .then(credential => {
-        console.log("User logged in.");
+        console.log("user logged in.");
         this.updateUserData(credential.user);
       })
   }
@@ -88,7 +87,7 @@ export class AuthService {
   public logout(): void {
     this.afAuth.signOut()
       .then(function () {
-        console.log("User logged out.");
+        console.log("user logged out.");
       })
       .catch(function (error) {
         console.error("Error logging out!");

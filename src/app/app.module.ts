@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from "./core/core.module";
 
 import { AppComponent } from './app.component';
-import { UserComponent } from './components/user/user.component';
+import { UserTableComponent } from './components/userTable/userTable.component';
 import { ItemComponent } from './components/item//item.component';
 import { ItemDetailsComponent } from './components/item/item-details/item-details.component';
 import { AuthGuard } from './core/auth.guard';
@@ -19,14 +19,14 @@ import { ItemListComponent } from './components/item/item-list/item-list.compone
 
 const appRoutes: Routes = [
   { path: 'item', component: ItemComponent },
-  { path: 'users', component: UserComponent, canActivate: [AuthGuard], data: { role: Roles.ADMIN } },
+  { path: 'users', component: UserTableComponent, canActivate: [AuthGuard], data: { role: Roles.ADMIN } },
   { path: '**', redirectTo: '/item', pathMatch: 'full' },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
+    UserTableComponent,
     ItemComponent,
     ItemDetailsComponent,
     MaxLineValidatorDirective,

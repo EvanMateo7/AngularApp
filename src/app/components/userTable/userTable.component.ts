@@ -9,10 +9,10 @@ import { Roles, User } from '../../models';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  templateUrl: './userTable.component.html',
+  styleUrls: ['./userTable.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserTableComponent implements OnInit {
 
   currentUser: User;
 

@@ -3,13 +3,18 @@
   color: white;
   margin: 0;
   box-shadow: 0px 0px 20px 0px black;
+  font-size: 1.6em;
 }
 
-.navbar-menu li a {
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+li a {
   border-top: 2px solid transparent; 
 }
 
-.navbar-menu li:hover a {
+li:hover a {
   border-top: 2px solid white; 
 }
 

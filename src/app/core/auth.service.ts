@@ -81,7 +81,7 @@ export class AuthService {
   }
 
   public get isAdmin(): boolean {
-    return !!this.currentUser.roles?.includes(Roles.ADMIN);
+    return !!this.currentUser?.roles?.includes(Roles.ADMIN);
   }
 
   public logout(): void {

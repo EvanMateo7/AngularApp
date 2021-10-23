@@ -1,8 +1,8 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from './core/auth.service';
 import { User } from './models';
-import { Subscription } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +12,12 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AppComponent {
   user$: Subscription;
   user: User;
-  constructor(private auth: AuthService, private router: Router, private cd: ChangeDetectorRef) { }
+  constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.user$ = this.auth.user.subscribe(next => {
       this.user = next;
-      this.cd.detectChanges();
-    });
-
+    }); 
     // Remove modal backdrop manually when changing locations
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

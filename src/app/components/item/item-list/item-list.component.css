@@ -1,8 +1,9 @@
 
 .item-list {
+  --thresholdWidth: 25rem;
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--thresholdWidth), 1fr));
   grid-gap: 10px;
   padding: 2em;
 }
@@ -92,4 +93,10 @@
   align-items: start;
   padding: 10px;
   font-size: 1.2em;
+}
+
+@media (max-width: 575.98px) {
+  .item-list {
+    --thresholdWidth: 20rem;
+  }
 }

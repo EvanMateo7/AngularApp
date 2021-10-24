@@ -6,22 +6,22 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="nav navbar-nav">
-        <li class="nav-item ">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/">Images</a>
         </li>
-        <li class="nav-item " *ngIf="auth.isAdmin">
+        <li class="nav-item" *ngIf="auth.isAdmin">
           <a class="nav-link" routerLink="/users">Users</a>
         </li>
       </ul>
     </div>
 
     <div class="nav navbar-nav mx-3">
-      <div *ngIf="!!user" class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <img class="user-photo mx-1" src="{{user.photoURL}}?sz=32" alt="User Photo">
-          {{user.displayName}}
+      <div *ngIf="!!user" class="nav-item dropdown user-tag">
+        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img class="user-tag-photo mx-2" src="{{user.photoURL}}?sz=32" alt="User Photo">
+          <span class="d-inline-block text-truncate">{{user.displayName}}</span>
         </a>
-        <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton">
+        <div class="dropdown-menu dropdown-menu-dark position-absolute user-tag-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" (click)="auth.logout()">Logout</a>
         </div>
       </div>

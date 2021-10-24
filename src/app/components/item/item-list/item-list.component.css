@@ -1,6 +1,6 @@
 
 .item-list {
-  --thresholdWidth: 25rem;
+  --thresholdWidth: 35em;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(auto-fill, minmax(var(--thresholdWidth), 1fr));
@@ -92,11 +92,10 @@
   flex-direction: column;
   align-items: start;
   padding: 10px;
-  font-size: 1.2em;
 }
 
 @media (max-width: 575.98px) {
   .item-list {
-    --thresholdWidth: 20rem;
+    --thresholdWidth: 32em;
   }
 }

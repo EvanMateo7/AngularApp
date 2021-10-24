@@ -2,6 +2,7 @@
 .item-details-image {
   height: 20em;
   object-fit: contain;
+  max-width: 100%;
 }
 
 .item-name {

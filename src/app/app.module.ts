@@ -18,9 +18,9 @@ import { ItemListComponent } from './components/item/item-list/item-list.compone
 
 
 const appRoutes: Routes = [
-  { path: 'item', component: ItemComponent },
+  { path: 'images', component: ItemComponent },
   { path: 'users', component: UserTableComponent, canActivate: [AuthGuard], data: { role: Roles.ADMIN } },
-  { path: '**', redirectTo: '/item', pathMatch: 'full' },
+  { path: '**', redirectTo: '/images', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -4,7 +4,7 @@ Admins can manage existing users.
 
 Technologies used:
 
-- Angular
+- Angular 11
 - Bootstrap 5
 - Firebase
 - Algolia

@@ -1,5 +1,9 @@
 # Image Posting
-This is a sample project using:
+This is a sample project where you can post images and have them reviewed by others.
+Admins can manage existing users.
+
+Technologies used:
+
 - Angular
 - Bootstrap 5
 - Firebase

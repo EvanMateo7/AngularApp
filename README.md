@@ -11,6 +11,6 @@ This is a sample project using:
 
 # Firebase Configuration
 
-The app requires the Firebase config defined in `src/environments/`.
+The app requires the `Firebase` config and the `Algolia` config to be defined in `src/environments/`.
 
-<img title="Sample Firebase config env" src="https://user-images.githubusercontent.com/23142137/138616818-77f844a7-0bd3-4be2-a1be-a2980a62fd66.png" width=500>
+<img title="Sample Firebase config env" src="https://user-images.githubusercontent.com/23142137/138622758-f497fb41-501c-4000-a779-f9f996a54736.png" width=500>

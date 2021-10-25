@@ -1,5 +1,5 @@
 # Image Posting
-This is a sample project where you can post images and have them reviewed by others.
+This is a sample project where users can post images and have them reviewed by others.
 Admins can manage existing users.
 
 Technologies used:

@@ -24,7 +24,7 @@ export class ItemSearchService {
 
   private initAlgolia() {
     const algoliaClient = algoliasearch(AlgoliaConfig.appId, AlgoliaConfig.searchAPIKey);
-    this.algoliaIndex = algoliaClient.initIndex('angularapp_dev');
+    this.algoliaIndex = algoliaClient.initIndex(AlgoliaConfig.searchIndex);
   }
 
   get currentPage() {
